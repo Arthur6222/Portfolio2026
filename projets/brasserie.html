@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS Brasserie - Portfolio</title>
+    <link rel="stylesheet" href="../cssdoc/style.css">
+    <style>
+        .project-detail-hero {
+            min-height: 45vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, rgba(255, 160, 0, 0.15), rgba(0, 255, 255, 0.05));
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        .project-detail-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 60% 50%, rgba(255,160,0,0.12) 0%, transparent 70%);
+        }
+        .hero-badge {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border: 1px solid rgba(0,255,255,0.3);
+            padding: 8px 20px;
+        }
+        .back-btn:hover { border-color: #00ffff; box-shadow: 0 0 15px rgba(0,255,255,0.3); }
+        .hero-inner {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+        .project-category {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ffa000;
+            margin-bottom: 20px;
+        }
+        .project-main-title {
+            font-size: clamp(36px, 7vw, 72px);
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255,160,0,0.4);
+            line-height: 1.1;
+        }
+        .project-main-title span { color: #ffa000; }
+        .project-subtitle-detail {
+            font-size: clamp(14px, 2vw, 18px);
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        .meta-strip {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .meta-chip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .meta-chip-label { font-size: 11px; color: #555; letter-spacing: 2px; text-transform: uppercase; }
+        .meta-chip-value { font-size: 14px; color: #00ffff; }
+
+        /* Content */
+        .detail-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 50px 80px;
+        }
+        .section-block {
+            margin-bottom: 60px;
+        }
+        .section-block h3 {
+            font-size: 22px;
+            color: #ffa000;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-block h3::before { content: '//'; color: #ff00ff; font-size: 18px; }
+        .section-block p {
+            color: #ccc;
+            line-height: 1.9;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .tech-tag {
+            padding: 7px 18px;
+            background: rgba(255,160,0,0.1);
+            border: 1px solid rgba(255,160,0,0.4);
+            color: #ffa000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .highlight-box {
+            background: rgba(255,160,0,0.05);
+            border-left: 3px solid #ffa000;
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        .highlight-box p { margin: 0; color: #ddd; font-style: italic; font-size: 17px; line-height: 1.7; }
+        .skills-learned {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .skill-item {
+            padding: 15px 20px;
+            background: rgba(0,255,255,0.05);
+            border: 1px solid rgba(0,255,255,0.2);
+            color: #00ffff;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .skill-item::before { content: '▸'; color: #ff00ff; }
+        .cta-section {
+            text-align: center;
+            padding: 60px 0 0;
+            border-top: 1px solid rgba(0,255,255,0.15);
+        }
+        .cta-section p { color: #888; margin-bottom: 25px; font-size: 15px; }
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .screenshot-card {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,160,0,0.5);
+            background: radial-gradient(circle at top, rgba(255,160,0,0.18), rgba(0,0,0,0.95));
+            box-shadow: 0 0 28px rgba(255,160,0,0.25);
+        }
+        .screenshot-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .screenshot-caption {
+            padding: 10px 14px 12px;
+            font-size: 13px;
+            color: #ddd;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .detail-content { padding: 0 20px 60px; }
+            .hero-badge { left: 20px; }
+            .meta-strip { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <nav>
+        <div class="logo">PORTFOLIO - Arthur PICQUE</div>
+        <div class="nav-links">
+            <a href="../index.html">Accueil</a>
+            <a href="../about.html">À Propos</a>
+            <a href="../Skills.html">Compétences</a>
+            <a href="../projets.html" class="active">Projets</a>
+            <a href="../contact.html">Contact</a>
+            <a href="../hobbies.html">Hobbies</a>
+        </div>
+    </nav>
+
+    <div style="padding-top: 80px;">
+        <div class="project-detail-hero">
+            <div class="hero-badge">
+                <a href="../projets.html" class="back-btn">← Retour aux projets</a>
+            </div>
+            <div class="hero-inner">
+                <p class="project-category">Design & Branding</p>
+                <h1 class="project-main-title">BTS — <span>Brasserie</span><br>Terroir & Saveur</h1>
+                <p class="project-subtitle-detail">Une identité visuelle complète pour une brasserie artisanale célébrant le terroir local.</p>
+                <div class="meta-strip">
+                    <div class="meta-chip"><span class="meta-chip-label">Année</span><span class="meta-chip-value">2024</span></div>
+                    <div class="meta-chip"><span class="meta-chip-label">Contexte</span><span class="meta-chip-value">Projet scolaire</span></div>
+                    <div class="meta-chip"><span class="meta-chip-label">Rôle</span><span class="meta-chip-value">Designer & Dev Front</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-content">
+            <div class="section-block">
+                <h3>Présentation du projet</h3>
+                <p>
+                    BTS – Brasserie Terroir et Saveur est un projet complet autour d'une brasserie artisanale fictive :
+                    création de l'<strong style="color:#ffa000">identité de marque</strong> (univers visuel, charte) et
+                    réalisation d'un <strong style="color:#00ffff">site web fonctionnel</strong> (Ethur) permettant de
+                    présenter la production, les gammes de bières et de gérer des interactions avec les utilisateurs.
+                </p>
+                <div class="highlight-box">
+                    <p>"Une brasserie qui raconte une histoire à travers chaque détail — du logo jusqu'au site web de réservation de bières."</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Problématique</h3>
+                <p>
+                    Comment créer une identité visuelle qui évoque l'authenticité artisanale et la richesse du terroir,
+                    tout en restant moderne et adaptée à un site dynamique développé en PHP ? Il fallait trouver un
+                    équilibre entre <strong style="color:#ffa000">cachet traditionnel</strong> (codes graphiques de la
+                    brasserie) et <strong style="color:#00ffff">expérience utilisateur actuelle</strong> (navigation,
+                    lisibilité, parcours jusqu'à la réservation).
+                </p>
+            </div>
+
+            <div class="section-block">
+                <h3>Site web & parcours utilisateur</h3>
+                <p>
+                    Le site Ethur présente la brasserie à travers plusieurs sections : bannière d'accueil, présentation
+                    de la brasserie, mise en avant de la <strong style="color:#ffa000">production</strong>, catalogue de
+                    bières (blonde, brune, rouge) et formulaires de contact / connexion. L'utilisateur peut découvrir
+                    les gammes, visualiser la chaîne de production et accéder aux formulaires pour entrer en contact ou
+                    se connecter à l'espace dédié.
+                </p>
+                <div class="screenshot-grid">
+                    <div class="screenshot-card">
+                        <img src="../img/biere.png" alt="Cartes des bières sur le site de la brasserie">
+                        <div class="screenshot-caption">Section « Nos bières » : cartes produits pour Blonde, Brune et Rouge.</div>
+                    </div>
+                    <div class="screenshot-card">
+                        <img src="../img/bras.png" alt="Tableau de bord des brasseurs Ethur">
+                        <div class="screenshot-caption">Tableau de bord brasseurs : calculateur, matières premières et stock en temps réel.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Ce qui a été réalisé</h3>
+                <p>
+                    Côté design, j'ai conçu le logo, la charte graphique complète et les maquettes du site. Côté
+                    technique, j'ai intégré ces éléments dans une application web en PHP avec gestion de la navigation,
+                    des sections de contenu et des formulaires de contact / connexion.
+                </p>
+                <div class="skills-learned">
+                    <div class="skill-item">Identité visuelle</div>
+                    <div class="skill-item">Charte graphique</div>
+                    <div class="skill-item">Maquettage Figma</div>
+                    <div class="skill-item">Design web</div>
+                    <div class="skill-item">Intégration HTML/CSS</div>
+                    <div class="skill-item">Mise en place d'un site PHP</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Technologies & outils</h3>
+                <div class="tags-row">
+                    <span class="tech-tag">Figma</span>
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Canva</span>
+                    <span class="tech-tag">Photoshop</span>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Apprentissages</h3>
+                <p>
+                    Ce projet m'a permis de relier <strong style="color:#00ffff">design d'identité</strong> et
+                    <strong style="color:#00ffff">développement web concret</strong>. J'ai renforcé mes compétences en
+                    création de charte graphique, en maquettage Figma et en intégration, mais aussi en structuration
+                    d'un site PHP accueillant plusieurs pages (accueil, production, bières, contact, connexion) tout en
+                    restant fidèle à l'univers de la brasserie.
+                </p>
+            </div>
+
+            <div class="cta-section">
+                <p>Intéressé par ce type de projet ?</p>
+                <div class="cta-buttons">
+                    <a href="../contact.html" class="cta-button">Me contacter</a>
+                    <a href="../projets.html" class="cta-button secondary">Voir d'autres projets</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
