@@ -1993,3 +1993,27 @@ h2::before {
         display: none;
     }
 }
+
+/* Navbar fit fix for all pages */
+nav {
+    padding: 16px 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px 16px;
+}
+
+.nav-links a {
+    font-size: 12px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}

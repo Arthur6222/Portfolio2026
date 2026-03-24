@@ -63,7 +63,42 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observer tous les éléments qui doivent s'animer
+function addVeilleNavLink() {
+    const navContainers = document.querySelectorAll('.nav-links');
+    if (!navContainers.length) return;
+
+    const path = window.location.pathname.toLowerCase();
+    const isProjectSubpage = path.includes('/projets/');
+    const veilleHref = isProjectSubpage ? '../veille-technologique-rugby.html' : 'veille-technologique-rugby.html';
+    const isVeillePage = path.endsWith('/veille-technologique-rugby.html') || path.endsWith('veille-technologique-rugby.html');
+
+    navContainers.forEach((container) => {
+        const alreadyExists = Array.from(container.querySelectorAll('a')).some((link) => {
+            const href = link.getAttribute('href');
+            return href && href.indexOf('veille-technologique-rugby.html') !== -1;
+        });
+        if (alreadyExists) return;
+
+        const projectsLink = Array.from(container.querySelectorAll('a')).find((link) => {
+            const href = link.getAttribute('href') || '';
+            return href === 'projets.html' || href === '../projets.html';
+        });
+        if (!projectsLink) return;
+
+        const veilleLink = document.createElement('a');
+        veilleLink.href = veilleHref;
+        veilleLink.textContent = 'Veille Tech';
+        if (isVeillePage) {
+            veilleLink.classList.add('active');
+        }
+
+        projectsLink.insertAdjacentElement('afterend', veilleLink);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    addVeilleNavLink();
+
     const animatedElements = document.querySelectorAll(
         '.skill-card, .project-card, .feature-card, .about-container, .contact-container, .form-group'
     );

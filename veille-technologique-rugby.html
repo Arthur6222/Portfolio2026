@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille technologique Rugby - Portfolio</title>
+    <link rel="stylesheet" href="cssdoc/style.css">
+    <style>
+        .veille-layout { max-width: 980px; margin: 0 auto; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #00ffff;
+            text-decoration: none;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0,255,255,0.3);
+            padding: 8px 18px;
+            transition: all 0.3s;
+        }
+        .back-link:hover { border-color: #00ffff; box-shadow: 0 0 15px rgba(0,255,255,0.4); }
+        .hero-title { font-size: clamp(30px, 5vw, 48px); margin-bottom: 12px; color: #fff; text-shadow: 0 0 25px rgba(0,255,255,0.35); }
+        .hero-title span { color: #00ffff; }
+        .hero-subtitle { color: #888; font-size: 15px; line-height: 1.8; max-width: 780px; margin-bottom: 30px; }
+        .section-card {
+            border: 1px solid rgba(0,255,255,0.25);
+            background: rgba(0,255,255,0.03);
+            padding: 24px;
+            margin-bottom: 18px;
+        }
+        .section-card h2 {
+            color: #00ffff;
+            font-size: 20px;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+        .section-card p { color: #aaa; line-height: 1.8; margin-bottom: 10px; }
+        .section-card ul { margin: 8px 0 0 20px; color: #aaa; }
+        .section-card li { margin-bottom: 8px; line-height: 1.7; }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <nav>
+        <div class="logo">PORTFOLIO - Arthur PICQUE</div>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="about.html">À Propos</a>
+            <a href="Skills.html">Compétences</a>
+            <a href="projets.html">Projets</a>
+            <a href="veille-technologique-rugby.html" class="active">Veille Tech</a>
+            <a href="contact.html">Contact</a>
+            <a href="hobbies.html">Hobbies</a>
+        </div>
+    </nav>
+
+    <section class="page-content">
+        <div class="veille-layout">
+            <a href="projets.html" class="back-link">← Retour aux projets</a>
+            <h1 class="hero-title">Veille technologique <span>Rugby & IA</span></h1>
+            <p class="hero-subtitle">
+                Cette rubrique présente l'impact de l'intelligence artificielle dans le rugby moderne : performance, stratégie, santé des joueurs, analyse vidéo et expérience spectateur.
+            </p>
+
+            <article class="section-card">
+                <h2>1. Analyse des performances des joueurs</h2>
+                <p>L'IA permet d'analyser un volume important de données : passes, plaquages, courses, mêlées et phases de jeu.</p>
+                <ul>
+                    <li>Découpage automatique des matchs via vidéo et statistiques.</li>
+                    <li>Evaluation individuelle avec des indicateurs de performance détaillés.</li>
+                    <li>Identification des points forts et des axes de progression de chaque joueur.</li>
+                </ul>
+                <p>Les coachs disposent ainsi d'une lecture plus fine de la performance individuelle et collective.</p>
+            </article>
+
+            <article class="section-card">
+                <h2>2. Aide à la stratégie et au coaching</h2>
+                <p>Les outils d'IA assistent les staffs techniques dans la préparation tactique.</p>
+                <ul>
+                    <li>Analyse des habitudes des adversaires.</li>
+                    <li>Construction de plans de match plus précis.</li>
+                    <li>Simulation de scénarios de jeu et anticipation de certaines actions.</li>
+                </ul>
+                <p>Les données deviennent des décisions opérationnelles sur le terrain.</p>
+            </article>
+
+            <article class="section-card">
+                <h2>3. Préparation physique personnalisée</h2>
+                <p>En combinant données GPS, capteurs et suivi de santé, l'IA adapte la charge de travail à chaque profil.</p>
+                <ul>
+                    <li>Programmes d'entraînement individualisés.</li>
+                    <li>Suivi de la fatigue et de la récupération.</li>
+                    <li>Optimisation de la forme athlétique sur la durée.</li>
+                </ul>
+            </article>
+
+            <article class="section-card">
+                <h2>4. Prévention des blessures</h2>
+                <p>L'IA croise des sources multiples pour détecter des signaux faibles avant qu'une blessure ne survienne.</p>
+                <ul>
+                    <li>Historique médical et antécédents.</li>
+                    <li>Charge d'entraînement et intensité des séances.</li>
+                    <li>Indicateurs de déséquilibres ou de surcharge.</li>
+                </ul>
+                <p>Le staff peut alors ajuster la préparation de manière préventive.</p>
+            </article>
+
+            <article class="section-card">
+                <h2>5. Analyse vidéo automatisée</h2>
+                <p>L'analyse vidéo, historiquement très chronophage, devient plus rapide grâce à l'automatisation.</p>
+                <ul>
+                    <li>Reconnaissance automatique des actions clés (ruck, passe, essai).</li>
+                    <li>Tag des séquences importantes sans traitement manuel complet.</li>
+                    <li>Production rapide de statistiques exploitables après match.</li>
+                </ul>
+            </article>
+
+            <article class="section-card">
+                <h2>6. Expérience des fans et des médias</h2>
+                <p>L'IA enrichit la diffusion des rencontres avec des informations contextualisées.</p>
+                <ul>
+                    <li>Statistiques en direct pendant le match.</li>
+                    <li>Aide à l'explication des phases de jeu.</li>
+                    <li>Contenus personnalisés selon les centres d'intérêt des supporters.</li>
+                </ul>
+            </article>
+
+            <article class="section-card">
+                <h2>7. Prédictions et probabilités</h2>
+                <p>Des modèles permettent d'estimer des scénarios de résultat à partir d'un ensemble de variables.</p>
+                <ul>
+                    <li>Probabilité de victoire selon les données historiques.</li>
+                    <li>Impact de la forme récente des joueurs.</li>
+                    <li>Prise en compte des conditions de jeu et du contexte de match.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
