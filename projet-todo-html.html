@@ -3,87 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML/CSS To-Do App - Portfolio</title>
-    <link rel="stylesheet" href="cssdoc/style.css">
+    <title>HTML/CSS To-Do App — Projet Web | Portfolio Arthur PICQUE</title>
+    <meta name="description" content="Création d'une TODOList en HTML et CSS, projet de base pour maîtriser la structure et le style des interfaces web.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        .project-detail-layout { max-width: 960px; margin: 0 auto; }
-        .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #00ffff; text-decoration: none; margin-bottom: 25px; border: 1px solid rgba(0,255,255,0.3); padding: 8px 18px; transition: all 0.3s; }
-        .back-link:hover { border-color: #00ffff; box-shadow: 0 0 15px rgba(0,255,255,0.4); }
-        .project-header { margin-bottom: 35px; }
-        .project-kicker { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #ff00ff; margin-bottom: 10px; }
-        .project-title-main { font-size: clamp(30px, 5vw, 44px); margin-bottom: 10px; color: #fff; text-shadow: 0 0 25px rgba(0,255,255,0.4); }
-        .project-title-main span { color: #00ffff; }
-        .project-subtitle { color: #777; font-size: 14px; max-width: 600px; line-height: 1.7; }
-        .project-meta-grid { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; }
-        .project-meta-item { padding: 8px 14px; border: 1px solid rgba(0,255,255,0.3); background: rgba(0,255,255,0.04); font-size: 12px; color: #ccc; }
-        .project-meta-item span { color: #777; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; margin-right: 6px; }
-        .project-cover { margin: 35px 0 40px; }
-        .project-cover-inner { border: 1px solid rgba(0,255,255,0.3); overflow: hidden; }
-        .project-cover img { width: 100%; display: block; object-fit: cover; filter: brightness(0.85) saturate(0.9); transition: filter 0.3s, transform 0.3s; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --magenta:    #ff00ff;
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none; z-index: 0;
+        }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 2.5rem; height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem; letter-spacing: .15em; color: var(--cyan);
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a {
+            font-size: .78rem; font-weight: 500; letter-spacing: .12em;
+            text-transform: uppercase; color: var(--text-dim);
+            text-decoration: none; transition: color .25s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+
+        main {
+            position: relative; z-index: 1;
+            max-width: 980px; margin: 0 auto;
+            padding: 104px 2rem 5rem;
+        }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+            color: var(--cyan); text-decoration: none;
+            border: 1px solid rgba(0,255,255,.3); padding: 8px 18px;
+            margin-bottom: 2.5rem; transition: all .25s;
+        }
+        .back-link:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 18px rgba(0,255,255,.3);
+            transform: translateX(-3px);
+        }
+
+        /* HERO */
+        .hero-project {
+            position: relative; overflow: hidden;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--cyan);
+            background: linear-gradient(135deg, rgba(0,255,255,.04), rgba(255,0,255,.02));
+            padding: 4rem 2.5rem; margin-bottom: 3rem;
+        }
+        .hero-project::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 60% 0%, rgba(0,255,255,.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-inner { position: relative; z-index: 1; }
+
+        .project-kicker {
+            font-size: .72rem; letter-spacing: .35em;
+            text-transform: uppercase; color: var(--magenta); margin-bottom: .6rem;
+        }
+
+        .project-title-main {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 4rem);
+            letter-spacing: .06em; color: #fff;
+            text-shadow: 0 0 30px rgba(0,255,255,.3);
+            line-height: 1.1; margin-bottom: .8rem;
+        }
+        .project-title-main span { color: var(--cyan); }
+
+        .project-subtitle {
+            font-size: .95rem; color: var(--text-dim);
+            max-width: 580px; line-height: 1.75; margin-bottom: 1.8rem;
+        }
+
+        .project-meta-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .project-meta-item {
+            padding: 7px 14px;
+            border: 1px solid rgba(0,255,255,.25);
+            background: rgba(0,255,255,.04);
+            font-size: .8rem; color: var(--text);
+        }
+        .project-meta-item span {
+            color: var(--text-dim); font-size: .7rem;
+            text-transform: uppercase; letter-spacing: .1em; margin-right: 6px;
+        }
+
+        /* COVER */
+        .project-cover { margin-bottom: 3rem; }
+        .project-cover-inner {
+            border: 1px solid rgba(0,255,255,.25); overflow: hidden;
+            border-radius: 12px; box-shadow: 0 0 30px rgba(0,255,255,.15);
+        }
+        .project-cover img {
+            width: 100%; display: block; object-fit: cover;
+            filter: brightness(.9) saturate(.95);
+            transition: filter .35s, transform .35s;
+        }
         .project-cover:hover img { filter: brightness(1) saturate(1); transform: scale(1.02); }
-        .project-cover-caption { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #555; text-align: center; margin-top: 8px; }
-        .section-block { margin-bottom: 40px; }
-        .section-block h2 { margin-bottom: 16px; }
-        .section-block p { color: #aaa; font-size: 15px; line-height: 1.8; margin-bottom: 10px; }
-        .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .tag-pill { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(0,255,255,0.4); background: rgba(0,255,255,0.06); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #00ffff; }
-        .cta-footer { margin-top: 20px; border-top: 1px solid rgba(0,255,255,0.2); padding-top: 25px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: space-between; }
-        .cta-footer p { margin: 0; color: #666; font-size: 13px; }
+        .project-cover-caption {
+            font-size: .7rem; text-transform: uppercase;
+            letter-spacing: .18em; color: var(--text-dim);
+            text-align: center; margin-top: .6rem;
+        }
+
+        /* SCREENSHOT */
         .screenshot-wrap {
-            margin: 20px auto 0;
-            max-width: 900px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(0,255,255,0.25);
-            background: radial-gradient(circle at top, rgba(0,255,255,0.08), rgba(0,0,0,0.95));
+            margin: 1.5rem auto 0;
+            border-radius: 12px; overflow: hidden;
+            border: 1px solid rgba(0,255,255,.25);
+            background: radial-gradient(circle at top, rgba(0,255,255,.08), rgba(0,0,0,.95));
+            box-shadow: 0 0 25px rgba(0,255,255,.1);
         }
-        .screenshot-wrap img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
+        .screenshot-wrap img { display: block; width: 100%; height: auto; }
+
+        /* GALLERY CARDS */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-            margin-top: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px; margin-top: 1.5rem;
         }
         .gallery-card {
             position: relative;
-            border: 1px solid rgba(0,255,255,0.2);
-            background: radial-gradient(circle at top left, rgba(0,255,255,0.15), transparent 60%);
-            padding: 16px 18px 18px;
-            overflow: hidden;
+            border: 1px solid rgba(0,255,255,.2);
+            background: radial-gradient(circle at top left, rgba(0,255,255,.12), transparent 60%);
+            padding: 1.2rem 1.4rem 1.5rem; overflow: hidden;
+            transition: border-color .25s, background .25s;
+        }
+        .gallery-card:hover {
+            border-color: rgba(0,255,255,.45);
+            background: radial-gradient(circle at top left, rgba(0,255,255,.18), transparent 60%);
         }
         .gallery-card h3 {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #00ffff;
-            margin-bottom: 8px;
+            font-size: .72rem; text-transform: uppercase;
+            letter-spacing: .2em; color: var(--cyan); margin-bottom: .6rem;
         }
-        .gallery-card p {
-            font-size: 13px;
-            color: #aaa;
-            margin: 0;
-        }
+        .gallery-card p { font-size: .88rem; color: var(--text-dim); margin: 0; line-height: 1.7; }
         .gallery-card::after {
-            content: '';
-            position: absolute;
-            right: -40px;
-            bottom: -40px;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,0,255,0.35);
-            opacity: 0.4;
+            content: ''; position: absolute;
+            right: -40px; bottom: -40px;
+            width: 120px; height: 120px;
+            border-radius: 50%; border: 1px solid rgba(255,0,255,.35); opacity: .4;
+        }
+
+        /* SECTIONS */
+        .section-block { margin-bottom: 3.5rem; }
+        .section-block.accent-left {
+            border-left: 3px solid var(--magenta); padding-left: 1.5rem;
+        }
+        .section-block h2 {
+            font-size: .85rem; font-weight: 700;
+            letter-spacing: .2em; text-transform: uppercase;
+            color: var(--cyan); margin-bottom: 1.2rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+
+        .section-block p {
+            font-size: .95rem; color: var(--text-dim);
+            line-height: 1.85; margin-bottom: .8rem;
+        }
+        .section-block p strong { color: var(--cyan); font-weight: 500; }
+
+        /* TAGS */
+        .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: .8rem; }
+        .tag-pill {
+            padding: 5px 14px; border-radius: 999px;
+            border: 1px solid rgba(0,255,255,.35);
+            background: rgba(0,255,255,.05);
+            font-size: .7rem; text-transform: uppercase;
+            letter-spacing: .1em; color: var(--cyan); transition: all .25s;
+        }
+        .tag-pill:hover { background: rgba(0,255,255,.12); border-color: var(--cyan); }
+
+        /* CTA */
+        .cta-footer {
+            margin-top: 1rem; padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex; flex-wrap: wrap; gap: 1.2rem;
+            align-items: center; justify-content: space-between;
+        }
+        .cta-footer p { color: var(--text-dim); font-size: .88rem; margin: 0; }
+        .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 22px;
+            font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+            text-transform: uppercase; text-decoration: none;
+            border: 1px solid var(--cyan); color: var(--bg-deep);
+            background: var(--cyan); transition: all .25s;
+        }
+        .cta-button:hover { background: transparent; color: var(--cyan); box-shadow: 0 0 18px rgba(0,255,255,.3); }
+        .cta-button.secondary {
+            background: transparent; color: var(--cyan); border-color: rgba(0,255,255,.4);
+        }
+        .cta-button.secondary:hover { background: rgba(0,255,255,.08); border-color: var(--cyan); }
+
+        /* FADE */
+        .fade-in { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+        .fade-in.visible { opacity: 1; transform: none; }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1.2rem; }
+            .nav-links a { font-size: .7rem; }
+            main { padding: 88px 1.2rem 4rem; }
+            .hero-project { padding: 2.5rem 1.5rem; }
         }
     </style>
 </head>
 <body>
     <div class="grid-background"></div>
+
     <nav>
-        <div class="logo">PORTFOLIO - Arthur PICQUE</div>
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
         <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="about.html">À Propos</a>
@@ -94,63 +268,138 @@
             <a href="hobbies.html">Hobbies</a>
         </div>
     </nav>
-    <section class="page-content">
-        <div class="project-detail-layout">
-            <a href="projets.html" class="back-link">← Retour aux projets</a>
-            <header class="project-header">
+
+    <main>
+        <a href="projets.html" class="back-link">← Retour aux projets</a>
+
+        <!-- HERO -->
+        <header class="hero-project fade-in">
+            <div class="hero-inner">
                 <p class="project-kicker">Projet web</p>
                 <h1 class="project-title-main">HTML/CSS <span>To-Do App</span></h1>
-                <p class="project-subtitle">Création d'une TODOList en HTML et CSS, projet de base pour maîtriser la structure et le style des interfaces web.</p>
+                <p class="project-subtitle">
+                    Création d'une TODOList en HTML et CSS, projet de base pour maîtriser
+                    la structure et le style des interfaces web.
+                </p>
                 <div class="project-meta-grid">
                     <div class="project-meta-item"><span>Contexte</span>Projet scolaire</div>
                     <div class="project-meta-item"><span>Rôle</span>Développement Front-End</div>
-                </div>
-            </header>
-            <div class="project-cover">
-                <div class="project-cover-inner">
-                    <img src="img/todohtmlvisu.png" alt="Liste des tâches - vue d’ensemble">
-                </div>
-                <p class="project-cover-caption">Liste des tâches en HTML/CSS — vue d’ensemble</p>
-            </div>
-            <div class="section-block">
-                <h2>Présentation</h2>
-                <p>Application de gestion de tâches réalisée entièrement en HTML et CSS. Permet d'appréhender la structure sémantique d'une page et la mise en forme des éléments, sans JavaScript au départ.</p>
-                <div class="screenshot-wrap">
-                    <img src="img/todo-html-screen.png" alt="Capture d’écran de la TODO list HTML/CSS">
-                </div>
-                <div class="gallery">
-                    <div class="gallery-card">
-                        <h3>Vue liste</h3>
-                        <p>Affichage principal des tâches sous forme de liste verticale, avec une hiérarchie claire entre le titre et les actions.</p>
-                    </div>
-                    <div class="gallery-card">
-                        <h3>Zone d’ajout</h3>
-                        <p>Zone de saisie dédiée pour créer rapidement une nouvelle tâche et la voir apparaître instantanément dans la liste.</p>
-                    </div>
-                    <div class="gallery-card">
-                        <h3>État des tâches</h3>
-                        <p>Mise en forme visuelle différenciée pour les tâches actives et celles considérées comme terminées.</p>
-                    </div>
+                    <div class="project-meta-item"><span>Stack</span>HTML / CSS</div>
                 </div>
             </div>
-            <div class="section-block">
-                <h2>Technologies & compétences</h2>
-                <div class="tag-row">
-                    <span class="tag-pill">HTML</span>
-                    <span class="tag-pill">CSS</span>
-                    <span class="tag-pill">Sémantique</span>
-                    <span class="tag-pill">Layout</span>
-                </div>
+        </header>
+
+        <!-- COVER -->
+        <div class="project-cover fade-in">
+            <div class="project-cover-inner">
+                <img src="img/todohtmlvisu.png" alt="Liste des tâches - vue d'ensemble">
             </div>
-            <div class="cta-footer">
-                <p>Intéressé par ce type de projet ?</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="cta-button">Me contacter</a>
-                    <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+            <p class="project-cover-caption">Liste des tâches en HTML/CSS — vue d'ensemble</p>
+        </div>
+
+        <!-- PRÉSENTATION -->
+        <div class="section-block fade-in">
+            <h2>Présentation</h2>
+            <p>
+                Application de gestion de tâches réalisée entièrement en <strong>HTML et CSS</strong>.
+                Ce projet permet d'appréhender la <strong>structure sémantique</strong> d'une page web
+                et la mise en forme des éléments d'interface, sans JavaScript au départ.
+            </p>
+            <p>
+                L'objectif était de poser des bases solides sur l'organisation du code HTML,
+                l'utilisation des balises sémantiques et la maîtrise des propriétés CSS
+                pour créer une interface claire et fonctionnelle.
+            </p>
+
+            <div class="screenshot-wrap">
+                <img src="img/todo-html-screen.png" alt="Capture d'écran de la TODO list HTML/CSS">
+            </div>
+
+            <div class="gallery">
+                <div class="gallery-card">
+                    <h3>Vue liste</h3>
+                    <p>Affichage principal des tâches sous forme de liste verticale, avec une hiérarchie claire entre le titre et les actions.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Zone d'ajout</h3>
+                    <p>Zone de saisie dédiée pour créer rapidement une nouvelle tâche et la voir apparaître dans la liste.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>État des tâches</h3>
+                    <p>Mise en forme visuelle différenciée pour les tâches actives et celles considérées comme terminées.</p>
                 </div>
             </div>
         </div>
-    </section>
-    <script src="script.js"></script>
+
+        <!-- CE QUE J'AI APPRIS -->
+        <div class="section-block fade-in">
+            <h2>Compétences développées</h2>
+            <p>
+                Ce projet m'a permis de consolider plusieurs compétences fondamentales du développement web :
+            </p>
+            <div class="gallery">
+                <div class="gallery-card">
+                    <h3>HTML sémantique</h3>
+                    <p>Utilisation correcte des balises structurelles : <code>header</code>, <code>main</code>, <code>ul</code>, <code>li</code>, <code>form</code>…</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>CSS layout</h3>
+                    <p>Mise en page avec Flexbox, gestion des espacements, des couleurs et des états au survol.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Accessibilité</h3>
+                    <p>Bonne pratique des attributs <code>aria</code> et des labels pour les éléments de formulaire.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TECHNOLOGIES -->
+        <div class="section-block fade-in">
+            <h2>Technologies & compétences</h2>
+            <div class="tag-row">
+                <span class="tag-pill">HTML</span>
+                <span class="tag-pill">CSS</span>
+                <span class="tag-pill">Sémantique</span>
+                <span class="tag-pill">Flexbox</span>
+                <span class="tag-pill">Layout</span>
+                <span class="tag-pill">Formulaires</span>
+                <span class="tag-pill">Accessibilité</span>
+            </div>
+        </div>
+
+        <!-- BILAN -->
+        <div class="section-block accent-left fade-in">
+            <h2>Bilan personnel</h2>
+            <p>
+                Même si ce projet peut sembler simple, il représente une étape essentielle
+                dans l'apprentissage du développement web. Maîtriser la structure HTML et
+                le style CSS avant d'aborder JavaScript permet de comprendre les fondations
+                sur lesquelles reposent toutes les interfaces modernes. Ce projet m'a donné
+                la rigueur nécessaire pour écrire un code propre, lisible et bien organisé.
+            </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-footer fade-in">
+            <p>Intéressé par ce type de projet ?</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="cta-button">Me contacter</a>
+                <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>

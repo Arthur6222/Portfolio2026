@@ -1,40 +1,419 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optimisation SEO - Portfolio</title>
-    <link rel="stylesheet" href="cssdoc/style.css">
+    <title>Optimisation SEO — Référencement naturel | Portfolio Arthur PICQUE</title>
+    <meta name="description" content="Formation SEO : audit, mots-clés, bonnes pratiques et optimisation du référencement naturel pour améliorer la visibilité des sites web.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        .project-detail-layout { max-width: 960px; margin: 0 auto; }
-        .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #00ffff; text-decoration: none; margin-bottom: 25px; border: 1px solid rgba(0,255,255,0.3); padding: 8px 18px; transition: all 0.3s; }
-        .back-link:hover { border-color: #00ffff; box-shadow: 0 0 15px rgba(0,255,255,0.4); }
-        .project-header { margin-bottom: 35px; }
-        .project-kicker { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #ff00ff; margin-bottom: 10px; }
-        .project-title-main { font-size: clamp(30px, 5vw, 44px); margin-bottom: 10px; color: #fff; text-shadow: 0 0 25px rgba(0,255,255,0.4); }
-        .project-title-main span { color: #00ffff; }
-        .project-subtitle { color: #777; font-size: 14px; max-width: 600px; line-height: 1.7; }
-        .project-meta-grid { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; }
-        .project-meta-item { padding: 8px 14px; border: 1px solid rgba(0,255,255,0.3); background: rgba(0,255,255,0.04); font-size: 12px; color: #ccc; }
-        .project-meta-item span { color: #777; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; margin-right: 6px; }
-        .project-cover { margin: 35px 0 40px; }
-        .project-cover-inner { border: 1px solid rgba(0,255,255,0.3); overflow: hidden; }
-        .project-cover img { width: 100%; display: block; object-fit: cover; filter: brightness(0.85) saturate(0.9); transition: filter 0.3s, transform 0.3s; }
-        .project-cover:hover img { filter: brightness(1) saturate(1); transform: scale(1.02); }
-        .project-cover-caption { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #555; text-align: center; margin-top: 8px; }
-        .section-block { margin-bottom: 40px; }
-        .section-block h2 { margin-bottom: 16px; }
-        .section-block p { color: #aaa; font-size: 15px; line-height: 1.8; margin-bottom: 10px; }
-        .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .tag-pill { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(0,255,255,0.4); background: rgba(0,255,255,0.06); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #00ffff; }
-        .cta-footer { margin-top: 20px; border-top: 1px solid rgba(0,255,255,0.2); padding-top: 25px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: space-between; }
-        .cta-footer p { margin: 0; color: #666; font-size: 13px; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --magenta:    #ff00ff;
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
+            color: var(--cyan);
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+        }
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--cyan); }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 104px 2rem 5rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .72rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            text-decoration: none;
+            border: 1px solid rgba(0,255,255,.3);
+            padding: 8px 18px;
+            margin-bottom: 2.5rem;
+            transition: all .25s;
+        }
+        .back-link:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 18px rgba(0,255,255,.3);
+            transform: translateX(-3px);
+        }
+
+        /* HERO */
+        .hero-project {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--cyan);
+            background: linear-gradient(135deg, rgba(0,255,255,.04), rgba(255,0,255,.02));
+            padding: 4rem 2.5rem;
+            margin-bottom: 3rem;
+        }
+        .hero-project::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 60% 0%, rgba(0,255,255,.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-inner { position: relative; z-index: 1; }
+
+        .project-kicker {
+            font-size: .72rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            margin-bottom: .6rem;
+        }
+
+        .project-title-main {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 4rem);
+            letter-spacing: .06em;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(0,255,255,.3);
+            line-height: 1.1;
+            margin-bottom: .8rem;
+        }
+        .project-title-main span { color: var(--cyan); }
+
+        .project-subtitle {
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 580px;
+            line-height: 1.75;
+            margin-bottom: 1.8rem;
+        }
+
+        .project-meta-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .project-meta-item {
+            padding: 7px 14px;
+            border: 1px solid rgba(0,255,255,.25);
+            background: rgba(0,255,255,.04);
+            font-size: .8rem;
+            color: var(--text);
+        }
+        .project-meta-item span {
+            color: var(--text-dim);
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-right: 6px;
+        }
+
+        /* COVER */
+        .project-cover { margin-bottom: 3rem; }
+        .project-cover-inner {
+            border: 1px solid rgba(0,255,255,.25);
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0,255,255,.15);
+        }
+        .project-cover img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            filter: brightness(.9) saturate(.95);
+            transition: filter .35s, transform .35s;
+        }
+        .project-cover:hover img {
+            filter: brightness(1) saturate(1);
+            transform: scale(1.02);
+        }
+        .project-cover-caption {
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: .6rem;
+        }
+
+        /* SECTIONS */
+        .section-block { margin-bottom: 3.5rem; }
+        .section-block.accent-left {
+            border-left: 3px solid var(--magenta);
+            padding-left: 1.5rem;
+        }
+
+        .section-block h2 {
+            font-size: .85rem;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-block p {
+            font-size: .95rem;
+            color: var(--text-dim);
+            line-height: 1.85;
+            margin-bottom: .8rem;
+        }
+        .section-block p strong { color: var(--cyan); font-weight: 500; }
+        .section-block code {
+            background: rgba(0,255,255,.08);
+            color: var(--cyan);
+            padding: 1px 6px;
+            font-size: .85em;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* CARDS GRID */
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-top: .5rem;
+        }
+        .bullet-card {
+            background: rgba(255,0,255,.04);
+            border: 1px solid rgba(255,0,255,.2);
+            padding: 1.2rem 1.4rem;
+            transition: border-color .25s, background .25s;
+        }
+        .bullet-card:hover {
+            border-color: rgba(255,0,255,.5);
+            background: rgba(255,0,255,.07);
+        }
+        .bullet-card-title {
+            font-size: .72rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            margin-bottom: .6rem;
+        }
+        .bullet-card p {
+            font-size: .88rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* CHECKLIST */
+        .check-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: .9rem;
+        }
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: .93rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+        .check-list li::before {
+            content: '✓';
+            color: var(--cyan);
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .check-list li strong { color: var(--cyan); font-weight: 500; }
+
+        /* SCORE BLOCK */
+        .score-row {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 1.2rem;
+        }
+        .score-item { }
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: .78rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 6px;
+        }
+        .score-label { color: var(--text-dim); }
+        .score-val { color: var(--cyan); font-weight: 700; }
+        .score-bar-bg {
+            height: 6px;
+            background: rgba(0,255,255,.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--cyan), var(--magenta));
+            transition: width 1s ease;
+        }
+
+        /* TAGS */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: .8rem;
+        }
+        .tag-pill {
+            padding: 5px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,255,255,.35);
+            background: rgba(0,255,255,.05);
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--cyan);
+            transition: all .25s;
+        }
+        .tag-pill:hover {
+            background: rgba(0,255,255,.12);
+            border-color: var(--cyan);
+        }
+
+        /* CTA */
+        .cta-footer {
+            margin-top: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cta-footer p { color: var(--text-dim); font-size: .88rem; margin: 0; }
+        .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .cta-button {
+            display: inline-block;
+            padding: 10px 22px;
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--cyan);
+            color: var(--bg-deep);
+            background: var(--cyan);
+            transition: all .25s;
+        }
+        .cta-button:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 18px rgba(0,255,255,.3);
+        }
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--cyan);
+            border-color: rgba(0,255,255,.4);
+        }
+        .cta-button.secondary:hover {
+            background: rgba(0,255,255,.08);
+            border-color: var(--cyan);
+        }
+
+        /* FADE IN */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: none; }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1.2rem; }
+            .nav-links a { font-size: .7rem; }
+            main { padding: 88px 1.2rem 4rem; }
+            .hero-project { padding: 2.5rem 1.5rem; }
+        }
     </style>
 </head>
 <body>
     <div class="grid-background"></div>
+
     <nav>
-        <div class="logo">PORTFOLIO - Arthur PICQUE</div>
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
         <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="about.html">À Propos</a>
@@ -45,46 +424,176 @@
             <a href="hobbies.html">Hobbies</a>
         </div>
     </nav>
-    <section class="page-content">
-        <div class="project-detail-layout">
-            <a href="projets.html" class="back-link">← Retour aux projets</a>
-            <header class="project-header">
+
+    <main>
+        <a href="projets.html" class="back-link">← Retour aux projets</a>
+
+        <!-- HERO -->
+        <header class="hero-project fade-in">
+            <div class="hero-inner">
                 <p class="project-kicker">Formation & veille</p>
                 <h1 class="project-title-main">Optimisation <span>SEO</span></h1>
-                <p class="project-subtitle">Formation sur l'importance d'avoir un audit SEO correct voire excellent pour le référencement naturel des sites web.</p>
+                <p class="project-subtitle">
+                    Formation sur l'importance d'un audit SEO solide pour améliorer le référencement
+                    naturel des sites web et maximiser leur visibilité sur les moteurs de recherche.
+                </p>
                 <div class="project-meta-grid">
                     <div class="project-meta-item"><span>Contexte</span>Formation</div>
                     <div class="project-meta-item"><span>Domaine</span>Référencement web</div>
-                </div>
-            </header>
-            <div class="project-cover">
-                <div class="project-cover-inner">
-                    <img src="img/SEO.png" alt="Optimisation SEO">
-                </div>
-                <p class="project-cover-caption">Audit et optimisation SEO</p>
-            </div>
-            <div class="section-block">
-                <h2>Présentation</h2>
-                <p>Formation dédiée à l'optimisation SEO (Search Engine Optimization). Acquisition des bases pour réaliser un audit SEO, identifier les axes d'amélioration et mettre en œuvre les bonnes pratiques pour améliorer la visibilité des sites dans les moteurs de recherche.</p>
-            </div>
-            <div class="section-block">
-                <h2>Technologies & compétences</h2>
-                <div class="tag-row">
-                    <span class="tag-pill">SEO</span>
-                    <span class="tag-pill">Audit</span>
-                    <span class="tag-pill">Référencement</span>
-                    <span class="tag-pill">Mots-clés</span>
+                    <div class="project-meta-item"><span>Type</span>SEO On-page & technique</div>
                 </div>
             </div>
-            <div class="cta-footer">
-                <p>Intéressé par ce type de projet ?</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="cta-button">Me contacter</a>
-                    <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+        </header>
+
+        <!-- COVER -->
+        <div class="project-cover fade-in">
+            <div class="project-cover-inner">
+                <img src="img/SEO.png" alt="Optimisation SEO — Audit et référencement naturel">
+            </div>
+            <p class="project-cover-caption">Audit et optimisation SEO</p>
+        </div>
+
+        <!-- PRÉSENTATION -->
+        <div class="section-block fade-in">
+            <h2>Présentation</h2>
+            <p>
+                Cette formation m'a permis d'acquérir les fondamentaux du <strong>SEO (Search Engine Optimization)</strong> :
+                comprendre comment les moteurs de recherche indexent et classent les pages, et comment
+                agir concrètement pour améliorer la visibilité organique d'un site.
+            </p>
+            <p>
+                Au programme : réalisation d'audits SEO complets, identification des axes d'amélioration
+                techniques et éditoriaux, et mise en œuvre des bonnes pratiques pour grimper dans les
+                résultats de recherche sans recourir à la publicité payante.
+            </p>
+        </div>
+
+        <!-- CE QUE COUVRE LA FORMATION -->
+        <div class="section-block fade-in">
+            <h2>Ce que couvre cette formation</h2>
+            <div class="section-grid">
+                <div class="bullet-card">
+                    <div class="bullet-card-title">SEO On-page</div>
+                    <p>Optimisation des balises <code>title</code>, <code>meta description</code>, headings et structure de contenu.</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title">SEO Technique</div>
+                    <p>Vitesse de chargement, mobile-first, crawlabilité, sitemap XML et fichier robots.txt.</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title">Recherche de mots-clés</div>
+                    <p>Identification des requêtes cibles, analyse de l'intention de recherche et stratégie éditoriale.</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title">Audit SEO</div>
+                    <p>Méthodologie d'audit complet : détection des erreurs, des doublons et des opportunités d'amélioration.</p>
                 </div>
             </div>
         </div>
-    </section>
-    <script src="script.js"></script>
+
+        <!-- BONNES PRATIQUES -->
+        <div class="section-block fade-in">
+            <h2>Bonnes pratiques appliquées</h2>
+            <ul class="check-list">
+                <li><strong>Balises sémantiques</strong> — Utilisation correcte des balises H1→H6, alt des images et structure HTML logique.</li>
+                <li><strong>Vitesse & performance</strong> — Compression des images, minification du CSS/JS, score Core Web Vitals.</li>
+                <li><strong>Contenu de qualité</strong> — Densité de mots-clés naturelle, contenu utile et original, mise à jour régulière.</li>
+                <li><strong>Maillage interne</strong> — Liens internes cohérents pour faciliter la navigation et distribuer le jus SEO.</li>
+                <li><strong>URL propres</strong> — Structures d'URL lisibles, descriptives et sans paramètres inutiles.</li>
+                <li><strong>Données structurées</strong> — Balisage Schema.org pour enrichir les résultats dans les SERPs.</li>
+            </ul>
+        </div>
+
+        <!-- SCORE VISUEL -->
+        <div class="section-block fade-in">
+            <h2>Axes d'un audit SEO</h2>
+            <p>Un audit SEO complet évalue plusieurs dimensions d'un site. Voici les axes principaux analysés :</p>
+            <div class="score-row">
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-label">Performance technique</span>
+                        <span class="score-val">Core Web Vitals / Vitesse</span>
+                    </div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" style="width:88%"></div></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-label">Optimisation On-page</span>
+                        <span class="score-val">Balises / Contenu / Mots-clés</span>
+                    </div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" style="width:75%"></div></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-label">Crawlabilité & indexation</span>
+                        <span class="score-val">Sitemap / Robots / Structure</span>
+                    </div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" style="width:82%"></div></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-label">Expérience utilisateur</span>
+                        <span class="score-val">Mobile-first / UX / Accessibilité</span>
+                    </div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" style="width:70%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TECHNOLOGIES -->
+        <div class="section-block fade-in">
+            <h2>Compétences & outils</h2>
+            <p>
+                Cette formation m'a familiarisé avec les outils et concepts utilisés quotidiennement
+                par les équipes marketing et développement web pour piloter et améliorer le référencement naturel.
+            </p>
+            <div class="tag-row">
+                <span class="tag-pill">SEO</span>
+                <span class="tag-pill">Audit SEO</span>
+                <span class="tag-pill">Mots-clés</span>
+                <span class="tag-pill">Référencement naturel</span>
+                <span class="tag-pill">Core Web Vitals</span>
+                <span class="tag-pill">Google Search Console</span>
+                <span class="tag-pill">Schema.org</span>
+                <span class="tag-pill">HTML sémantique</span>
+                <span class="tag-pill">Contenu éditorial</span>
+            </div>
+        </div>
+
+        <!-- BILAN -->
+        <div class="section-block accent-left fade-in">
+            <h2>Bilan personnel</h2>
+            <p>
+                Cette formation m'a ouvert les yeux sur l'importance du SEO dans tout projet web.
+                Un site techniquement irréprochable mais mal référencé reste invisible. J'applique
+                désormais ces bonnes pratiques dès la conception de mes projets : structuration
+                du HTML, choix des mots-clés, optimisation des performances et suivi via
+                Google Search Console. Le SEO est un travail de fond, itératif, mais aux résultats durables.
+            </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-footer fade-in">
+            <p>Intéressé par l'optimisation SEO de votre site ?</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="cta-button">Me contacter</a>
+                <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
+```

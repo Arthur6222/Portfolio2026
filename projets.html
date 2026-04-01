@@ -4,14 +4,304 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projets - Portfolio</title>
-    <link rel="stylesheet" href="cssdoc/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
+            color: var(--cyan);
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--cyan); }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 2rem 6rem;
+        }
+
+        /* HEADER */
+        .page-header {
+            margin-bottom: 3.5rem;
+        }
+
+        .page-kicker {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .page-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 28px; height: 1px;
+            background: var(--cyan);
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 1rem;
+        }
+
+        .page-title span { color: var(--cyan); }
+
+        .page-subtitle {
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 520px;
+            line-height: 1.7;
+        }
+
+        /* FILTERS */
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .filter-btn {
+            padding: .45rem 1.1rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all .25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        /* GRID */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: border-color .3s, box-shadow .3s, transform .3s;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .6s ease, transform .6s ease, border-color .3s, box-shadow .3s;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            border-color: rgba(0,255,255,.4);
+            box-shadow: 0 8px 40px rgba(0,255,255,.1);
+            transform: translateY(-4px);
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(13,26,34,.95));
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(.8) saturate(.85);
+            transition: transform .5s ease, filter .4s;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.06);
+            filter: brightness(1) saturate(1);
+        }
+
+        .project-badge {
+            position: absolute;
+            top: .9rem;
+            right: .9rem;
+            z-index: 2;
+            padding: .3rem .75rem;
+            border-radius: 999px;
+            font-size: .62rem;
+            text-transform: uppercase;
+            letter-spacing: .15em;
+            font-weight: 600;
+            background: rgba(0,255,255,.15);
+            border: 1px solid rgba(0,255,255,.4);
+            color: var(--cyan);
+        }
+
+        .project-info {
+            padding: 1.4rem 1.5rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .project-info h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: .06em;
+            color: #fff;
+            margin-bottom: .65rem;
+        }
+
+        .project-info p {
+            font-size: .85rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+            flex: 1;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            text-decoration: none;
+            padding: .6rem 1.2rem;
+            border: 1px solid rgba(0,255,255,.3);
+            border-radius: 4px;
+            align-self: flex-start;
+            transition: all .3s;
+        }
+
+        .project-link:hover {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.15);
+        }
+
+        /* COUNTER */
+        .projects-counter {
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .projects-counter span { color: var(--cyan); }
+
+        @media (max-width: 700px) {
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: .65rem; }
+            main { padding: 90px 1.2rem 4rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
     <div class="grid-background"></div>
 
     <nav>
-        <div class="logo">PORTFOLIO - Arthur PICQUE</div>
-        <div class="nav-links"> 
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
+        <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="about.html">À Propos</a>
             <a href="Skills.html">Compétences</a>
@@ -22,191 +312,245 @@
         </div>
     </nav>
 
-    <section class="page-content">
-        <h2>Mes Projets</h2>
-        
-        <div class="projects-grid">
-           <div class="project-card">
+    <main>
+        <div class="page-header">
+            <p class="page-kicker">Portfolio complet</p>
+            <h1 class="page-title">Mes<br><span>Projets</span></h1>
+            <p class="page-subtitle">Développement web, mobile, réseau et workshops créatifs — l'ensemble de mes réalisations.</p>
+        </div>
+
+        <div class="filter-row">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="mobile">Mobile</button>
+            <button class="filter-btn" data-filter="reseau">Réseau</button>
+            <button class="filter-btn" data-filter="stage">Stage</button>
+            <button class="filter-btn" data-filter="workshop">Workshop</button>
+        </div>
+
+        <p class="projects-counter">Affichage : <span id="count">15</span> projets</p>
+
+        <div class="projects-grid" id="grid">
+
+            <div class="project-card" data-cat="web stage">
                 <div class="project-image">
+                    <span class="project-badge">BTS</span>
                     <img src="img/banniere.jpg" alt="BTS Brasserie">
                 </div>
                 <div class="project-info">
                     <h3>BTS - Brasserie Terroir et Saveur</h3>
                     <p>Une brasserie artisanale célébrant le terroir local avec des bières uniques. Identité visuelle riche inspirée de l'art brassicole traditionnel.</p>
-                    
                     <a href="projets/brasserie.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
-            
-            <div class="project-card">
+
+            <div class="project-card" data-cat="workshop">
                 <div class="project-image">
+                    <span class="project-badge">Workshop</span>
                     <img src="img/imagejames.png" alt="James Bond Workshop">
                 </div>
                 <div class="project-info">
-                    <h3>James Bond  - Workshop 2025</h3>
-                    <p>Objectif : créer un gadget numérique discret façon james bond.</p>
-                    
+                    <h3>James Bond - Workshop 2025</h3>
+                    <p>Objectif : créer un gadget numérique discret façon James Bond.</p>
                     <a href="projet-james-bond.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
-            
-            <div class="project-card">
+
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
+                    <span class="project-badge">Web</span>
                     <img src="img/nueva.png" alt="Nueva Volta">
                 </div>
                 <div class="project-info">
                     <h3>Nueva Volta - Travel Platform</h3>
-                    <p>Plateforme de voyage immersive pour découvrir de nouvelles destinations. Etablir des parcours est sa spécialité.</p>
-                    
+                    <p>Plateforme de voyage immersive pour découvrir de nouvelles destinations. Établir des parcours est sa spécialité.</p>
                     <a href="projet-nueva-volta.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
-            
-            <div class="project-card">
+
+            <div class="project-card" data-cat="workshop">
                 <div class="project-image">
-                    <img src="img/workshop2024.png" alt="Rube Goldberg Workshop">
+                    <span class="project-badge">Workshop</span>
+                    <img src="img/workshop2024.png" alt="Rube Goldberg">
                 </div>
                 <div class="project-info">
                     <h3>Rube Goldberg Machine Workshop</h3>
-                    <p>Workshop créatif 2024 axé sur l'innovation et la construction basé sur la machine de rube Goldberg.</p>
-                    
+                    <p>Workshop créatif 2024 axé sur l'innovation et la construction basé sur la machine de Rube Goldberg.</p>
                     <a href="projet-rube-goldberg.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
-            
-            <div class="project-card">
+
+            <div class="project-card" data-cat="stage web">
                 <div class="project-image">
-                    <img src="img/kimple2.png" alt="Kimple Platform">
+                    <span class="project-badge">Stage</span>
+                    <img src="img/kimple2.png" alt="Kimple">
                 </div>
                 <div class="project-info">
-                    <h3>Kimple - Plateforme Interactive - STAGE</h3>
+                    <h3>Kimple - Plateforme Interactive</h3>
                     <p>Missions réalisées dans le cadre de mon stage de 1ère année.</p>
-                    
                     <a href="projets/kimple.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-cat="stage">
                 <div class="project-image">
+                    <span class="project-badge">Stage</span>
                     <img src="img/stage-jwt.png" alt="Stage JWT">
                 </div>
                 <div class="project-info">
                     <h3>Stage 2ème année - Plugin JWT</h3>
                     <p>Projet de stage orienté sécurité avec la mise en place d'un plugin d'authentification JWT.</p>
-                    
                     <a href="projet-stage-jwt.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
-            
-            <div class="project-card">
+
+            <div class="project-card" data-cat="mobile">
                 <div class="project-image">
-                    <img src="img/todolist2.png" alt="To-Do App Flutter">
+                    <span class="project-badge">Mobile</span>
+                    <img src="img/todolist2.png" alt="To-Do Flutter">
                 </div>
                 <div class="project-info">
                     <h3>To-Do App Flutter</h3>
-                    <p>Application mobile de gestion de tâches développée avec Flutter. Interface simple, moderne, pensée pour une utilisation quotidienne.</p>
-                    
+                    <p>Application mobile de gestion de tâches développée avec Flutter. Interface simple et moderne.</p>
                     <a href="projet-flutterflow-todo.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
-                    <img src="img/todohtml.png" alt="FlutterFlow To-Do">
+                    <span class="project-badge">Web</span>
+                    <img src="img/todohtml.png" alt="HTML To-Do">
                 </div>
                 <div class="project-info">
                     <h3>HTML/CSS To-Do App</h3>
-                    <p>Création d'une TODOList en HTML CSS cette fois. </p>
-                   
+                    <p>Création d'une TODOList en HTML CSS.</p>
                     <a href="projet-todo-html.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
-                    <img src="img/vantime.png" alt="vantime">
+                    <span class="project-badge">WordPress</span>
+                    <img src="img/vantime.png" alt="Vantime">
                 </div>
                 <div class="project-info">
                     <h3>Vantime</h3>
-                    <p>Projet mené à bien grâce à WordPress metant en forme un site de vente de repas pour robot en ligne (fictif).</p>
-                    
+                    <p>Site WordPress de vente de repas pour robots en ligne (fictif).</p>
                     <a href="projet-vantime.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-cat="reseau">
                 <div class="project-image">
-                    <img src="img/reseaup1.png" alt="reseauPro1">
+                    <span class="project-badge">Réseau</span>
+                    <img src="img/reseaup1.png" alt="Projet Réseau">
                 </div>
                 <div class="project-info">
-                    <h3>Projet réseau</h3>
-                    <p>Projet réalisé en quatuor mettant en place un systeme de bypass de mot de passe avec JohnTheReaper et création d'un active directory.</p>
-                    
+                    <h3>Projet Réseau</h3>
+                    <p>Bypass de mot de passe avec JohnTheReaper et création d'un Active Directory.</p>
                     <a href="projet-reseau.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-
-             <div class="project-card">
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
-                    <img src="img/pythonAPI.png" alt="reseauPro1">
+                    <span class="project-badge">Python</span>
+                    <img src="img/pythonAPI.png" alt="API Python">
                 </div>
                 <div class="project-info">
                     <h3>API REST Python</h3>
-                    <p>Dans le cadre de cours sur Python, nous avons interrogé une APIREST en python avec requests & flask </p>
-                    
+                    <p>Interrogation d'une API REST en Python avec requests & Flask.</p>
                     <a href="projet-python-api.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-
-    
-            <div class="project-card">
+            <div class="project-card" data-cat="reseau">
                 <div class="project-image">
-                    <img src="img/serveur.png" alt="reseauPro1">
+                    <span class="project-badge">Serveur</span>
+                    <img src="img/serveur.png" alt="Serveur Web">
                 </div>
                 <div class="project-info">
                     <h3>Serveur Web</h3>
-                    <p>J'ai monté un serveur web dans le cadre d'un cours afin de stocker des fichers HTML, CSS...</p>
-                    
+                    <p>Montage d'un serveur web pour stocker des fichiers HTML, CSS et plus.</p>
                     <a href="projet-serveur-web.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-               <div class="project-card">
+            <div class="project-card" data-cat="reseau">
                 <div class="project-image">
-                    <img src="img/infra.png" alt="reseauPro1">
+                    <span class="project-badge">Réseau</span>
+                    <img src="img/infra.png" alt="Infrastructure">
                 </div>
                 <div class="project-info">
                     <h3>Infrastructure Réseau</h3>
-                    <p>Avec toute la classe nous avons monté une infrastructure et l'avons sécurisée en nous aidant de CiscoPacketTracer</p>
-                    
+                    <p>Montage et sécurisation d'une infrastructure réseau avec Cisco Packet Tracer.</p>
                     <a href="projet-infrastructure-reseau.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
-                    <img src="img/meteo.png" alt="reseauPro1">
+                    <span class="project-badge">JavaScript</span>
+                    <img src="img/meteo.png" alt="API Météo">
                 </div>
                 <div class="project-info">
                     <h3>API Météo JS</h3>
-                    <p>Création d'une API météo en JavaScript. Dans le cadre de ce cours nous avons pu développer une API qui renvoie des données météo.</p>
-                    
+                    <p>Développement d'une API météo en JavaScript renvoyant des données exploitables côté client.</p>
                     <a href="projet-api-meteo.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
 
-             <div class="project-card">
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
-                    <img src="img/SEO.png" alt="reseauPro1">
+                    <span class="project-badge">SEO</span>
+                    <img src="img/SEO.png" alt="SEO">
                 </div>
                 <div class="project-info">
                     <h3>Optimisation SEO</h3>
-                    <p>J'ai également suivis une formation sur l'importance d'avoir un audit SEO correct voir excellent.</p>
-                    
+                    <p>Formation sur l'importance d'un audit SEO correct et les bonnes pratiques d'optimisation.</p>
                     <a href="projet-seo.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
+
         </div>
-    </section>
+    </main>
+
+    <script>
+        // Intersection Observer fade-in
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.05 });
+
+        document.querySelectorAll('.project-card').forEach(el => observer.observe(el));
+
+        // Filter
+        const btns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.project-card');
+        const counter = document.getElementById('count');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+                let visible = 0;
+
+                cards.forEach(card => {
+                    const cats = card.dataset.cat || '';
+                    const show = filter === 'all' || cats.includes(filter);
+                    card.style.display = show ? '' : 'none';
+                    if (show) visible++;
+                });
+
+                counter.textContent = visible;
+            });
+        });
+    </script>
+</body>
+</html>

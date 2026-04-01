@@ -4,221 +4,310 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hobbies - Portfolio</title>
-    <link rel="stylesheet" href="cssdoc/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        .hobbies-container {
-            padding: 4rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
         }
 
-        .hobbies-header {
-            text-align: center;
-            margin-bottom: 4rem;
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* GRID BACKGROUND */
+        .grid-background {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
+            color: var(--cyan);
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--cyan); }
+
+        /* HERO */
+        .hero {
             position: relative;
+            height: 420px;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 4rem 3.5rem;
+            margin-top: 64px;
+            overflow: hidden;
         }
 
-        .hobbies-header h2 {
-            font-size: 4rem;
-            color: #00ffff;
-            margin-bottom: 1rem;
-            text-shadow: 
-                0 0 20px rgba(0, 255, 255, 0.8),
-                0 0 40px rgba(255, 0, 255, 0.6),
-                0 0 60px rgba(0, 255, 255, 0.4);
-            animation: textGlow 2s ease-in-out infinite alternate;
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to top, var(--bg-deep) 0%, rgba(5,10,14,.55) 60%, transparent 100%),
+                linear-gradient(135deg, #0a2a3a 0%, #050a0e 100%);
+            z-index: 1;
         }
 
-        @keyframes textGlow {
-            from { 
-                text-shadow: 
-                    0 0 20px rgba(0, 255, 255, 0.8),
-                    0 0 40px rgba(255, 0, 255, 0.6);
-            }
-            to { 
-                text-shadow: 
-                    0 0 40px rgba(0, 255, 255, 1),
-                    0 0 60px rgba(255, 0, 255, 0.8),
-                    0 0 80px rgba(0, 255, 255, 0.6);
-            }
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
+        .hero-eyebrow {
+            font-size: .75rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .6rem;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+        }
+
+        .hero-title span { color: var(--cyan); }
+
+        .hero-sub {
+            margin-top: 1rem;
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        /* SECTION DIVIDER */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin: 3rem 0 2.5rem;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-divider span {
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            white-space: nowrap;
+        }
+
+        /* MAIN */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+        }
+
+        /* HOBBIES GRID */
         .hobbies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            perspective: 1000px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
+        /* HOBBY CARD */
         .hobby-card {
             position: relative;
-            height: 450px;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             overflow: hidden;
-            border: 2px solid transparent;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: border-color .35s, transform .35s, box-shadow .35s;
             cursor: pointer;
         }
 
-        .hobby-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            padding: 2px;
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .hobby-card:hover::before {
-            opacity: 1;
-            animation: borderRotate 3s linear infinite;
-        }
-
-        @keyframes borderRotate {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .hobby-card:hover {
-            transform: translateY(-20px) rotateX(5deg);
-            box-shadow: 
-                0 20px 60px rgba(0, 255, 255, 0.4),
-                0 0 100px rgba(255, 0, 255, 0.3);
+            border-color: var(--cyan);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0,255,255,.15);
         }
 
+        /* IMAGE ZONE */
         .hobby-image {
             width: 100%;
-            height: 60%;
+            height: 220px;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
-        }
-
-        .hobby-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.9) 100%);
-            z-index: 1;
+            background: var(--bg-surface);
         }
 
         .hobby-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
-            filter: grayscale(50%);
+            filter: grayscale(40%) brightness(.85);
+            transition: transform .5s ease, filter .5s ease;
         }
 
         .hobby-card:hover .hobby-image img {
-            transform: scale(1.1);
-            filter: grayscale(0%);
+            transform: scale(1.07);
+            filter: grayscale(0%) brightness(1);
         }
 
-        .hobby-icon {
+        /* overlay gradient */
+        .hobby-image::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 5rem;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, var(--bg-card) 100%);
+            z-index: 1;
+        }
+
+        /* NUMÉRO */
+        .hobby-number {
+            position: absolute;
+            top: 1rem;
+            left: 1.2rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: .2em;
+            color: var(--cyan);
             z-index: 2;
-            opacity: 0.3;
-            transition: all 0.6s ease;
+            opacity: .7;
         }
 
-        .hobby-card:hover .hobby-icon {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(2);
-        }
-
+        /* CONTENT */
         .hobby-content {
-            padding: 2rem;
-            position: relative;
-            z-index: 2;
-            height: 40%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 1.5rem;
         }
 
         .hobby-title {
-            font-size: 1.8rem;
-            color: #00ffff;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: .08em;
+            color: #fff;
+            margin-bottom: .5rem;
+            transition: color .25s;
         }
+
+        .hobby-card:hover .hobby-title { color: var(--cyan); }
 
         .hobby-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95rem;
-            line-height: 1.4;
+            font-size: .88rem;
+            color: var(--text-dim);
+            line-height: 1.6;
         }
 
-        .hobby-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+        /* TAG */
+        .hobby-tag {
+            display: inline-block;
             margin-top: 1rem;
+            font-size: .65rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            padding: .3rem .8rem;
+            background: var(--cyan-dim);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: background .25s, border-color .25s;
         }
 
-        .tag {
-            padding: 0.4rem 1rem;
-            background: rgba(255, 0, 255, 0.2);
-            border: 1px solid rgba(255, 0, 255, 0.5);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #ff00ff;
-            transition: all 0.3s;
+        .hobby-card:hover .hobby-tag {
+            background: rgba(0,255,255,.15);
+            border-color: var(--cyan);
         }
 
-        .hobby-card:hover .tag {
-            background: rgba(0, 255, 255, 0.2);
-            border-color: rgba(0, 255, 255, 0.5);
-            color: #00ffff;
+        /* FADE IN */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .6s ease, transform .6s ease;
         }
 
-        .floating-icon {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.1;
-            pointer-events: none;
-            animation: float-random 10s infinite ease-in-out;
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        @keyframes float-random {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, -30px) rotate(90deg); }
-            50% { transform: translate(-30px, -60px) rotate(180deg); }
-            75% { transform: translate(-60px, -20px) rotate(270deg); }
+        /* STAGGER */
+        .hobby-card:nth-child(1) { transition-delay: .05s; }
+        .hobby-card:nth-child(2) { transition-delay: .12s; }
+        .hobby-card:nth-child(3) { transition-delay: .19s; }
+        .hobby-card:nth-child(4) { transition-delay: .26s; }
+        .hobby-card:nth-child(5) { transition-delay: .33s; }
+        .hobby-card:nth-child(6) { transition-delay: .40s; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hobbies-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        .page-content {
-            min-height: 100vh;
-            padding-top: 100px;
-        }
-
-        @media (max-width: 768px) {
-            .hobbies-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hobbies-header h2 {
-                font-size: 2.5rem;
-            }
+        @media (max-width: 600px) {
+            .hobbies-grid { grid-template-columns: 1fr; }
+            .hero { padding: 0 1.5rem 2.5rem; }
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: .7rem; }
+            .main-content { padding: 2rem 1rem 4rem; }
         }
     </style>
 </head>
@@ -226,8 +315,8 @@
     <div class="grid-background"></div>
 
     <nav>
-        <div class="logo">PORTFOLIO - Arthur PICQUE</div>
-        <div class="nav-links"> 
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
+        <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="about.html">À Propos</a>
             <a href="Skills.html">Compétences</a>
@@ -238,97 +327,116 @@
         </div>
     </nav>
 
-    <section class="page-content">
-        <div class="hobbies-container">
-            <div class="hobbies-header">
-                <h2> MES PASSIONS</h2>
-                <p style="color: rgba(255,255,255,0.6); font-size: 1.1rem;">Au-delà du code</p>
-            </div>
-
-            
-            <div class="floating-icon" style="top: 10%; left: 5%;">🎮</div>
-            <div class="floating-icon" style="top: 30%; right: 8%; animation-delay: 2s;"></div>
-            <div class="floating-icon" style="bottom: 20%; left: 10%; animation-delay: 4s;"></div>
-            <div class="floating-icon" style="top: 60%; right: 15%; animation-delay: 6s;"></div>
-
-            <div class="hobbies-grid">
-                <div class="hobby-card">
-                    <div class="hobby-image">
-                        <img src="img/stade.png" alt="Gaming" onerror="this.style.display='none'">
-                    </div>
-                    <div class="hobby-content">
-                        <div>
-                            <h3 class="hobby-title">RUGBY</h3>
-                            <p class="hobby-text">Joueur depuis plus de 10 ans. Le rugby est un réél état d'esprit pour moi ! </p>
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <div class="hobby-card">
-                    <div class="hobby-image">
-                        <img src="img/centre.jpeg" alt="Code" onerror="this.style.display='none'">
-                    </div>
-                    <div class="hobby-content">
-                        <div>
-                            <h3 class="hobby-title">ANIMATION</h3>
-                            <p class="hobby-text">Pendant les vacanvces j'ai la chance de faire animateur en centre de loisir et d'amuser les enfants ! </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hobby-card">
-                    <div class="hobby-image">
-                        <img src="img/batterie.png" alt="Design" onerror="this.style.display='none'">
-                    </div>
-                    <div class="hobby-content">
-                        <div>
-                            <h3 class="hobby-title">MUSIQUE</h3>
-                            <p class="hobby-text">Ancien joueur de batterie, j'aime développer ma culture musicale</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="hobby-card">
-                    <div class="hobby-image">
-                        <img src="img/dev.png" alt="Musique" onerror="this.style.display='none'">
-                    </div>
-                    <div class="hobby-content">
-                        <div>
-                            <h3 class="hobby-title">DÉVELOPPEMENT</h3>
-                            <p class="hobby-text">J'aime développer pour moi-même(projets persos, aide pour la famille...)</p>
-                        </div> 
-                    </div>
-                </div>
-
-                <div class="hobby-card">
-                    <div class="hobby-image">
-                        <img src="img/manette.png" alt="Veille" onerror="this.style.display='none'">
-                    </div>
-                    <div class="hobby-content">
-                        <div>
-                            <h3 class="hobby-title">GAMING</h3>
-                            <p class="hobby-text">RPG, FPS, Horreur</p>
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <div class="hobby-card">
-                    <div class="hobby-image">
-                        <img src="img/setup.png" alt="Projects" onerror="this.style.display='none'">
-                    </div>
-                    <div class="hobby-content">
-                        <div>
-                            <h3 class="hobby-title">PROJETS PERSONNELS</h3>
-                            <p class="hobby-text">Expérimentation et créativité</p>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Portfolio · Arthur Picque</p>
+            <h1 class="hero-title">Mes <span>Passions</span></h1>
+            <p class="hero-sub">Au-delà du code — ce qui me définit en dehors du clavier.</p>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <div class="section-divider fade-in">
+            <span>Ce qui me passionne</span>
+        </div>
+
+        <div class="hobbies-grid">
+
+            <!-- RUGBY -->
+            <div class="hobby-card fade-in">
+                <div class="hobby-image">
+                    <span class="hobby-number">01</span>
+                    <img src="img/stade.png" alt="Rugby">
+                </div>
+                <div class="hobby-content">
+                    <h3 class="hobby-title">Rugby</h3>
+                    <p class="hobby-text">Joueur depuis plus de 10 ans. Le rugby est un véritable état d'esprit — dépassement de soi, collectif et engagement.</p>
+                    <span class="hobby-tag">Sport · Collectif</span>
+                </div>
+            </div>
+
+            <!-- ANIMATION -->
+            <div class="hobby-card fade-in">
+                <div class="hobby-image">
+                    <span class="hobby-number">02</span>
+                    <img src="img/centre.jpeg" alt="Animation">
+                </div>
+                <div class="hobby-content">
+                    <h3 class="hobby-title">Animation</h3>
+                    <p class="hobby-text">Pendant les vacances j'ai la chance d'être animateur en centre de loisirs et de partager des moments avec les enfants.</p>
+                    <span class="hobby-tag">Pédagogie · Partage</span>
+                </div>
+            </div>
+
+            <!-- MUSIQUE -->
+            <div class="hobby-card fade-in">
+                <div class="hobby-image">
+                    <span class="hobby-number">03</span>
+                    <img src="img/batterie.png" alt="Musique">
+                </div>
+                <div class="hobby-content">
+                    <h3 class="hobby-title">Musique</h3>
+                    <p class="hobby-text">Ancien batteur, j'aime développer ma culture musicale et explorer différents styles et sonorités.</p>
+                    <span class="hobby-tag">Batterie · Culture</span>
+                </div>
+            </div>
+
+            <!-- DÉVELOPPEMENT -->
+            <div class="hobby-card fade-in">
+                <div class="hobby-image">
+                    <span class="hobby-number">04</span>
+                    <img src="img/dev.png" alt="Développement">
+                </div>
+                <div class="hobby-content">
+                    <h3 class="hobby-title">Développement</h3>
+                    <p class="hobby-text">J'aime coder pour moi-même — projets persos, outils pour la famille, et expérimentations créatives.</p>
+                    <span class="hobby-tag">Code · Créativité</span>
+                </div>
+            </div>
+
+            <!-- GAMING -->
+            <div class="hobby-card fade-in">
+                <div class="hobby-image">
+                    <span class="hobby-number">05</span>
+                    <img src="img/manette.png" alt="Gaming">
+                </div>
+                <div class="hobby-content">
+                    <h3 class="hobby-title">Gaming</h3>
+                    <p class="hobby-text">RPG, FPS, Horreur — les jeux vidéo comme terrain d'exploration narrative et d'immersion.</p>
+                    <span class="hobby-tag">RPG · FPS · Horreur</span>
+                </div>
+            </div>
+
+            <!-- PROJETS PERSONNELS -->
+            <div class="hobby-card fade-in">
+                <div class="hobby-image">
+                    <span class="hobby-number">06</span>
+                    <img src="img/setup.png" alt="Projets personnels">
+                </div>
+                <div class="hobby-content">
+                    <h3 class="hobby-title">Projets Personnels</h3>
+                    <p class="hobby-text">Expérimentation et créativité — construire des choses qui n'existent pas encore, juste pour le plaisir.</p>
+                    <span class="hobby-tag">Création · Expérimentation</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>

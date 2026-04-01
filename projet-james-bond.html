@@ -4,127 +4,563 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workshop James Bond — Gadget numérique | Portfolio Arthur PICQUE</title>
-    <meta name="description" content="Projet workshop 2025 : conception et prototypage d'un gadget numérique discret inspiré de l'univers James Bond. Électronique, créativité et storytelling.">
-    <link rel="stylesheet" href="cssdoc/style.css">
+    <meta name="description" content="Projet workshop 2025 : conception et prototypage d'un gadget numérique discret inspiré de l'univers James Bond.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        .project-detail-layout { max-width: 960px; margin: 0 auto; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --magenta:    #ff00ff;
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
+            color: var(--cyan);
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--cyan); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 420px;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 4rem 3.5rem;
+            margin-top: 64px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to top, var(--bg-deep) 0%, rgba(5,10,14,.55) 60%, transparent 100%),
+                linear-gradient(135deg, #0a2a3a 0%, #050a0e 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-eyebrow {
+            font-size: .75rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            margin-bottom: .6rem;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+        }
+
+        .hero-title span { color: var(--cyan); }
+
+        .hero-sub {
+            margin-top: 1rem;
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 560px;
+            line-height: 1.6;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.8rem;
+        }
+
+        .meta-item { display: flex; flex-direction: column; gap: 3px; }
+        .meta-item .label {
+            font-size: .65rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+        .meta-item .value {
+            font-size: .85rem;
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        /* MAIN */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+        }
+
+        /* BACK LINK */
         .back-link {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-            color: #00ffff; text-decoration: none; margin-bottom: 30px;
-            border: 1px solid rgba(0,255,255,0.3); padding: 10px 20px;
-            transition: all 0.3s; font-family: 'Courier New', monospace;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .72rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            margin-bottom: 2.5rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all .3s;
         }
-        .back-link:hover { border-color: #00ffff; box-shadow: 0 0 20px rgba(0,255,255,0.4); transform: translateX(-2px); }
-        .hero-project {
-            min-height: 55vh; display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden; margin: 0 -20px 50px;
-            background: linear-gradient(135deg, rgba(0,255,255,0.06) 0%, rgba(255,0,255,0.04) 50%, rgba(10,10,15,0.98) 100%);
-            border: 1px solid rgba(0,255,255,0.2);
-            border-left-width: 4px; border-left-color: #00ffff;
+        .back-link:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.2);
+            transform: translateX(-3px);
         }
-        .hero-project::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(ellipse 80% 50% at 50% 20%, rgba(0,255,255,0.08) 0%, transparent 60%);
+
+        /* SECTION DIVIDER */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin: 3rem 0 2rem;
         }
-        .hero-inner { position: relative; z-index: 2; text-align: center; padding: 50px 24px 45px; }
-        .project-kicker {
-            font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: #ff00ff;
-            margin-bottom: 12px; opacity: 0.95;
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
         }
-        .project-title-main {
-            font-size: clamp(32px, 6vw, 52px); margin-bottom: 16px; color: #fff;
-            text-shadow: 0 0 40px rgba(0,255,255,0.35); line-height: 1.15;
-            letter-spacing: 1px;
+        .section-divider span {
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            white-space: nowrap;
         }
-        .project-title-main span { color: #00ffff; }
-        .project-subtitle {
-            color: #888; font-size: clamp(14px, 2vw, 16px); max-width: 560px; margin: 0 auto 28px;
-            line-height: 1.75;
-        }
-        .project-meta-strip {
-            display: flex; justify-content: center; flex-wrap: wrap; gap: 24px;
-        }
-        .meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .meta-item .label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #555; }
-        .meta-item .value { font-size: 13px; color: #00ffff; font-weight: 500; }
+
+        /* PHOTO BAND */
         .photo-band {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-            margin-bottom: 55px; border: 1px solid rgba(0,255,255,0.2); overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            margin-bottom: 3.5rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
         }
-        .photo-slot { position: relative; overflow: hidden; min-height: 220px; background: rgba(0,255,255,0.03); }
-        .photo-slot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease, filter 0.4s; filter: brightness(0.88) saturate(0.9); }
-        .photo-slot:hover img { transform: scale(1.06); filter: brightness(1) saturate(1); }
-        .photo-slot .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(10,10,15,0.85) 100%); pointer-events: none; }
-        .photo-slot .label { position: absolute; bottom: 12px; left: 14px; z-index: 2; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #00ffff; }
-        .section-block { margin-bottom: 55px; }
+
+        .photo-slot {
+            position: relative;
+            overflow: hidden;
+            min-height: 240px;
+            background: var(--cyan-dim);
+        }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(.85) saturate(.9);
+            transition: transform .5s ease, filter .4s;
+        }
+
+        .photo-slot:hover img {
+            transform: scale(1.06);
+            filter: brightness(1) saturate(1);
+        }
+
+        .photo-slot .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(5,10,14,.85) 100%);
+            pointer-events: none;
+        }
+
+        .photo-slot .photo-label {
+            position: absolute;
+            bottom: 12px;
+            left: 14px;
+            z-index: 2;
+            font-size: .65rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+        }
+
+        /* SECTION BLOCK */
+        .section-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-block.accent-left {
+            border-left: 3px solid var(--cyan);
+            border-radius: 0 12px 12px 0;
+        }
+
         .section-block h2 {
-            font-size: 18px; color: #00ffff; margin-bottom: 20px; letter-spacing: 2px;
-            text-transform: uppercase; display: flex; align-items: center; gap: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: .08em;
+            color: var(--cyan);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
         }
-        .section-block h2::before { content: '//'; color: #ff00ff; font-size: 16px; }
-        .section-block p { color: #aaa; font-size: 15px; line-height: 1.85; margin-bottom: 14px; }
+
+        .section-block h2::before {
+            content: '//';
+            color: var(--magenta);
+            font-size: 1rem;
+            font-family: 'DM Sans', monospace;
+        }
+
+        .section-block p {
+            font-size: .95rem;
+            line-height: 1.85;
+            color: var(--text);
+            margin-bottom: .8rem;
+        }
+
+        .section-block p:last-child { margin-bottom: 0; }
+
+        /* HIGHLIGHT QUOTE */
         .highlight-quote {
-            background: rgba(0,255,255,0.04); border-left: 4px solid #00ffff;
-            padding: 28px 32px; margin: 28px 0; position: relative;
+            background: var(--cyan-dim);
+            border-left: 3px solid var(--cyan);
+            border-radius: 0 8px 8px 0;
+            padding: 1.4rem 1.8rem;
+            margin: 1.4rem 0;
+            position: relative;
         }
-        .highlight-quote p { margin: 0; color: #bbb; font-style: italic; font-size: 16px; line-height: 1.75; }
-        .highlight-quote .quote-mark { position: absolute; top: 18px; left: 24px; font-size: 36px; color: rgba(0,255,255,0.2); font-family: Georgia, serif; line-height: 1; }
-        .section-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+
+        .highlight-quote p {
+            margin: 0;
+            font-style: italic;
+            color: #e8f4fa;
+            font-size: 1rem;
+        }
+
+        /* CARDS GRID */
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
         .bullet-card {
-            background: rgba(255,0,255,0.04); border: 1px solid rgba(255,0,255,0.22);
-            padding: 24px 22px; transition: all 0.3s;
+            background: var(--bg-deep);
+            border: 1px solid rgba(255,0,255,.2);
+            border-radius: 10px;
+            padding: 1.4rem 1.6rem;
+            transition: all .3s;
         }
-        .bullet-card:hover { border-color: rgba(255,0,255,0.45); box-shadow: 0 8px 32px rgba(255,0,255,0.08); }
+
+        .bullet-card:hover {
+            border-color: rgba(255,0,255,.45);
+            box-shadow: 0 8px 32px rgba(255,0,255,.08);
+        }
+
         .bullet-card-title {
-            font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #ff00ff;
-            margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+            font-size: .72rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--magenta);
+            margin-bottom: .7rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
         }
-        .bullet-card-title::before { content: '▸'; font-size: 14px; }
-        .bullet-card p { color: #bbb; font-size: 14px; line-height: 1.7; margin: 0; }
-        .steps-list { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+
+        .bullet-card-title::before { content: '▸'; }
+
+        .bullet-card p {
+            color: var(--text);
+            font-size: .88rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* STEPS */
+        .steps-list {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
         .steps-list li {
-            position: relative; padding-left: 52px; padding-bottom: 28px; color: #aaa; font-size: 15px; line-height: 1.8;
+            position: relative;
+            padding: 1rem 1.2rem 1rem 3.5rem;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: .92rem;
+            line-height: 1.75;
+            transition: border-color .25s;
         }
-        .steps-list li:last-child { padding-bottom: 0; }
+
+        .steps-list li:hover { border-color: var(--cyan-mid); }
+
         .steps-list li::before {
-            counter-increment: step; content: counter(step, decimal-leading-zero);
-            position: absolute; left: 0; top: -2px;
-            font-size: 14px; font-weight: bold; color: #ff00ff; letter-spacing: 2px;
+            counter-increment: step;
+            content: counter(step, decimal-leading-zero);
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            font-size: .8rem;
+            font-weight: 700;
+            color: var(--magenta);
+            letter-spacing: .1em;
         }
-        .steps-list li strong { color: #00ffff; font-weight: 600; }
+
+        .steps-list li strong { color: var(--cyan); }
+
+        /* SPECS GRID */
         .specs-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.2rem;
         }
+
         .spec-card {
-            background: rgba(0,255,255,0.03); border: 1px solid rgba(0,255,255,0.2);
-            padding: 20px 22px;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            transition: border-color .25s;
         }
-        .spec-card .spec-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-bottom: 6px; }
-        .spec-card .spec-value { font-size: 15px; color: #00ffff; }
-        .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+
+        .spec-card:hover { border-color: var(--cyan-mid); }
+
+        .spec-card .spec-label {
+            font-size: .65rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: .4rem;
+        }
+
+        .spec-card .spec-value {
+            font-size: .92rem;
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        /* TAGS */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            margin-top: 1rem;
+        }
+
         .tag-pill {
-            padding: 8px 16px; border: 1px solid rgba(0,255,255,0.35);
-            background: rgba(0,255,255,0.05); font-size: 11px; text-transform: uppercase;
-            letter-spacing: 1px; color: #00ffff; transition: all 0.25s;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            background: var(--cyan-dim);
+            border-radius: 4px;
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--cyan);
+            transition: all .25s;
         }
-        .tag-pill:hover { background: rgba(0,255,255,0.12); border-color: #00ffff; }
-        .skills-learned { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+
+        .tag-pill:hover {
+            background: rgba(0,255,255,.14);
+            border-color: var(--cyan);
+        }
+
+        /* SKILLS */
+        .skills-learned {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: .8rem;
+        }
+
         .skill-chip {
-            padding: 14px 18px; background: rgba(0,255,255,0.04); border: 1px solid rgba(0,255,255,0.18);
-            color: #00ffff; font-size: 13px; display: flex; align-items: center; gap: 10px;
+            padding: .9rem 1.1rem;
+            background: var(--cyan-dim);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--cyan);
+            font-size: .88rem;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            transition: all .25s;
         }
-        .skill-chip::before { content: '✓'; color: #ff00ff; font-weight: bold; }
+
+        .skill-chip:hover {
+            border-color: var(--cyan-mid);
+            background: rgba(0,255,255,.12);
+        }
+
+        .skill-chip::before {
+            content: '✓';
+            color: var(--magenta);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* CTA FOOTER */
         .cta-footer {
-            margin-top: 50px; padding-top: 40px; border-top: 1px solid rgba(0,255,255,0.15);
-            display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            align-items: center;
+            justify-content: space-between;
         }
-        .cta-footer p { margin: 0; color: #666; font-size: 14px; }
-        .sep-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,0,255,0.25), transparent); margin: 45px 0; }
+
+        .cta-footer p {
+            margin: 0;
+            color: var(--text-dim);
+            font-size: .9rem;
+        }
+
+        .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 28px;
+            font-size: .78rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all .3s;
+            background: var(--cyan);
+            color: var(--bg-deep);
+            border: 1px solid var(--cyan);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 24px rgba(0,255,255,.25);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--cyan);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--cyan-dim);
+        }
+
+        /* SEP */
+        .sep-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,0,255,.2), transparent);
+            margin: 2.5rem 0;
+        }
+
+        /* FADE IN */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .project-detail-layout { padding: 0 12px; }
-            .hero-project { margin: 0 0 40px; min-height: 45vh; }
-            .photo-band { grid-template-columns: 1fr; min-height: 200px; }
+            .hero { padding: 0 1.5rem 2.5rem; }
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: .7rem; }
+            .main-content { padding: 2rem 1rem 4rem; }
+            .photo-band { grid-template-columns: 1fr; }
+            .section-block { padding: 1.4rem 1.4rem; }
         }
     </style>
 </head>
@@ -132,7 +568,7 @@
     <div class="grid-background"></div>
 
     <nav>
-        <div class="logo">PORTFOLIO - Arthur PICQUE</div>
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
         <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="about.html">À Propos</a>
@@ -144,174 +580,165 @@
         </div>
     </nav>
 
-    <section class="page-content">
-        <div class="project-detail-layout">
-            <a href="projets.html" class="back-link">← Retour aux projets</a>
-
-            <!-- Hero -->
-            <header class="hero-project">
-                <div class="hero-inner">
-                    <p class="project-kicker">Workshop créatif 2025</p>
-                    <h1 class="project-title-main">Gadget numérique <span>James Bond</span></h1>
-                    <p class="project-subtitle">
-                        Conception et prototypage d'un objet connecté discret inspiré de l'univers des espions :
-                        électronique embarquée, scénario d'usage et démonstration en conditions réelles.
-                    </p>
-                    <div class="project-meta-strip">
-                        <div class="meta-item"><span class="label">Année</span><span class="value">2025</span></div>
-                        <div class="meta-item"><span class="label">Contexte</span><span class="value">Workshop scolaire</span></div>
-                        <div class="meta-item"><span class="label">Durée</span><span class="value">Quelques jours</span></div>
-                        <div class="meta-item"><span class="label">Rôle</span><span class="value">Conception & prototypage</span></div>
-                        <div class="meta-item"><span class="label">Équipe</span><span class="value">Petit groupe</span></div>
-                    </div>
-                </div>
-            </header>
-
-            
-            <div class="photo-band">
-                <div class="photo-slot">
-                    <img src="img/jamesgadjet.png" alt="Vue du prototype physique du gadget James Bond">
-                    <div class="overlay"></div>
-                    <span class="label">Prototype — vue d'ensemble</span>
-                </div>
-                <div class="photo-slot">
-                    <img src="img/imagejames.png" alt="Détail du gadget James Bond en situation">
-                    <div class="overlay"></div>
-                    <span class="label">Gadget en situation</span>
-                </div>
-            </div>
-
-            <!-- Contexte & objectif -->
-            <div class="section-block">
-                <h2>Contexte & objectif du workshop</h2>
-                <p>
-                    Ce workshop s'inscrit dans un cadre pédagogique visant à sortir des sentiers battus : plutôt que d'enchaîner des exercices techniques isolés, l'idée était de livrer un <strong style="color:#00ffff">projet complet, narratif et démontrable</strong>. Le thème James Bond imposait une contrainte forte — la discrétion — et un univers reconnu, ce qui a facilité l'idéation tout en gardant un objectif technique clair.
-                </p>
-                <p>
-                    L'objectif principal : imaginer un gadget crédible (surveillance, communication, sécurité ou autre), définir son scénario d'utilisation sur le terrain, puis en réaliser un prototype fonctionnel ou semi-fonctionnel à base de microcontrôleur, capteurs et éventuellement liaison sans fil. Le rendu devait être présentable devant un jury et utilisable dans une courte démo.
-                </p>
-                <div class="highlight-quote">
-                    <span class="quote-mark">"</span>
-                    <p>Penser usage avant technologie : à qui sert l'objet, dans quelle situation, et pourquoi un agent l'utiliserait — puis faire en sorte que le prototype le prouve.</p>
-                </div>
-            </div>
-
-            <div class="sep-line"></div>
-
-            <!-- Problématique -->
-            <div class="section-block">
-                <h2>Problématique</h2>
-                <p>
-                    Comment concevoir un objet numérique qui soit à la fois <strong style="color:#00ffff">discret</strong> (forme, taille, comportement), <strong style="color:#00ffff">crédible</strong> dans un scénario type mission, et <strong style="color:#00ffff">réalisable</strong> en quelques jours avec des moyens limités ? La difficulté tenait à l'équilibre entre ambition du concept et faisabilité technique, tout en gardant une dimension « produit » et pas seulement « démo technique ».
-                </p>
-            </div>
-
-            <!-- Processus -->
-            <div class="section-block">
-                <h2>Processus de réalisation</h2>
-                <ol class="steps-list">
-                    <li><strong>Cadrage & idée</strong> — Brainstorming sur les familles de gadgets (surveillance, communication, sécurisation de données, accès physique…). Choix d'un concept qui pouvait être illustré par un prototype simple mais convaincant.</li>
-                    <li><strong>Scénario d'usage</strong> — Rédaction d'un mini-scénario : qui est l'agent, quelle mission, à quel moment le gadget intervient, et quel bénéfice il apporte. Cela a servi de fil rouge pour les choix techniques.</li>
-                    <li><strong>Spécifications techniques</strong> — Liste des fonctions à démontrer (capteurs, LEDs, buzzer, communication, etc.), choix des composants (Arduino ou équivalent, breadboard, câblage) et plan de câblage.</li>
-                    <li><strong>Prototypage</strong> — Assemblage, câblage et programmation du microcontrôleur pour obtenir un comportement cohérent avec le scénario (ex. détection → alerte, ou bouton discret → action).</li>
-                    <li><strong>Mise en forme & discrétion</strong> — Réflexion sur l'enveloppe (boîtier, forme) pour que l'objet paraisse crédible et discret, même avec un prototype « breadboard » partiellement visible.</li>
-                    <li><strong>Préparation de la démo</strong> — Répétition du pitch et de la démonstration en conditions quasi réelles pour rendre le projet compréhensible et impactant en peu de temps.</li>
-                </ol>
-            </div>
-
-            <!-- Ce qui a été livré -->
-            <div class="section-block">
-                <h2>Ce qui a été livré</h2>
-                <p>
-                    Un prototype physique démontrant les fonctions principales du gadget, une courte présentation orale avec scénario et démo live, et éventuellement une fiche technique ou un schéma. L'accent était mis sur la <strong style="color:#00ffff">clarté du storytelling</strong> et sur la <strong style="color:#00ffff">preuve de faisabilité</strong> par l'objet lui-même.
-                </p>
-                <div class="specs-grid">
-                    <div class="spec-card"><div class="spec-label">Type</div><div class="spec-value">Gadget discret / prototype</div></div>
-                    <div class="spec-card"><div class="spec-label">Électronique</div><div class="spec-value">Microcontrôleur, capteurs, I/O</div></div>
-                    <div class="spec-card"><div class="spec-label">Rendu</div><div class="spec-value">Démo + présentation</div></div>
-                    <div class="spec-card"><div class="spec-label">Contrainte clé</div><div class="spec-value">Discrétion & crédibilité</div></div>
-                </div>
-            </div>
-
-            <div class="sep-line"></div>
-
-            <!-- Démarche en 3 cartes -->
-            <div class="section-block">
-                <h2>Démarche en trois axes</h2>
-                <div class="section-grid">
-                    <div class="bullet-card">
-                        <div class="bullet-card-title">Idéation</div>
-                        <p>Recherche de concepts réalisables en peu de temps : surveillance, communication sécurisée, accès, alerte… Choix d'une idée qui permettait à la fois une bonne histoire et un prototype démontrable.</p>
-                    </div>
-                    <div class="bullet-card">
-                        <div class="bullet-card-title">Prototypage</div>
-                        <p>Utilisation d'un microcontrôleur (type Arduino ou équivalent), capteurs, LEDs, et éventuellement modules radio ou NFC. Programmation pour lier les entrées (bouton, capteur) aux sorties (feedback visuel ou sonore, transmission).</p>
-                    </div>
-                    <div class="bullet-card">
-                        <div class="bullet-card-title">Mise en scène</div>
-                        <p>Rédaction du scénario de mission, définition du moment d'usage du gadget et préparation d'une démo courte et claire. L'objectif : que le jury comprenne immédiatement l'utilité et la crédibilité de l'objet.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Défis & apprentissages -->
-            <div class="section-block">
-                <h2>Défis & apprentissages</h2>
-                <p>
-                    Principaux défis : rester dans le temps imparti tout en gardant un rendu propre, et faire en sorte que le prototype « parle » sans avoir besoin d'explications longues. Côté technique, la gestion du câblage et des entrées/sorties a demandé de bien séquencer les étapes (d'abord faire marcher une fonction, puis enchaîner).
-                </p>
-                <p>
-                    Ce workshop a renforcé la capacité à <strong style="color:#00ffff">lier récit et technique</strong> : une bonne idée ne suffit pas si elle n'est pas démontrable ; un prototype technique ne suffit pas s'il n'est pas mis en situation. La contrainte de discrétion a aussi obligé à faire des choix de conception simples et efficaces plutôt qu'à surcharger l'objet.
-                </p>
-            </div>
-
-            <!-- Compétences mobilisées -->
-            <div class="section-block">
-                <h2>Compétences mobilisées</h2>
-                <div class="skills-learned">
-                    <span class="skill-chip">Électronique de base</span>
-                    <span class="skill-chip">Programmation microcontrôleur</span>
-                    <span class="skill-chip">Prototypage rapide</span>
-                    <span class="skill-chip">Storytelling & scénario</span>
-                    <span class="skill-chip">Travail en équipe</span>
-                    <span class="skill-chip">Présentation & démo</span>
-                </div>
-            </div>
-
-            <!-- Technologies -->
-            <div class="section-block">
-                <h2>Technologies & outils</h2>
-                <p>
-                    Environnement de prototypage classique : microcontrôleur (Arduino ou compatible), breadboard, capteurs (mouvement, proximité, etc.), LEDs, buzzer, câblage. Côté logiciel : IDE Arduino ou équivalent pour le flash et le debug. Optionnel : modules radio, NFC ou Bluetooth pour une dimension « communication discrète ».
-                </p>
-                <div class="tag-row">
-                    <span class="tag-pill">Arduino / Microcontrôleur</span>
-                    <span class="tag-pill">Capteurs</span>
-                    <span class="tag-pill">Câblage & breadboard</span>
-                    <span class="tag-pill">IDE Arduino</span>
-                    <span class="tag-pill">Prototypage</span>
-                    <span class="tag-pill">Démo & pitch</span>
-                </div>
-            </div>
-
-            <!-- Bilan -->
-            <div class="section-block">
-                <h2>Bilan personnel</h2>
-                <p>
-                    Ce projet m'a rappelé que les meilleures idées techniques gagnent à être racontées : un gadget « cool » sans scénario d'usage reste une démo ; avec un contexte de mission et une contrainte de discrétion, il devient un vrai concept produit. J'en retiens aussi l'importance de découper le travail en étapes courtes et testables, et de soigner la démo finale pour que le jury voie immédiatement la valeur du prototype.
-                </p>
-            </div>
-
-            <div class="cta-footer">
-                <p>Vous souhaitez en savoir plus sur ce projet ou discuter d'un concept similaire ?</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="cta-button">Me contacter</a>
-                    <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
-                </div>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Workshop créatif · 2025</p>
+            <h1 class="hero-title">Gadget <span>James Bond</span></h1>
+            <p class="hero-sub">Conception et prototypage d'un objet connecté discret inspiré de l'univers des espions — électronique embarquée, scénario d'usage et démo en conditions réelles.</p>
+            <div class="hero-meta">
+                <div class="meta-item"><span class="label">Année</span><span class="value">2025</span></div>
+                <div class="meta-item"><span class="label">Contexte</span><span class="value">Workshop scolaire</span></div>
+                <div class="meta-item"><span class="label">Durée</span><span class="value">Quelques jours</span></div>
+                <div class="meta-item"><span class="label">Rôle</span><span class="value">Conception & prototypage</span></div>
+                <div class="meta-item"><span class="label">Équipe</span><span class="value">Petit groupe</span></div>
             </div>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <main class="main-content">
+
+        <a href="projets.html" class="back-link fade-in">← Retour aux projets</a>
+
+        <!-- PHOTOS -->
+        <div class="photo-band fade-in">
+            <div class="photo-slot">
+                <img src="img/jamesgadjet.png" alt="Vue du prototype physique du gadget James Bond">
+                <div class="overlay"></div>
+                <span class="photo-label">Prototype — vue d'ensemble</span>
+            </div>
+            <div class="photo-slot">
+                <img src="img/imagejames.png" alt="Détail du gadget James Bond en situation">
+                <div class="overlay"></div>
+                <span class="photo-label">Gadget en situation</span>
+            </div>
+        </div>
+
+        <!-- CONTEXTE -->
+        <div class="section-block accent-left fade-in">
+            <h2>Contexte & objectif</h2>
+            <p>Ce workshop s'inscrit dans un cadre pédagogique visant à sortir des sentiers battus : livrer un <strong style="color:var(--cyan)">projet complet, narratif et démontrable</strong>. Le thème James Bond imposait une contrainte forte — la discrétion — et un univers reconnu, ce qui a facilité l'idéation tout en gardant un objectif technique clair.</p>
+            <p>L'objectif principal : imaginer un gadget crédible (surveillance, communication, sécurité), définir son scénario d'utilisation sur le terrain, puis en réaliser un prototype fonctionnel à base de microcontrôleur, capteurs et éventuellement liaison sans fil.</p>
+            <div class="highlight-quote">
+                <p>Penser usage avant technologie : à qui sert l'objet, dans quelle situation, et pourquoi un agent l'utiliserait — puis faire en sorte que le prototype le prouve.</p>
+            </div>
+        </div>
+
+        <!-- PROBLÉMATIQUE -->
+        <div class="section-block fade-in">
+            <h2>Problématique</h2>
+            <p>Comment concevoir un objet numérique qui soit à la fois <strong style="color:var(--cyan)">discret</strong>, <strong style="color:var(--cyan)">crédible</strong> dans un scénario type mission, et <strong style="color:var(--cyan)">réalisable</strong> en quelques jours avec des moyens limités ? La difficulté tenait à l'équilibre entre ambition du concept et faisabilité technique.</p>
+        </div>
+
+        <div class="sep-line"></div>
+
+        <!-- PROCESSUS -->
+        <div class="section-block fade-in">
+            <h2>Processus de réalisation</h2>
+            <ol class="steps-list">
+                <li><strong>Cadrage & idée</strong> — Brainstorming sur les familles de gadgets. Choix d'un concept illustrable par un prototype simple mais convaincant.</li>
+                <li><strong>Scénario d'usage</strong> — Rédaction d'un mini-scénario : qui est l'agent, quelle mission, à quel moment le gadget intervient.</li>
+                <li><strong>Spécifications techniques</strong> — Liste des fonctions à démontrer, choix des composants et plan de câblage.</li>
+                <li><strong>Prototypage</strong> — Assemblage, câblage et programmation du microcontrôleur pour un comportement cohérent avec le scénario.</li>
+                <li><strong>Mise en forme & discrétion</strong> — Réflexion sur l'enveloppe pour que l'objet paraisse crédible et discret.</li>
+                <li><strong>Préparation de la démo</strong> — Répétition du pitch pour rendre le projet compréhensible et impactant en peu de temps.</li>
+            </ol>
+        </div>
+
+        <!-- LIVRABLE -->
+        <div class="section-block fade-in">
+            <h2>Ce qui a été livré</h2>
+            <p>Un prototype physique démontrant les fonctions principales du gadget, une présentation orale avec scénario et démo live. L'accent était mis sur la <strong style="color:var(--cyan)">clarté du storytelling</strong> et la <strong style="color:var(--cyan)">preuve de faisabilité</strong> par l'objet lui-même.</p>
+            <div class="specs-grid">
+                <div class="spec-card"><div class="spec-label">Type</div><div class="spec-value">Gadget discret / prototype</div></div>
+                <div class="spec-card"><div class="spec-label">Électronique</div><div class="spec-value">Microcontrôleur, capteurs, I/O</div></div>
+                <div class="spec-card"><div class="spec-label">Rendu</div><div class="spec-value">Démo + présentation</div></div>
+                <div class="spec-card"><div class="spec-label">Contrainte clé</div><div class="spec-value">Discrétion & crédibilité</div></div>
+            </div>
+        </div>
+
+        <div class="sep-line"></div>
+
+        <!-- 3 AXES -->
+        <div class="section-block fade-in">
+            <h2>Démarche en trois axes</h2>
+            <div class="section-grid">
+                <div class="bullet-card">
+                    <div class="bullet-card-title">Idéation</div>
+                    <p>Recherche de concepts réalisables en peu de temps : surveillance, communication sécurisée, accès, alerte… Choix d'une idée permettant une bonne histoire et un prototype démontrable.</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title">Prototypage</div>
+                    <p>Microcontrôleur (Arduino ou équivalent), capteurs, LEDs, modules radio ou NFC. Programmation pour lier entrées (capteur, bouton) aux sorties (feedback visuel, sonore, transmission).</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title">Mise en scène</div>
+                    <p>Rédaction du scénario de mission, définition du moment d'usage et préparation d'une démo courte. Objectif : que le jury comprenne immédiatement l'utilité de l'objet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DÉFIS -->
+        <div class="section-block fade-in">
+            <h2>Défis & apprentissages</h2>
+            <p>Rester dans le temps imparti tout en gardant un rendu propre, et faire en sorte que le prototype « parle » sans explications longues. Côté technique, la gestion du câblage et des I/O a demandé de bien séquencer les étapes.</p>
+            <p>Ce workshop a renforcé la capacité à <strong style="color:var(--cyan)">lier récit et technique</strong> : une bonne idée sans démo reste un concept ; un prototype sans contexte reste une démo technique. La contrainte de discrétion a aussi imposé des choix simples et efficaces.</p>
+        </div>
+
+        <!-- COMPÉTENCES -->
+        <div class="section-block fade-in">
+            <h2>Compétences mobilisées</h2>
+            <div class="skills-learned">
+                <span class="skill-chip">Électronique de base</span>
+                <span class="skill-chip">Programmation microcontrôleur</span>
+                <span class="skill-chip">Prototypage rapide</span>
+                <span class="skill-chip">Storytelling & scénario</span>
+                <span class="skill-chip">Travail en équipe</span>
+                <span class="skill-chip">Présentation & démo</span>
+            </div>
+        </div>
+
+        <!-- TECHNOLOGIES -->
+        <div class="section-block fade-in">
+            <h2>Technologies & outils</h2>
+            <p>Microcontrôleur (Arduino ou compatible), breadboard, capteurs (mouvement, proximité…), LEDs, buzzer, câblage. IDE Arduino pour le flash et le debug. Optionnel : modules radio, NFC ou Bluetooth.</p>
+            <div class="tag-row">
+                <span class="tag-pill">Arduino / Microcontrôleur</span>
+                <span class="tag-pill">Capteurs</span>
+                <span class="tag-pill">Câblage & breadboard</span>
+                <span class="tag-pill">IDE Arduino</span>
+                <span class="tag-pill">Prototypage</span>
+                <span class="tag-pill">Démo & pitch</span>
+            </div>
+        </div>
+
+        <!-- BILAN -->
+        <div class="section-block accent-left fade-in">
+            <h2>Bilan personnel</h2>
+            <p>Ce projet m'a rappelé que les meilleures idées techniques gagnent à être racontées : un gadget « cool » sans scénario reste une démo ; avec un contexte de mission et une contrainte de discrétion, il devient un vrai concept produit. J'en retiens aussi l'importance de découper le travail en étapes courtes et testables, et de soigner la démo finale.</p>
+        </div>
+
+        <div class="cta-footer fade-in">
+            <p>Vous souhaitez en savoir plus sur ce projet ou discuter d'un concept similaire ?</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="cta-button">Me contacter</a>
+                <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
