@@ -321,8 +321,7 @@
 
         <div class="filter-row">
             <button class="filter-btn active" data-filter="all">Tous</button>
-            <button class="filter-btn" data-filter="web">Web</button>
-            <button class="filter-btn" data-filter="mobile">Mobile</button>
+            <button class="filter-btn" data-filter="web">Développement</button>
             <button class="filter-btn" data-filter="reseau">Réseau</button>
             <button class="filter-btn" data-filter="stage">Stage</button>
             <button class="filter-btn" data-filter="workshop">Workshop</button>
@@ -332,7 +331,7 @@
 
         <div class="projects-grid" id="grid">
 
-            <div class="project-card" data-cat="web stage">
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/banniere.jpg" alt="BTS Brasserie">
@@ -380,7 +379,7 @@
                 </div>
             </div>
 
-            <div class="project-card" data-cat="stage web">
+            <div class="project-card" data-cat="stage ">
                 <div class="project-image">
                     <span class="project-badge">Stage</span>
                     <img src="img/kimple2.png" alt="Kimple">
@@ -404,7 +403,7 @@
                 </div>
             </div>
 
-            <div class="project-card" data-cat="mobile">
+            <div class="project-card" data-cat="web">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/todolist2.png" alt="To-Do Flutter">
@@ -500,7 +499,7 @@
                 </div>
             </div>
 
-            <div class="project-card" data-cat="web">
+            <div class="project-card" data-cat="seo">
                 <div class="project-image">
                     <span class="project-badge">SEO</span>
                     <img src="img/seo.png" alt="SEO">
@@ -516,7 +515,7 @@
     </main>
 
     <script>
-        // Intersection Observer fade-in
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((e, i) => {
                 if (e.isIntersecting) {
