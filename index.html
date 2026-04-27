@@ -31,9 +31,7 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-        }
-
-        /* ── GRID BACKGROUND ── */
+        }/* ── GRID BACKGROUND ── */
         .grid-background {
             position: fixed; inset: 0;
             background-image:
@@ -78,9 +76,7 @@
             text-decoration: none;
             transition: color .25s ease;
             white-space: nowrap;
-        }
-
-        .nav-links a:hover,
+        }.nav-links a:hover,
         .nav-links a.active {
             color: var(--cyan);
             text-shadow: 0 0 10px rgba(0,255,255,.3);
@@ -107,9 +103,7 @@
 
         .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav-burger.open span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
-        .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        @media (max-width: 768px) {
+        .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }@media (max-width: 768px) {
             .nav-burger { display: flex; }
             .nav-links {
                 display: none;
@@ -157,9 +151,7 @@
             justify-content: center;
             padding-top: 64px;
             overflow: hidden;
-        }
-
-        .hero-content {
+        }.hero-content {
             position: relative;
             z-index: 2;
             max-width: 900px;
@@ -204,9 +196,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-        }
-
-        .cta-buttons {
+        }.cta-buttons {
             display: flex;
             gap: clamp(1rem, 3vw, 1.5rem);
             justify-content: center;
@@ -251,9 +241,7 @@
             background: rgba(0,255,255,.1);
             box-shadow: 0 0 20px rgba(0,255,255,.3);
             transform: translateY(-2px);
-        }
-
-        .hero-stats {
+        }.hero-stats {
             display: flex;
             justify-content: center;
             gap: clamp(2rem, 5vw, 4rem);
@@ -303,9 +291,7 @@
             letter-spacing: .1em;
             text-transform: uppercase;
             white-space: nowrap;
-        }
-
-        /* ── QUICK CARDS ── */
+        }/* ── QUICK CARDS ── */
         .quick-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -377,6 +363,41 @@
 
         .quick-card:hover .quick-card-arrow { transform: translateX(4px); }
 
+        /* ── BUTTON EXCEL ── */
+        .download-excel-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+
+        .excel-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: #217346;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .excel-button:hover {
+            background: #1a5a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .excel-icon {
+            font-size: 1.2rem;
+        }
+
         /* ── ANIMATIONS ── */
         @keyframes slideDown {
             from {
@@ -397,9 +418,7 @@
         .fade-in {
             opacity: 0;
             animation: fadeIn .6s ease-out forwards;
-        }
-
-        .fade-in:nth-child(1) { animation-delay: .1s; }
+        }.fade-in:nth-child(1) { animation-delay: .1s; }
         .fade-in:nth-child(2) { animation-delay: .15s; }
         .fade-in:nth-child(3) { animation-delay: .2s; }
         .fade-in:nth-child(4) { animation-delay: .25s; }
@@ -407,6 +426,18 @@
         .fade-in:nth-child(6) { animation-delay: .35s; }
 
         /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .download-excel-btn {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .excel-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
         @media (max-width: 640px) {
             .hero {
                 min-height: auto;
@@ -528,6 +559,14 @@
             </div>
         </div>
     </main>
+
+    <!-- Bouton de téléchargement Excel -->
+    <div class="download-excel-btn">
+        <a href="tabcomp.xlsx" download class="excel-button">
+            
+            Télécharger le tableau des compétences
+        </a>
+    </div>
 
     <script>
         // Fade-in observer
