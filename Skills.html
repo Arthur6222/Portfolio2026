@@ -33,7 +33,6 @@
             overflow-x: hidden;
         }
 
-        /* ── GRID BG ── */
         .grid-background {
             position: fixed; inset: 0;
             background-image:
@@ -48,23 +47,65 @@
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 2.5rem; height: 64px;
-            background: rgba(5,10,14,.9);
+            background: rgba(5,10,14,.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
         }
         .logo {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.25rem; letter-spacing: .15em; color: var(--cyan);
+            font-size: 1.3rem; letter-spacing: .15em; color: var(--cyan);
         }
-        .nav-links { display: flex; gap: 2rem; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
         .nav-links a {
-            font-size: .75rem; font-weight: 500;
+            font-size: .78rem; font-weight: 500;
             letter-spacing: .12em; text-transform: uppercase;
             color: var(--muted); text-decoration: none;
-            transition: color .3s;
+            transition: color .25s; white-space: nowrap;
         }
         .nav-links a:hover,
         .nav-links a.active { color: var(--cyan); }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+        .nav-burger span {
+            display: block;
+            width: 24px; height: 2px;
+            background: var(--cyan);
+            border-radius: 2px;
+            transition: all .3s;
+        }
+        .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-burger.open span:nth-child(2) { opacity: 0; }
+        .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 1.2rem; }
+            .nav-burger { display: flex; }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 64px; left: 0; right: 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                background: rgba(5,10,14,.97);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem 0;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                width: 100%;
+                padding: .85rem 1.8rem;
+                font-size: .8rem;
+            }
+        }
 
         /* ── PAGE ── */
         .page-content {
@@ -74,7 +115,6 @@
             margin: 0 auto;
         }
 
-        /* ── PAGE HEADER ── */
         .page-header { margin-bottom: 64px; }
         .page-kicker {
             font-size: .7rem; letter-spacing: .35em;
@@ -94,7 +134,6 @@
             letter-spacing: .1em; text-transform: uppercase;
         }
 
-        /* ── SECTION TITLE ── */
         .section-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 2rem; letter-spacing: .08em;
@@ -110,7 +149,6 @@
         }
         .section-title span { color: var(--cyan); }
 
-        /* ── SKILL GRID ── */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -118,7 +156,6 @@
             margin-bottom: 64px;
         }
 
-        /* ── SKILL CARD ── */
         .skill-card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -143,9 +180,9 @@
             text-transform: uppercase; padding: 4px 10px;
             border: 1px solid; display: inline-block;
         }
-        .badge-school  { color: var(--cyan);    border-color: rgba(0,255,255,.3);    background: rgba(0,255,255,.05); }
-        .badge-solo    { color: var(--magenta);  border-color: rgba(255,0,255,.3);    background: rgba(255,0,255,.05); }
-        .badge-pro     { color: #ffe066;         border-color: rgba(255,224,102,.3);  background: rgba(255,224,102,.05); }
+        .badge-school  { color: var(--cyan);   border-color: rgba(0,255,255,.3);   background: rgba(0,255,255,.05); }
+        .badge-solo    { color: var(--magenta); border-color: rgba(255,0,255,.3);   background: rgba(255,0,255,.05); }
+        .badge-pro     { color: #ffe066;        border-color: rgba(255,224,102,.3); background: rgba(255,224,102,.05); }
 
         .skill-card h3 {
             font-family: 'Bebas Neue', sans-serif;
@@ -158,7 +195,6 @@
             margin-bottom: 20px;
         }
 
-        /* bar */
         .skill-bar {
             height: 3px;
             background: rgba(255,255,255,.06);
@@ -178,14 +214,12 @@
             text-transform: uppercase; color: var(--muted);
         }
 
-        /* ── SOLO CARD accent ── */
         .solo-card::before { background: linear-gradient(90deg, var(--magenta), transparent); }
         .solo-card .skill-progress {
             background: linear-gradient(90deg, var(--magenta), rgba(255,0,255,.4));
             box-shadow: 0 0 8px rgba(255,0,255,.4);
         }
 
-        /* ── PROFESSIONAL SKILLS ── */
         .professional-skills { margin-bottom: 64px; }
         .professional-grid {
             display: flex; flex-wrap: wrap; gap: 10px;
@@ -204,7 +238,6 @@
             color: #fff;
         }
 
-        /* ── TOOLS ── */
         .tools-section { margin-bottom: 80px; }
         .tools-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
         .tool-badge {
@@ -220,21 +253,16 @@
             box-shadow: 0 0 16px rgba(255,0,255,.2);
         }
 
-        /* ── SEP ── */
         .sep-line {
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(0,255,255,.2), transparent);
             margin: 56px 0;
         }
 
-        /* ── FADE IN ── */
         .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            nav { padding: 0 1.2rem; }
-            .nav-links { display: none; }
             .page-content { padding: 90px 20px 80px; }
             .skills-grid { grid-template-columns: 1fr; }
         }
@@ -245,7 +273,10 @@
 
     <nav>
         <div class="logo">PORTFOLIO — Arthur PICQUE</div>
-        <div class="nav-links">
+        <button class="nav-burger" id="burger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
             <a href="index.html">Accueil</a>
             <a href="about.html">À Propos</a>
             <a href="Skills.html" class="active">Compétences</a>
@@ -258,14 +289,12 @@
 
     <section class="page-content">
 
-        <!-- HEADER -->
         <div class="page-header fade-in">
             <p class="page-kicker">BTS SIO — SLAM</p>
             <h1>Mes <span>Compétences</span></h1>
             <p class="page-intro">Techniques · Scolaires · Auto-formation · Professionnelles</p>
         </div>
 
-        <!-- ══ BLOC 1 — SCOLAIRE ══ -->
         <div class="fade-in">
             <div class="section-title">Compétences <span>Scolaires</span></div>
         </div>
@@ -278,7 +307,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:80%"></div></div>
                 <div class="skill-level">Avancé — projets scolaires & perso</div>
             </div>
-
             <div class="skill-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-school">BTS SIO</span></div>
                 <h3>PHP & Bases de données</h3>
@@ -286,7 +314,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:70%"></div></div>
                 <div class="skill-level">Intermédiaire — CRUD, sessions</div>
             </div>
-
             <div class="skill-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-school">BTS SIO</span></div>
                 <h3>Réseaux & Systèmes</h3>
@@ -294,7 +321,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:60%"></div></div>
                 <div class="skill-level">Intermédiaire — cours & TP</div>
             </div>
-
             <div class="skill-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-school">BTS SIO</span></div>
                 <h3>WordPress / CMS</h3>
@@ -302,7 +328,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:65%"></div></div>
                 <div class="skill-level">Intermédiaire — projet Vantime</div>
             </div>
-
             <div class="skill-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-school">BTS SIO</span></div>
                 <h3>C# & Programmation objet</h3>
@@ -310,7 +335,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:55%"></div></div>
                 <div class="skill-level">Débutant avancé — bases solides</div>
             </div>
-
             <div class="skill-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-school">BTS SIO</span></div>
                 <h3>Gestion de projet</h3>
@@ -322,7 +346,6 @@
 
         <div class="sep-line"></div>
 
-        <!-- ══ BLOC 2 — AUTO-FORMATION ══ -->
         <div class="fade-in">
             <div class="section-title">Auto-<span>Formation</span></div>
         </div>
@@ -335,7 +358,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:75%"></div></div>
                 <div class="skill-level">Confirmé — projets concrets</div>
             </div>
-
             <div class="skill-card solo-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-solo">Auto-formation</span></div>
                 <h3>Développement Mobile Flutter</h3>
@@ -343,7 +365,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:65%"></div></div>
                 <div class="skill-level">Intermédiaire — en progression</div>
             </div>
-
             <div class="skill-card solo-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-solo">Auto-formation</span></div>
                 <h3>React & JavaScript moderne</h3>
@@ -351,7 +372,6 @@
                 <div class="skill-bar"><div class="skill-progress" style="width:55%"></div></div>
                 <div class="skill-level">Débutant avancé — en apprentissage</div>
             </div>
-
             <div class="skill-card solo-card fade-in">
                 <div class="skill-badge-row"><span class="skill-source-badge badge-solo">Auto-formation</span></div>
                 <h3>Design UI / Figma</h3>
@@ -363,7 +383,6 @@
 
         <div class="sep-line"></div>
 
-        <!-- ══ BLOC 3 — RÉFÉRENTIEL BTS ══ -->
         <div class="professional-skills fade-in">
             <div class="section-title">Référentiel <span>BTS SIO</span></div>
             <div class="professional-grid">
@@ -378,7 +397,6 @@
 
         <div class="sep-line"></div>
 
-        <!-- ══ BLOC 4 — OUTILS ══ -->
         <div class="tools-section fade-in">
             <div class="section-title">Outils & <span>Technologies</span></div>
             <div class="tools-grid">
@@ -416,6 +434,17 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            burger.classList.remove('open');
+            navLinks.classList.remove('open');
+        }));
     </script>
 </body>
 </html>

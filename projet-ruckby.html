@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruckby — E-commerce Rugby | Portfolio Arthur PICQUE</title>
+    <meta name="description" content="Site de vente en ligne de maillots de rugby développé en React. Boutique avec filtres, panier dynamique et résumé de commande.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --magenta:    #ff00ff;
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* GRID BG */
+        .grid-background {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
+            color: var(--cyan);
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--cyan); }
+
+        /* MAIN */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 6rem 2rem 5rem;
+        }
+
+        /* BACK LINK */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+            transition: color .25s;
+        }
+        .back-link:hover { color: var(--cyan); }
+
+        /* HERO */
+        .project-hero {
+            margin-bottom: 3rem;
+        }
+
+        .project-kicker {
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+        }
+
+        .project-title-main {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 9vw, 5.5rem);
+            line-height: .95;
+            letter-spacing: .05em;
+            color: #fff;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-title-main span { color: var(--cyan); }
+
+        .project-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-dim);
+            max-width: 580px;
+            line-height: 1.7;
+            margin-bottom: 1.8rem;
+        }
+
+        .project-meta-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem;
+        }
+
+        .project-meta-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: .6rem 1.1rem;
+            font-size: .78rem;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+        }
+
+        .project-meta-item span {
+            font-size: .62rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+        }
+
+        /* LOGO BLOCK */
+        .logo-block {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-frame {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 16px;
+            background: #f5f3ee;
+            border: 1px solid rgba(0,255,255,.2);
+            box-shadow: 0 0 40px rgba(0,255,255,.12);
+            overflow: hidden;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-frame img {
+            width: 100%;
+            object-fit: contain;
+        }
+
+        /* BROWSER MOCKUP */
+        .device-preview {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .browser-frame {
+            width: 100%;
+            max-width: 580px;
+            border-radius: 12px;
+            background: #05050a;
+            border: 1px solid rgba(0,255,255,.35);
+            box-shadow: 0 0 28px rgba(0,255,255,.18);
+            overflow: hidden;
+        }
+
+        .browser-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
+            background: linear-gradient(90deg, #111, #05050a);
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+
+        .browser-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #ff5f57;
+        }
+        .browser-dot:nth-child(2) { background: #febc2e; }
+        .browser-dot:nth-child(3) { background: #28c840; }
+
+        .browser-url {
+            flex: 1;
+            margin-left: 8px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.04);
+            color: #555;
+            font-size: .65rem;
+            font-family: monospace;
+        }
+
+        .browser-body img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* SCREENSHOTS GRID */
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .screenshot-slot {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 20px rgba(0,255,255,.08);
+            background: var(--bg-card);
+        }
+
+        .screenshot-slot img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .screenshot-caption {
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--text-dim);
+            text-align: center;
+            padding: .5rem;
+        }
+
+        /* SECTION BLOCKS */
+        .section-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--cyan);
+            border-radius: 10px;
+            padding: 2rem 2.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease, border-color .3s, box-shadow .3s;
+        }
+
+        .section-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-block:hover {
+            border-color: rgba(0,255,255,.35);
+            box-shadow: 0 4px 30px rgba(0,255,255,.07);
+        }
+
+        .section-block.accent-left {
+            border-left-color: var(--magenta);
+        }
+
+        .section-block h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: .1em;
+            color: #fff;
+            margin-bottom: .9rem;
+        }
+
+        .section-block p {
+            font-size: .92rem;
+            line-height: 1.75;
+            color: var(--text);
+            margin-bottom: .8rem;
+        }
+
+        .section-block p:last-child { margin-bottom: 0; }
+
+        .section-block strong { color: var(--cyan); font-weight: 600; }
+
+        .section-block code {
+            background: rgba(0,255,255,.08);
+            border: 1px solid rgba(0,255,255,.18);
+            border-radius: 4px;
+            padding: .1em .45em;
+            font-size: .82em;
+            color: var(--cyan);
+        }
+
+        /* GRID 2 COL */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .bullet-card {
+            background: rgba(0,255,255,.04);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem 1.4rem;
+            transition: border-color .3s, box-shadow .3s;
+        }
+
+        .bullet-card:hover {
+            border-color: rgba(0,255,255,.3);
+            box-shadow: 0 0 18px rgba(0,255,255,.07);
+        }
+
+        .bullet-card-title {
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .55rem;
+        }
+
+        .bullet-card p {
+            font-size: .84rem;
+            color: var(--text-dim);
+            margin: 0;
+        }
+
+        /* TAG PILLS */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-top: 1rem;
+        }
+
+        .tag-pill {
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .35rem .85rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            background: var(--cyan-dim);
+        }
+
+        /* SEP */
+        .sep-line {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        /* FADE IN */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* CTA FOOTER */
+        .cta-footer {
+            margin-top: 1rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cta-footer p {
+            font-size: .88rem;
+            color: var(--text-dim);
+            margin: 0;
+        }
+
+        .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .cta-button {
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: .75rem 1.8rem;
+            border-radius: 4px;
+            transition: all .3s;
+            background: var(--cyan);
+            color: #050a0e;
+            border: 1px solid var(--cyan);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 25px rgba(0,255,255,.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--cyan);
+            border: 1px solid var(--border);
+        }
+
+        .cta-button.secondary:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.15);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: .7rem; }
+            main { padding: 5rem 1.2rem 4rem; }
+            .section-grid { grid-template-columns: 1fr; }
+            .screenshots-grid { grid-template-columns: 1fr; }
+            .section-block { padding: 1.4rem 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+
+    <nav>
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="about.html">À Propos</a>
+            <a href="Skills.html">Compétences</a>
+            <a href="projets.html" class="active">Projets</a>
+            <a href="veille-technologique-rugby.html">Veille Tech</a>
+            <a href="contact.html">Contact</a>
+            <a href="hobbies.html">Hobbies</a>
+        </div>
+    </nav>
+
+    <main>
+        <a href="projets.html" class="back-link fade-in">← Retour aux projets</a>
+
+        <!-- HERO -->
+        <header class="project-hero fade-in">
+            <p class="project-kicker">Projet Personnel — E-commerce</p>
+            <h1 class="project-title-main">
+                Ruckby<br>
+                <span>Jersey Store</span>
+            </h1>
+            <p class="project-subtitle">
+                Site de vente en ligne de maillots et équipements de rugby, développé en React.
+                Boutique avec filtres par catégorie, panier dynamique et récapitulatif de commande.
+            </p>
+            <div class="project-meta-grid">
+                <div class="project-meta-item">
+                    <span>Type</span>E-commerce
+                </div>
+                <div class="project-meta-item">
+                    <span>Framework</span>React + Vite
+                </div>
+                <div class="project-meta-item">
+                    <span>Contexte</span>Projet personnel
+                </div>
+                <div class="project-meta-item">
+                    <span>Déploiement</span>Vercel
+                </div>
+            </div>
+        </header>
+
+        
+
+        <div class="sep-line"></div>
+
+        <!-- PRÉSENTATION -->
+        <div class="section-block fade-in">
+            <h2>Présentation</h2>
+            <p>
+                Ruckby est un <strong>site e-commerce fictif</strong> dédié aux maillots officiels
+                et équipements de rugby. Le projet est né de l'envie de combiner deux de mes centres
+                d'intérêt : le développement web moderne avec React et le rugby.
+            </p>
+            <p>
+                L'application propose une boutique complète avec un catalogue de produits,
+                un système de <strong>filtrage par catégorie</strong>, un <strong>panier dynamique</strong>
+                mis à jour en temps réel et un récapitulatif de commande avec calcul du total.
+            </p>
+
+            <!-- BROWSER MOCKUP -->
+            <div class="device-preview">
+                <div class="browser-frame">
+                    <div class="browser-bar">
+                        
+                    <div class="browser-body">
+                        <img src="img/ruckby.png" alt="Page d'accueil Ruckby">
+                    </div>
+                </div>
+            </div>
+        </div>
+            <br>
+        <!-- SCREENSHOTS -->
+        <div class="section-block fade-in">
+            <h2>Captures d'écran</h2>
+            <p>Aperçu de la boutique et du panier dynamique en situation.</p>
+            <div class="screenshots-grid">
+                <div class="screenshot-slot">
+                    <img src="img/ruckbyacc.png" alt="Page boutique Ruckby">
+                    <div class="screenshot-caption">Page boutique</div>
+                </div>
+                <div class="screenshot-slot">
+                    <img src="img/pannier.png" alt="Page panier Ruckby">
+                    <div class="screenshot-caption">Panier dynamique</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FONCTIONNALITÉS -->
+        <div class="section-block fade-in">
+            <h2>Fonctionnalités</h2>
+            <p>Les principales fonctionnalités développées sur ce projet :</p>
+            <div class="section-grid">
+                <div class="bullet-card">
+                    <div class="bullet-card-title"> Panier dynamique</div>
+                    <p>Ajout, suppression et modification des quantités en temps réel via le <code>Context API</code> de React.</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title"> Filtrage produits</div>
+                    <p>Filtres par catégorie (maillots, équipements, accessoires) mis à jour instantanément sans rechargement.</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title"> Résumé commande</div>
+                    <p>Calcul automatique du sous-total, frais de livraison et total TTC dans la page panier.</p>
+                </div>
+                <div class="bullet-card">
+                    <div class="bullet-card-title"> Interface soignée</div>
+                    <p>Design moderne aux couleurs du rugby, entièrement responsive mobile et desktop.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- STACK TECHNIQUE -->
+        <div class="section-block fade-in">
+            <h2>Stack technique</h2>
+            <p>
+                Le projet s'appuie sur <strong>React</strong> avec <strong>Vite</strong> comme bundler
+                pour des performances optimales en développement. La gestion du panier est assurée par
+                le <code>Context API</code> natif de React, sans librairie externe.
+                Le routage est géré par <strong>React Router</strong> pour la navigation entre
+                la boutique et le panier. Le site est déployé sur <strong>Vercel</strong>.
+            </p>
+            <div class="tag-row">
+                <span class="tag-pill">React</span>
+                <span class="tag-pill">Vite</span>
+                <span class="tag-pill">JavaScript</span>
+                <span class="tag-pill">Context API</span>
+                <span class="tag-pill">React Router</span>
+                <span class="tag-pill">CSS Modules</span>
+                <span class="tag-pill">Vercel</span>
+                <span class="tag-pill">HTML5</span>
+            </div>
+        </div>
+
+        <!-- BILAN -->
+        <div class="section-block accent-left fade-in">
+            <h2>Bilan personnel</h2>
+            <p>
+                Ce projet m'a permis de consolider mes bases en React en allant au-delà des tutoriels :
+                concevoir une architecture de composants cohérente, gérer un état global partagé
+                avec le <code>Context API</code> et construire une interface e-commerce fonctionnelle
+                de A à Z.
+            </p>
+            <p>
+                Le choix du thème rugby était aussi une façon de rendre le projet personnel et motivant.
+                C'est un des premiers projets React que j'ai déployé en production sur Vercel.
+            </p>
+        </div>
+
+        <div class="sep-line"></div>
+
+        <!-- CTA -->
+        <div class="cta-footer fade-in">
+            <p>Envie de voir le site en live ou le code source ?</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button" target="_blank">Voir le site →</a>
+                <a href="#" class="cta-button secondary" target="_blank">GitHub</a>
+                <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in, .section-block').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

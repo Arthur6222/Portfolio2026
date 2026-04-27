@@ -7,15 +7,435 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cssdoc/style.css">
+    <style>
+        /* ── RESET & BASE ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #050a0e;
+            --surface: #0a1218;
+            --card: #0d1a22;
+            --cyan: #00ffff;
+            --magenta: #ff00ff;
+            --text: #c8d8e4;
+            --muted: #5a7080;
+            --border: rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── GRID BACKGROUND ── */
+        .grid-background {
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 clamp(1.2rem, 5vw, 2.5rem);
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            letter-spacing: .15em;
+            color: var(--cyan);
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(1rem, 3vw, 2rem);
+        }
+
+        .nav-links a {
+            font-size: .75rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .25s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cyan);
+            text-shadow: 0 0 10px rgba(0,255,255,.3);
+        }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .nav-burger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--cyan);
+            border-radius: 2px;
+            transition: all .3s cubic-bezier(.25, .46, .45, .94);
+        }
+
+        .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-burger.open span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+        .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 768px) {
+            .nav-burger { display: flex; }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 64px; left: 0; right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                background: rgba(5,10,14,.98);
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid var(--border);
+                padding: 0;
+                max-height: calc(100vh - 64px);
+                overflow-y: auto;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                padding: 1rem 1.8rem;
+                border-bottom: 1px solid rgba(0,255,255,.05);
+                font-size: .8rem;
+                text-shadow: none;
+            }
+        }
+
+        /* ── PAGE CONTAINER ── */
+        main {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1.2rem, 5vw, 2.5rem);
+        }
+
+        /* ── HERO SECTION ── */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 64px;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            padding: clamp(2rem, 5vw, 4rem);
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -.02em;
+            margin-bottom: 1rem;
+            animation: slideDown .8s ease-out;
+        }
+
+        .hero-title .cyan { color: var(--cyan); }
+        .hero-title .outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--cyan);
+            text-stroke: 1.5px var(--cyan);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(.9rem, 2.5vw, 1.1rem);
+            color: var(--muted);
+            font-weight: 400;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            animation: fadeIn .8s ease-out .1s backwards;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 2.5rem;
+            animation: fadeIn .8s ease-out .2s backwards;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: clamp(1rem, 3vw, 1.5rem);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            animation: fadeIn .8s ease-out .3s backwards;
+        }
+
+        .cta-button {
+            padding: clamp(.85rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.2rem);
+            font-size: clamp(.85rem, 1.5vw, .95rem);
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 2px solid var(--cyan);
+            border-radius: 4px;
+            transition: all .3s cubic-bezier(.25, .46, .45, .94);
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cta-button.primary {
+            background: var(--cyan);
+            color: var(--bg);
+            box-shadow: 0 0 20px rgba(0,255,255,.3);
+        }
+
+        .cta-button.primary:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 30px rgba(0,255,255,.5);
+            transform: translateY(-2px);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--cyan);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(0,255,255,.1);
+            box-shadow: 0 0 20px rgba(0,255,255,.3);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: clamp(2rem, 5vw, 4rem);
+            flex-wrap: wrap;
+            animation: fadeIn .8s ease-out .4s backwards;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--cyan);
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        .stat-label {
+            font-size: .75rem;
+            color: var(--muted);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: clamp(3rem, 8vw, 5rem) 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider-label {
+            font-size: clamp(.8rem, 2vw, .9rem);
+            color: var(--muted);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ── QUICK CARDS ── */
+        .quick-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: clamp(3rem, 8vw, 5rem);
+        }
+
+        .quick-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: clamp(1.8rem, 4vw, 2.2rem);
+            background: linear-gradient(135deg, rgba(0,255,255,.05), rgba(255,0,255,.02));
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: all .3s cubic-bezier(.25, .46, .45, .94);
+            overflow: hidden;
+        }
+
+        .quick-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(0,255,255,.1), transparent 50%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .quick-card:hover {
+            border-color: var(--cyan);
+            background: linear-gradient(135deg, rgba(0,255,255,.1), rgba(255,0,255,.05));
+            box-shadow: 0 0 30px rgba(0,255,255,.2);
+            transform: translateY(-4px);
+        }
+
+        .quick-card:hover::before { opacity: 1; }
+
+        .quick-card-icon {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            line-height: 1;
+        }
+
+        .quick-card-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
+            letter-spacing: -.01em;
+            color: var(--cyan);
+            font-weight: 700;
+        }
+
+        .quick-card-text {
+            font-size: clamp(.85rem, 1.5vw, .95rem);
+            line-height: 1.5;
+            color: var(--muted);
+            flex-grow: 1;
+        }
+
+        .quick-card-arrow {
+            font-size: .85rem;
+            color: var(--cyan);
+            font-weight: 600;
+            letter-spacing: .08em;
+            transition: transform .3s;
+        }
+
+        .quick-card:hover .quick-card-arrow { transform: translateX(4px); }
+
+        /* ── ANIMATIONS ── */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn .6s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: .1s; }
+        .fade-in:nth-child(2) { animation-delay: .15s; }
+        .fade-in:nth-child(3) { animation-delay: .2s; }
+        .fade-in:nth-child(4) { animation-delay: .25s; }
+        .fade-in:nth-child(5) { animation-delay: .3s; }
+        .fade-in:nth-child(6) { animation-delay: .35s; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .hero {
+                min-height: auto;
+                padding: 80px 1.2rem 2rem;
+            }
+
+            .hero-content { padding: 2rem 0; }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-button { width: 100%; }
+
+            .quick-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="grid-background"></div>
 
-    <!-- NAV -->
     <nav>
         <div class="logo">PORTFOLIO — Arthur PICQUE</div>
-        <div class="nav-links">
+        <button class="nav-burger" id="burger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
             <a href="index.html" class="active">Accueil</a>
             <a href="about.html">À Propos</a>
             <a href="Skills.html">Compétences</a>
@@ -26,111 +446,91 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-
-        <!-- LEFT -->
-        <div class="hero-content fade-in">
-            <p class="hero-eyebrow">Portfolio · Arthur Picque</p>
-            <h1 class="hero-title">
-                Développeur<br>
-                <span class="cyan">Web</span>
-                <span class="outline"> &amp; Digital</span>
-            </h1>
-            <p class="hero-subtitle">Innovation pour seul dicton</p>
-            <p class="hero-description">
-                Bienvenue dans mon Portfolio — le lieu de centralisation de mes projets, idées et travaux de ces 2 dernières années et bien plus.
-            </p>
-            <div class="cta-buttons">
-                <a href="projets.html" class="cta-button primary">Voir mes projets</a>
-                <a href="contact.html" class="cta-button secondary">Me contacter</a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number">2+</div>
-                    <div class="stat-label">Ans d'expérience</div>
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content fade-in">
+                <h1 class="hero-title">
+                    Développeur<br>
+                    <span class="cyan">Web</span>
+                    <span class="outline"> &amp; Digital</span>
+                </h1>
+                <p class="hero-subtitle">Innovation pour seul dicton</p>
+                <p class="hero-description">
+                    Bienvenue dans mon Portfolio — le lieu de centralisation de mes projets, idées et travaux de ces 2 dernières années et bien plus.
+                </p>
+                <div class="cta-buttons">
+                    <a href="projets.html" class="cta-button primary">Voir mes projets</a>
+                    <a href="contact.html" class="cta-button secondary">Me contacter</a>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Projets réalisés</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">BTS</div>
-                    <div class="stat-label">SIO en cours</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- RIGHT CUBE -->
-        <div class="hero-visual">
-            <div class="cube-ring"></div>
-            <div class="cube-wrapper">
-                <div class="rotating-cube">
-                    <div class="cube-face front">◇</div>
-                    <div class="cube-face back">◇</div>
-                    <div class="cube-face left">◇</div>
-                    <div class="cube-face right">◇</div>
-                    <div class="cube-face top">◇</div>
-                    <div class="cube-face bottom">◇</div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Ans d'expérience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Projets réalisés</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">BTS</div>
+                        <div class="stat-label">SIO en cours</div>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <!-- QUICK ACCESS -->
+        <div class="page-content">
+            <div class="divider fade-in">
+                <div class="divider-line"></div>
+                <span class="divider-label">Explorer le portfolio</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="quick-cards">
+                <a href="about.html" class="quick-card fade-in">
+                    <div class="quick-card-icon">👤</div>
+                    <div class="quick-card-title">À Propos</div>
+                    <p class="quick-card-text">Mon parcours, ma formation et ce qui me motive au quotidien.</p>
+                    <span class="quick-card-arrow">Découvrir →</span>
+                </a>
+                <a href="Skills.html" class="quick-card fade-in">
+                    <div class="quick-card-icon">⚡</div>
+                    <div class="quick-card-title">Compétences</div>
+                    <p class="quick-card-text">HTML, CSS, JavaScript, PHP, SQL et bien d'autres outils maîtrisés.</p>
+                    <span class="quick-card-arrow">Découvrir →</span>
+                </a>
+                <a href="projets.html" class="quick-card fade-in">
+                    <div class="quick-card-icon">🚀</div>
+                    <div class="quick-card-title">Projets</div>
+                    <p class="quick-card-text">Mes réalisations concrètes — sites, apps et expérimentations.</p>
+                    <span class="quick-card-arrow">Découvrir →</span>
+                </a>
+                <a href="veille-technologique-rugby.html" class="quick-card fade-in">
+                    <div class="quick-card-icon">🔍</div>
+                    <div class="quick-card-title">Veille Tech</div>
+                    <p class="quick-card-text">Technologie & rugby — ma veille sur l'innovation dans le sport.</p>
+                    <span class="quick-card-arrow">Découvrir →</span>
+                </a>
+                <a href="hobbies.html" class="quick-card fade-in">
+                    <div class="quick-card-icon">🎯</div>
+                    <div class="quick-card-title">Hobbies</div>
+                    <p class="quick-card-text">Rugby, musique, gaming — ce qui me définit hors du clavier.</p>
+                    <span class="quick-card-arrow">Découvrir →</span>
+                </a>
+                <a href="contact.html" class="quick-card fade-in">
+                    <div class="quick-card-icon">✉️</div>
+                    <div class="quick-card-title">Contact</div>
+                    <p class="quick-card-text">Un projet ? Une opportunité ? Parlons-en ensemble.</p>
+                    <span class="quick-card-arrow">Me contacter →</span>
+                </a>
+            </div>
         </div>
-
-    </section>
-
-    <!-- QUICK ACCESS -->
-    <div class="quick-section">
-        <div class="section-divider fade-in">
-            <span>Explorer le portfolio</span>
-        </div>
-        <div class="quick-grid">
-
-            <a href="about.html" class="quick-card fade-in">
-                <div class="quick-card-icon">👤</div>
-                <div class="quick-card-title">À Propos</div>
-                <p class="quick-card-text">Mon parcours, ma formation et ce qui me motive au quotidien.</p>
-                <span class="quick-card-arrow">Découvrir →</span>
-            </a>
-
-            <a href="Skills.html" class="quick-card fade-in">
-                <div class="quick-card-icon">⚡</div>
-                <div class="quick-card-title">Compétences</div>
-                <p class="quick-card-text">HTML, CSS, JavaScript, PHP, SQL et bien d'autres outils maîtrisés.</p>
-                <span class="quick-card-arrow">Découvrir →</span>
-            </a>
-
-            <a href="projets.html" class="quick-card fade-in">
-                <div class="quick-card-icon">🚀</div>
-                <div class="quick-card-title">Projets</div>
-                <p class="quick-card-text">Mes réalisations concrètes — sites, apps et expérimentations.</p>
-                <span class="quick-card-arrow">Découvrir →</span>
-            </a>
-
-            <a href="veille-technologique-rugby.html" class="quick-card fade-in">
-                <div class="quick-card-icon">🔍</div>
-                <div class="quick-card-title">Veille Tech</div>
-                <p class="quick-card-text">Technologie & rugby — ma veille sur l'innovation dans le sport.</p>
-                <span class="quick-card-arrow">Découvrir →</span>
-            </a>
-
-            <a href="hobbies.html" class="quick-card fade-in">
-                <div class="quick-card-icon">🎯</div>
-                <div class="quick-card-title">Hobbies</div>
-                <p class="quick-card-text">Rugby, musique, gaming — ce qui me définit hors du clavier.</p>
-                <span class="quick-card-arrow">Découvrir →</span>
-            </a>
-
-            <a href="contact.html" class="quick-card fade-in">
-                <div class="quick-card-icon">✉️</div>
-                <div class="quick-card-title">Contact</div>
-                <p class="quick-card-text">Un projet ? Une opportunité ? Parlons-en ensemble.</p>
-                <span class="quick-card-arrow">Me contacter →</span>
-            </a>
-
-        </div>
-    </div>
+    </main>
 
     <script>
+        // Fade-in observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
@@ -139,8 +539,19 @@
                 }
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Burger
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            burger.classList.remove('open');
+            navLinks.classList.remove('open');
+        }));
     </script>
 </body>
 </html>

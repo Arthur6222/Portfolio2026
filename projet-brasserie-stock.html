@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brasserie Stock — Gestion de stock | Portfolio Arthur PICQUE</title>
+    <meta name="description" content="Application web de gestion de stock de bière développée en 2ème année BTS. Authentification, tableau de bord et gestion des références.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
+            color: var(--cyan);
+        }
+
+        .nav-links { display: flex; gap: 2rem; }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--cyan); }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 100px 2rem 6rem;
+        }
+
+        /* BACK */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            font-size: .72rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            padding: .55rem 1.2rem;
+            border-radius: 4px;
+            margin-bottom: 2.5rem;
+            transition: border-color .3s, box-shadow .3s;
+        }
+
+        .back-link:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.2);
+        }
+
+        /* HERO */
+        .hero-project {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .7s, transform .7s;
+        }
+
+        .hero-project.visible { opacity: 1; transform: translateY(0); }
+
+        .project-kicker {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .project-kicker::before {
+            content: "";
+            display: inline-block;
+            width: 28px; height: 1px;
+            background: var(--cyan);
+        }
+
+        .project-title-main {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-title-main span { color: var(--cyan); }
+
+        .project-subtitle {
+            font-size: .95rem;
+            color: var(--text-dim);
+            line-height: 1.75;
+            max-width: 600px;
+            margin-bottom: 1.6rem;
+        }
+
+        .project-meta-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .project-meta-item {
+            padding: 7px 14px;
+            border: 1px solid rgba(0,255,255,.25);
+            background: rgba(0,255,255,.04);
+            font-size: .8rem;
+            color: var(--text);
+            border-radius: 4px;
+        }
+
+        .project-meta-item span {
+            color: var(--text-dim);
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-right: 6px;
+        }
+
+        /* VISUALS */
+        .visual-block {
+            margin-bottom: 3rem;
+        }
+
+        .visual-label {
+            font-size: .68rem;
+            text-transform: uppercase;
+            letter-spacing: .22em;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+        }
+
+        .visual-label::before {
+            content: "";
+            display: inline-block;
+            width: 18px; height: 1px;
+            background: var(--cyan);
+        }
+
+        .visual-frame {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--bg-card);
+            position: relative;
+            transition: border-color .3s, box-shadow .3s;
+        }
+
+        .visual-frame:hover {
+            border-color: rgba(0,255,255,.4);
+            box-shadow: 0 8px 40px rgba(0,255,255,.1);
+        }
+
+        .visual-frame img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            filter: brightness(.9) saturate(.9);
+            transition: filter .35s, transform .35s;
+        }
+
+        .visual-frame:hover img {
+            filter: brightness(1) saturate(1);
+            transform: scale(1.015);
+        }
+
+        /* Placeholder quand pas d'image */
+        .visual-placeholder {
+            width: 100%;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0,255,255,.02),
+                rgba(0,255,255,.02) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+        }
+
+        .visual-placeholder-icon {
+            font-size: 2.5rem;
+            opacity: .35;
+        }
+
+        .visual-placeholder-text {
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            color: var(--text-dim);
+            opacity: .6;
+        }
+
+        .visual-caption {
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: .6rem;
+        }
+
+        /* SECTION BLOCK */
+        .section-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 2.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .6s, transform .6s, border-color .3s;
+        }
+
+        .section-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-block:hover { border-color: rgba(0,255,255,.28); }
+
+        .section-block h2 {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: .1em;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .section-block p {
+            font-size: .9rem;
+            color: var(--text-dim);
+            line-height: 1.75;
+            margin-bottom: .8rem;
+        }
+
+        .section-block p:last-child { margin-bottom: 0; }
+
+        /* TAGS */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-top: .8rem;
+        }
+
+        .tag-pill {
+            padding: .35rem .85rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--text-dim);
+            background: rgba(0,255,255,.03);
+        }
+
+        /* STEPS */
+        .steps-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .75rem;
+            margin-top: .8rem;
+        }
+
+        .steps-list li {
+            font-size: .88rem;
+            color: var(--text-dim);
+            padding-left: 1.4rem;
+            position: relative;
+            line-height: 1.65;
+        }
+
+        .steps-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+        }
+
+        /* SEP */
+        .sep-line {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2.5rem 0;
+        }
+
+        /* CTA */
+        .cta-footer {
+            margin-top: 1rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cta-footer p {
+            font-size: .88rem;
+            color: var(--text-dim);
+            margin: 0;
+        }
+
+        .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .cta-button {
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: .75rem 1.8rem;
+            border-radius: 4px;
+            transition: all .3s;
+            background: var(--cyan);
+            color: #050a0e;
+            border: 1px solid var(--cyan);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 25px rgba(0,255,255,.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--cyan);
+            border: 1px solid var(--border);
+        }
+
+        .cta-button.secondary:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.15);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .6s, transform .6s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 700px) {
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: .65rem; }
+            main { padding: 90px 1.2rem 4rem; }
+            .section-block { padding: 1.4rem 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+
+    <nav>
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="about.html">À Propos</a>
+            <a href="Skills.html">Compétences</a>
+            <a href="projets.html" class="active">Projets</a>
+            <a href="veille-technologique-rugby.html">Veille Tech</a>
+            <a href="contact.html">Contact</a>
+            <a href="hobbies.html">Hobbies</a>
+        </div>
+    </nav>
+
+    <main>
+        <a href="projets.html" class="back-link fade-in">← Retour aux projets</a>
+
+        <!-- HERO -->
+        <header class="hero-project fade-in">
+            <p class="project-kicker">Application Web — 2ème année BTS</p>
+            <h1 class="project-title-main">Brasserie<br><span>Gestion de Stock</span></h1>
+            <p class="project-subtitle">
+                Application web de gestion de stock développée en 2ème année de BTS SIO.
+                Elle permet à une brasserie de suivre ses références de bières, gérer les entrées
+                et sorties de stock, et visualiser l'état des inventaires via un tableau de bord sécurisé.
+            </p>
+            <div class="project-meta-grid">
+                <div class="project-meta-item"><span>Contexte</span>Projet scolaire — BTS SIO 2ème année</div>
+                <div class="project-meta-item"><span>Rôle</span>Développement fullstack</div>
+                <div class="project-meta-item"><span>Stack</span>PHP / MySQL / HTML / CSS</div>
+                <div class="project-meta-item"><span>Année</span>2024 – 2025</div>
+            </div>
+        </header>
+
+        <!-- VISUEL 1 : AUTHENTIFICATION -->
+        <div class="visual-block fade-in">
+            <p class="visual-label">Écran 01 — Authentification</p>
+            <div class="visual-frame">
+                <!-- Remplacez src par votre capture : img/brasserie-stock-auth.png -->
+                <div class="visual-placeholder">
+                    
+                    <div class="visual-placeholder-text">Capture — Page d'authentification</div>
+                    <div class="visual-placeholder-text" style="font-size:.6rem; opacity:.4;">img/brasserie-stock-auth.png</div>
+                </div>
+                <!-- <img src="img/brasserie-stock-auth.png" alt="Page d'authentification — Brasserie Stock"> -->
+            </div>
+            <p class="visual-caption">Page de connexion sécurisée — accès restreint par identifiants</p>
+        </div>
+
+        <!-- VISUEL 2 : ACCUEIL / DASHBOARD -->
+        <div class="visual-block fade-in">
+            <p class="visual-label">Écran 02 — Tableau de bord</p>
+            <div class="visual-frame">
+                <!-- Remplacez src par votre capture : img/brasserie-stock-home.png -->
+                <div class="visual-placeholder">
+                                       <div class="visual-placeholder-text">Capture — Page d'accueil / Dashboard</div>
+                    <div class="visual-placeholder-text" style="font-size:.6rem; opacity:.4;">img/brasserie-stock-home.png</div>
+                </div>
+                <!-- <img src="img/brasserie-stock-home.png" alt="Tableau de bord — Brasserie Stock"> -->
+            </div>
+            <p class="visual-caption">Tableau de bord principal — vue globale du stock</p>
+        </div>
+
+        <!-- VISUEL 3 : EMPLACEMENT LIBRE -->
+        <div class="visual-block fade-in">
+            <p class="visual-label">Écran 03 — Vue complémentaire</p>
+            <div class="visual-frame">
+                <!-- Remplacez src par votre capture : img/brasserie-stock-view3.png -->
+                <div class="visual-placeholder">
+                    <
+                    <div class="visual-placeholder-text">Capture — Vue au choix (stock, liste, formulaire…)</div>
+                    <div class="visual-placeholder-text" style="font-size:.6rem; opacity:.4;">img/brasserie-stock-view3.png</div>
+                </div>
+                <!-- <img src="img/brasserie-stock-view3.png" alt="Vue complémentaire — Brasserie Stock"> -->
+            </div>
+            <p class="visual-caption">Vue complémentaire — à définir selon votre capture</p>
+        </div>
+
+        <hr class="sep-line">
+
+        <!-- PRÉSENTATION -->
+        <div class="section-block fade-in">
+            <h2>Présentation</h2>
+            <p>
+                Ce projet reprend l'univers de la brasserie travaillé en 1ère année, mais avec une
+                dimension applicative bien plus avancée. Il ne s'agit plus d'un site vitrine,
+                mais d'une <strong>application de gestion métier</strong> permettant à un gérant
+                ou à ses employés de piloter le stock de bières en temps réel.
+            </p>
+            <p>
+                L'accès est sécurisé par un système d'authentification. Une fois connecté,
+                l'utilisateur accède à un tableau de bord présentant l'état des stocks,
+                les alertes de rupture et les dernières opérations enregistrées.
+            </p>
+        </div>
+
+        <!-- FONCTIONNALITÉS -->
+        <div class="section-block fade-in">
+            <h2>Fonctionnalités principales</h2>
+            <ul class="steps-list">
+                <li><strong>Authentification sécurisée</strong> — connexion par identifiant et mot de passe avec gestion de session PHP.</li>
+                <li><strong>Tableau de bord</strong> — vue synthétique des stocks, alertes de seuil bas et dernières entrées/sorties.</li>
+                <li><strong>Gestion des références</strong> — ajout, modification et suppression de bières avec leurs informations (nom, type, quantité, prix).</li>
+                <li><strong>Mouvements de stock</strong> — enregistrement des entrées et sorties avec horodatage.</li>
+                <li><strong>Base de données relationnelle</strong> — stockage MySQL structuré avec plusieurs tables liées.</li>
+            </ul>
+        </div>
+
+        <!-- STACK TECHNIQUE -->
+        <div class="section-block fade-in">
+            <h2>Stack technique</h2>
+            <p>
+                Le projet est développé en <strong>PHP procédural</strong> côté serveur, avec une
+                base de données <strong>MySQL</strong> gérée via <strong>phpMyAdmin</strong>.
+                L'interface est construite en <strong>HTML / CSS</strong> pur avec une attention
+                portée à la clarté et l'ergonomie des formulaires de saisie.
+            </p>
+            <div class="tag-row">
+                <span class="tag-pill">PHP</span>
+                <span class="tag-pill">MySQL</span>
+                <span class="tag-pill">HTML / CSS</span>
+                <span class="tag-pill">phpMyAdmin</span>
+                <span class="tag-pill">Sessions PHP</span>
+                <span class="tag-pill">CRUD</span>
+                <span class="tag-pill">Authentification</span>
+                <span class="tag-pill">Gestion de stock</span>
+            </div>
+        </div>
+
+        <!-- CE QUE J'AI APPRIS -->
+        <div class="section-block fade-in">
+            <h2>Ce que ce projet m'a apporté</h2>
+            <p>
+                Ce projet m'a permis de consolider mes compétences en développement fullstack
+                dans un contexte métier concret. La gestion des sessions, la sécurisation des
+                formulaires (protection contre les injections SQL, validation serveur) et la
+                conception du schéma de base de données ont été les apprentissages clés.
+            </p>
+            <p>
+                C'est aussi un projet où j'ai dû penser <strong>UX métier</strong> : rendre
+                l'interface lisible et rapide à utiliser pour un gérant de brasserie qui n'est
+                pas nécessairement à l'aise avec les outils numériques.
+            </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-footer fade-in">
+            <p>Intéressé par ce projet ?</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="cta-button">Me contacter</a>
+                <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add("visible");
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.08 });
+
+        document.querySelectorAll(".fade-in, .section-block").forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

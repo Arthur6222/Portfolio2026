@@ -3,601 +3,603 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veille technologique Rugby & IA — Arthur PICQUE</title>
+    <title>Projets - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --cyan: #00ffff;
-            --cyan-dim: rgba(0,255,255,0.12);
-            --cyan-glow: rgba(0,255,255,0.35);
-            --bg: #050a0e;
-            --surface: #0a1218;
-            --text: #c8d8e4;
-            --muted: #5a7080;
-            --white: #ffffff;
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
+            background: var(--bg-deep);
             color: var(--text);
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
+        .grid-background {
             position: fixed;
             inset: 0;
             background-image:
-                linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             pointer-events: none;
             z-index: 0;
         }
 
+        /* ── NAVBAR UNIFIÉE ── */
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 100;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 48px;
-            background: rgba(5,10,14,0.85);
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,255,255,0.1);
+            border-bottom: 1px solid var(--border);
         }
         .logo {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 3px;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
             color: var(--cyan);
         }
-        .nav-links { display: flex; gap: 28px; }
-        .nav-links a {
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
-
-        /* ── HERO ── */
-        .hero {
-            position: relative;
-            min-height: 100vh;
+        .nav-links {
             display: flex;
-            align-items: flex-end;
-            padding: 0 48px 100px;
+            align-items: center;
+            gap: 2rem;
+        }
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--cyan); }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+        .nav-burger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--cyan);
+            border-radius: 2px;
+            transition: all .3s;
+        }
+        .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-burger.open span:nth-child(2) { opacity: 0; }
+        .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 1.2rem; }
+            .nav-burger { display: flex; }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 64px; left: 0; right: 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                background: rgba(5,10,14,.97);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem 0;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                width: 100%;
+                padding: .85rem 1.8rem;
+                font-size: .8rem;
+            }
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 2rem 6rem;
+        }
+
+        .page-header { margin-bottom: 3.5rem; }
+
+        .page-kicker {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+        .page-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 28px; height: 1px;
+            background: var(--cyan);
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 1rem;
+        }
+        .page-title span { color: var(--cyan); }
+
+        .page-subtitle {
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 520px;
+            line-height: 1.7;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            margin-bottom: 2.5rem;
+        }
+        .filter-btn {
+            padding: .45rem 1.1rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all .25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0 1.5rem;
+        }
+        .section-title h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: .1em;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .section-title h2 span { color: var(--cyan); }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .6s ease, transform .6s ease, border-color .3s, box-shadow .3s;
         }
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: url('img/rugbyhero.jpg') center/cover no-repeat;
-            filter: brightness(0.3) saturate(0.5);
-            z-index: 0;
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .hero-bg::after {
+        .project-card:hover {
+            border-color: rgba(0,255,255,.4);
+            box-shadow: 0 8px 40px rgba(0,255,255,.1);
+            transform: translateY(-4px);
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+        .project-image::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, var(--bg) 0%, transparent 60%);
+            background: linear-gradient(to bottom, transparent 40%, rgba(13,26,34,.95));
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(.8) saturate(.85);
+            transition: transform .5s ease, filter .4s;
         }
-        .hero-tag {
-            font-size: 10px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--cyan);
-            margin-bottom: 20px;
-            border: 1px solid rgba(0,255,255,0.3);
-            display: inline-block;
-            padding: 6px 14px;
-        }
-        .hero-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(60px, 10vw, 120px);
-            line-height: 0.95;
-            color: var(--white);
-            margin-bottom: 28px;
-            letter-spacing: 2px;
-        }
-        .hero-title em {
-            font-style: normal;
-            color: var(--cyan);
-            text-shadow: 0 0 40px rgba(0,255,255,0.4);
-        }
-        .hero-desc {
-            font-size: 15px;
-            color: var(--text);
-            max-width: 520px;
-            line-height: 1.8;
-            font-weight: 300;
-        }
-        .hero-scroll {
-            position: absolute;
-            bottom: 40px;
-            right: 48px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--muted);
-            z-index: 2;
-        }
-        .scroll-line {
-            width: 1px;
-            height: 50px;
-            background: linear-gradient(to bottom, var(--cyan), transparent);
-            animation: scrollAnim 2s infinite;
-        }
-        @keyframes scrollAnim {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            51% { transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
+        .project-card:hover .project-image img {
+            transform: scale(1.06);
+            filter: brightness(1) saturate(1);
         }
 
-        .back-link {
+        .project-badge {
+            position: absolute;
+            top: .9rem;
+            right: .9rem;
+            z-index: 2;
+            padding: .3rem .75rem;
+            border-radius: 999px;
+            font-size: .62rem;
+            text-transform: uppercase;
+            letter-spacing: .15em;
+            font-weight: 600;
+            background: rgba(0,255,255,.15);
+            border: 1px solid rgba(0,255,255,.4);
+            color: var(--cyan);
+        }
+
+        .project-info {
+            padding: 1.4rem 1.5rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .project-info h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: .06em;
+            color: #fff;
+            margin-bottom: .65rem;
+        }
+        .project-info p {
+            font-size: .85rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+            flex: 1;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 10px;
-            letter-spacing: 2px;
+            gap: .5rem;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .15em;
             text-transform: uppercase;
             color: var(--cyan);
             text-decoration: none;
-            padding: 10px 20px;
-            border: 1px solid rgba(0,255,255,0.2);
-            transition: all 0.3s;
-            position: relative;
-            z-index: 2;
+            padding: .6rem 1.2rem;
+            border: 1px solid rgba(0,255,255,.3);
+            border-radius: 4px;
+            align-self: flex-start;
+            transition: all .3s;
         }
-        .back-link:hover { border-color: var(--cyan); box-shadow: 0 0 20px var(--cyan-dim); }
-
-        .wrapper { max-width: 1100px; margin: 0 auto; padding: 80px 40px 120px; position: relative; z-index: 1; }
-
-        /* ── STATS ── */
-        .stat-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-            margin-bottom: 80px;
-        }
-        .stat-block {
-            background: var(--surface);
-            border: 1px solid rgba(0,255,255,0.08);
-            padding: 36px 28px;
-            text-align: center;
-            transition: border-color 0.3s;
-        }
-        .stat-block:hover { border-color: rgba(0,255,255,0.3); }
-        .stat-num {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 52px;
-            color: var(--cyan);
-            line-height: 1;
-            margin-bottom: 8px;
-            text-shadow: 0 0 30px var(--cyan-glow);
-        }
-        .stat-label {
-            font-size: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
-
-        /* ── DIVIDER ── */
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 48px;
-        }
-        .divider-line { flex: 1; height: 1px; background: rgba(0,255,255,0.1); }
-        .divider-label {
-            font-size: 9px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--cyan);
-        }
-
-        /* ── BIG CARD ── */
-        .big-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 420px;
-            border: 1px solid rgba(0,255,255,0.15);
-            overflow: hidden;
-            margin-bottom: 32px;
-            position: relative;
-            transition: border-color 0.4s;
-        }
-        .big-card:hover { border-color: rgba(0,255,255,0.4); }
-        .big-card.reverse { direction: rtl; }
-        .big-card.reverse > * { direction: ltr; }
-
-        .card-img {
-            position: relative;
-            overflow: hidden;
-        }
-        .card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-            filter: brightness(0.65) saturate(0.8);
-            transition: filter 0.5s, transform 0.6s;
-        }
-        .big-card:hover .card-img img { filter: brightness(0.85) saturate(1); transform: scale(1.04); }
-        .card-img-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, rgba(5,10,14,0.5), transparent);
-        }
-        .big-card.reverse .card-img-overlay {
-            background: linear-gradient(to left, rgba(5,10,14,0.5), transparent);
-        }
-        .card-num {
-            position: absolute;
-            top: 20px; left: 20px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: var(--cyan);
-            border: 1px solid var(--cyan-glow);
-            padding: 4px 10px;
-        }
-
-        .card-body {
-            background: var(--surface);
-            padding: 48px 44px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .card-category {
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--cyan);
-            margin-bottom: 18px;
-        }
-        .card-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 36px;
-            letter-spacing: 1px;
-            color: var(--white);
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-        .card-text {
-            font-size: 14px;
-            line-height: 1.85;
-            color: var(--muted);
-            font-weight: 300;
-            margin-bottom: 28px;
-        }
-        .card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag {
-            font-size: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--cyan);
-            border: 1px solid rgba(0,255,255,0.2);
-            padding: 5px 12px;
+        .project-link:hover {
             background: var(--cyan-dim);
-            transition: background 0.3s;
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.15);
         }
-        .tag:hover { background: rgba(0,255,255,0.18); }
 
-        /* ── TRIO ── */
-        .trio {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-            margin-bottom: 32px;
+        .projects-counter {
+            font-size: .7rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
         }
-        .trio-card {
-            position: relative;
-            height: 380px;
-            overflow: hidden;
-            cursor: default;
-        }
-        .trio-card img {
+        .projects-counter span { color: var(--cyan); }
+
+        .img-placeholder {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center;
-            filter: brightness(0.45) saturate(0.6);
-            transition: filter 0.5s, transform 0.6s;
-            display: block;
-        }
-        .trio-card:hover img { filter: brightness(0.7) saturate(1); transform: scale(1.06); }
-        .trio-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(5,10,14,0.92) 0%, transparent 60%);
+            background: var(--bg-surface);
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 28px 24px;
-        }
-        .trio-num {
-            font-size: 9px;
-            letter-spacing: 3px;
-            color: var(--cyan);
-            margin-bottom: 8px;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: .7rem;
+            letter-spacing: .15em;
             text-transform: uppercase;
         }
-        .trio-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            letter-spacing: 1px;
-            color: var(--white);
-            margin-bottom: 10px;
-            line-height: 1.1;
-        }
-        .trio-text {
-            font-size: 12px;
-            color: var(--muted);
-            line-height: 1.7;
-            font-weight: 300;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, opacity 0.4s;
-            opacity: 0;
-        }
-        .trio-card:hover .trio-text { max-height: 80px; opacity: 1; }
 
-        /* ── FOOTER BANNER ── */
-        .footer-banner {
-            border: 1px solid rgba(0,255,255,0.15);
-            background: var(--surface);
-            padding: 48px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 32px;
-            flex-wrap: wrap;
-        }
-        .footer-banner-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            letter-spacing: 2px;
-            color: var(--white);
-        }
-        .footer-banner-title span { color: var(--cyan); }
-        .footer-banner-sub {
-            font-size: 13px;
-            color: var(--muted);
-            margin-top: 6px;
-            font-weight: 300;
-        }
-
-        /* ── FADE IN ── */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 768px) {
-            nav { padding: 16px 20px; }
-            .nav-links { display: none; }
-            .hero { padding: 0 24px 60px; }
-            .wrapper { padding: 40px 20px 80px; }
-            .big-card { grid-template-columns: 1fr; min-height: auto; }
-            .big-card.reverse { direction: ltr; }
-            .trio { grid-template-columns: 1fr; }
-            .trio-card { height: 260px; }
-            .stat-row { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 700px) {
+            main { padding: 90px 1.2rem 4rem; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <div class="grid-background"></div>
 
     <nav>
         <div class="logo">PORTFOLIO — Arthur PICQUE</div>
-        <div class="nav-links">
+        <button class="nav-burger" id="burger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
             <a href="index.html">Accueil</a>
             <a href="about.html">À Propos</a>
             <a href="Skills.html">Compétences</a>
-            <a href="projets.html">Projets</a>
-            <a href="veille-technologique-rugby.html" class="active">Veille Tech</a>
+            <a href="projets.html" class="active">Projets</a>
+            <a href="veille-technologique-rugby.html">Veille Tech</a>
             <a href="contact.html">Contact</a>
             <a href="hobbies.html">Hobbies</a>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-tag">Veille Technologique 2024</div>
-            <h1 class="hero-title">Rugby<br><em>&amp; Intelligence<br>Artificielle</em></h1>
-            <p class="hero-desc">Comment l'IA transforme le rugby moderne — de l'analyse de performance à l'expérience spectateur.</p>
-        </div>
-        <div class="hero-scroll">
-            <div class="scroll-line"></div>
-            Scroll
-        </div>
-    </section>
-
-    <div class="wrapper">
-        <a href="projets.html" class="back-link fade-in">← Retour aux projets</a>
-
-        <!-- STATS -->
-        <div class="stat-row fade-in" style="margin-top: 64px;">
-            <div class="stat-block">
-                <div class="stat-num">7</div>
-                <div class="stat-label">Domaines couverts</div>
-            </div>
-            <div class="stat-block">
-                <div class="stat-num">+30%</div>
-                <div class="stat-label">Gain de performance</div>
-            </div>
-            <div class="stat-block">
-                <div class="stat-num">IA</div>
-                <div class="stat-label">Au cœur du sport</div>
-            </div>
-            <div class="stat-block">
-                <div class="stat-num">2024</div>
-                <div class="stat-label">Édition</div>
-            </div>
+    <main>
+        <div class="page-header">
+            <p class="page-kicker">Portfolio complet</p>
+            <h1 class="page-title">Mes<br><span>Projets</span></h1>
+            <p class="page-subtitle">Développement web, mobile, réseau et workshops créatifs — l'ensemble de mes réalisations.</p>
         </div>
 
-        <!-- DIVIDER -->
-        <div class="divider fade-in">
-            <div class="divider-line"></div>
-            <span class="divider-label">Performance &amp; Stratégie</span>
-            <div class="divider-line"></div>
+        <div class="filter-row">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="web">Développement</button>
+            <button class="filter-btn" data-filter="reseau">Réseau</button>
+            <button class="filter-btn" data-filter="stage">Stage</button>
+            <button class="filter-btn" data-filter="workshop">Workshop</button>
+            <button class="filter-btn" data-filter="bts">Projets BTS</button>
         </div>
 
-        <!-- CARD 1 — Analyse performances -->
-        <div class="big-card fade-in">
-            <div class="card-img">
-                <img src="img/rugbyanalyse.jpg" alt="Analyse performance rugby">
-                <div class="card-img-overlay"></div>
-                <div class="card-num">01</div>
+        <p class="projects-counter">Affichage : <span id="count">17</span> projets</p>
+
+        <div class="section-title"><h2>— <span>Stages</span></h2></div>
+        <div class="projects-grid">
+            <div class="project-card" data-cat="stage">
+                <div class="project-image">
+                    <span class="project-badge">Stage</span>
+                    <img src="img/kimple2.png" alt="Kimple">
+                </div>
+                <div class="project-info">
+                    <h3>Kimple - Plateforme Interactive</h3>
+                    <p>Missions réalisées dans le cadre de mon stage de 1ère année.</p>
+                    <a href="projets/kimple.html" class="project-link">Voir le projet →</a>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="card-category">Data &amp; Analytics</div>
-                <h2 class="card-title">Analyse des Performances Joueurs</h2>
-                <p class="card-text">L'IA traite des milliers de données en temps réel — passes, plaquages, courses — pour offrir aux coachs une lecture précise et instantanée de chaque joueur.</p>
-                <div class="card-tags">
-                    <span class="tag">Vidéo auto</span>
-                    <span class="tag">KPI individuel</span>
-                    <span class="tag">Suivi collectif</span>
+            <div class="project-card" data-cat="stage">
+                <div class="project-image">
+                    <span class="project-badge">Stage</span>
+                    <img src="img/stage-jwt.png" alt="Stage JWT">
+                </div>
+                <div class="project-info">
+                    <h3>Stage 2ème année - Plugin JWT</h3>
+                    <p>Projet de stage orienté sécurité avec la mise en place d'un plugin d'authentification JWT.</p>
+                    <a href="projet-stage-jwt.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
         </div>
 
-        <!-- CARD 2 — Stratégie -->
-        <div class="big-card reverse fade-in">
-            <div class="card-img">
-                <img src="img/rugbystrat.jpg" alt="Stratégie rugby tactique">
-                <div class="card-img-overlay"></div>
-                <div class="card-num">02</div>
+        <div class="section-title"><h2>— Projets <span>Environnement Professionnel BTS</span></h2></div>
+        <div class="projects-grid">
+            <div class="project-card" data-cat="bts web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/todolist2.png" alt="To-Do Flutter">
+                </div>
+                <div class="project-info">
+                    <h3>To-Do App Flutter</h3>
+                    <p>Application mobile de gestion de tâches développée avec Flutter. Interface simple et moderne.</p>
+                    <a href="projet-flutterflow-todo.html" class="project-link">Voir le projet →</a>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="card-category">Tactique &amp; Coaching</div>
-                <h2 class="card-title">Aide à la Stratégie</h2>
-                <p class="card-text">Analyse des habitudes adverses, simulation de scénarios, construction de plans de match précis. Les données deviennent des décisions opérationnelles.</p>
-                <div class="card-tags">
-                    <span class="tag">Plan de match</span>
-                    <span class="tag">Simulation</span>
-                    <span class="tag">Anticipation</span>
+            <div class="project-card" data-cat="bts web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/banniere.jpg" alt="BTS Brasserie">
+                </div>
+                <div class="project-info">
+                    <h3>BTS - Brasserie Terroir et Saveur</h3>
+                    <p>Site vitrine pour une brasserie artisanale célébrant le terroir local. Réalisé en 1ère année.</p>
+                    <a href="projets/brasserie.html" class="project-link">Voir le projet →</a>
+                </div>
+            </div>
+            <div class="project-card" data-cat="bts web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <div class="img-placeholder">Capture à venir</div>
+                </div>
+                <div class="project-info">
+                    <h3>Brasserie — Gestion de Stock</h3>
+                    <p>Application web de gestion de stock de bières développée en 2ème année. Authentification, tableau de bord et CRUD complet.</p>
+                    <a href="projet-brasserie-stock.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
         </div>
 
-        <!-- DIVIDER -->
-        <div class="divider fade-in">
-            <div class="divider-line"></div>
-            <span class="divider-label">Santé &amp; Prévention</span>
-            <div class="divider-line"></div>
-        </div>
-
-        <!-- TRIO -->
-        <div class="trio fade-in">
-            <div class="trio-card">
-                <img src="img/rugbytraining.jpg" alt="Entraînement rugby">
-                <div class="trio-overlay">
-                    <div class="trio-num">03 — Préparation physique</div>
-                    <div class="trio-title">Entraînement Personnalisé</div>
-                    <div class="trio-text">GPS, capteurs et IA adaptent la charge de travail à chaque profil athlétique en temps réel.</div>
+        <div class="section-title"><h2>— <span>Développement</span> Web & Mobile</h2></div>
+        <div class="projects-grid">
+            <div class="project-card" data-cat="web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/ruckby.png" alt="Ruckby">
+                </div>
+                <div class="project-info">
+                    <h3>Ruckby - Boutique en ligne</h3>
+                    <p>Site de vente en ligne développé en React. Catalogue produits, gestion du panier et interface moderne.</p>
+                    <a href="projet-ruckby.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
-            <div class="trio-card">
-                <img src="img/rugbyblessure.jpg" alt="Prévention blessures rugby">
-                <div class="trio-overlay">
-                    <div class="trio-num">04 — Médical</div>
-                    <div class="trio-title">Prévention des Blessures</div>
-                    <div class="trio-text">Détection de signaux faibles avant qu'une blessure ne survienne, via l'historique médical et la charge d'entraînement.</div>
+            <div class="project-card" data-cat="web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/nueva.png" alt="Nueva Volta">
+                </div>
+                <div class="project-info">
+                    <h3>Nueva Volta - Travel Platform</h3>
+                    <p>Plateforme de voyage immersive pour découvrir de nouvelles destinations.</p>
+                    <a href="projet-nueva-volta.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
-            <div class="trio-card">
-                <img src="img/rugbyvideo.jpg" alt="Analyse vidéo rugby">
-                <div class="trio-overlay">
-                    <div class="trio-num">05 — Vidéo</div>
-                    <div class="trio-title">Analyse Vidéo Auto</div>
-                    <div class="trio-text">Reconnaissance automatique des rucks, passes et essais. Stats exploitables sans traitement manuel.</div>
+            <div class="project-card" data-cat="web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/todohtml.png" alt="HTML To-Do">
+                </div>
+                <div class="project-info">
+                    <h3>HTML/CSS To-Do App</h3>
+                    <p>Création d'une TODOList en HTML CSS.</p>
+                    <a href="projet-todo-html.html" class="project-link">Voir le projet →</a>
+                </div>
+            </div>
+            <div class="project-card" data-cat="web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/vantime.png" alt="Vantime">
+                </div>
+                <div class="project-info">
+                    <h3>Vantime</h3>
+                    <p>Site WordPress de vente de repas pour robots en ligne (fictif).</p>
+                    <a href="projet-vantime.html" class="project-link">Voir le projet →</a>
+                </div>
+            </div>
+            <div class="project-card" data-cat="web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/pythonAPI.png" alt="API Python">
+                </div>
+                <div class="project-info">
+                    <h3>API REST Python</h3>
+                    <p>Interrogation d'une API REST en Python avec requests & Flask.</p>
+                    <a href="projet-python-api.html" class="project-link">Voir le projet →</a>
+                </div>
+            </div>
+            <div class="project-card" data-cat="web">
+                <div class="project-image">
+                    <span class="project-badge">Développement</span>
+                    <img src="img/meteo.png" alt="API Météo">
+                </div>
+                <div class="project-info">
+                    <h3>API Météo JS</h3>
+                    <p>Développement d'une API météo en JavaScript renvoyant des données exploitables côté client.</p>
+                    <a href="projet-api-meteo.html" class="project-link">Voir le projet →</a>
+                </div>
+            </div>
+            <div class="project-card" data-cat="seo">
+                <div class="project-image">
+                    <span class="project-badge">SEO</span>
+                    <img src="img/seo.png" alt="SEO">
+                </div>
+                <div class="project-info">
+                    <h3>Optimisation SEO</h3>
+                    <p>Formation sur l'importance d'un audit SEO correct et les bonnes pratiques d'optimisation.</p>
+                    <a href="projet-seo.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
         </div>
 
-        <!-- DIVIDER -->
-        <div class="divider fade-in">
-            <div class="divider-line"></div>
-            <span class="divider-label">Fan Experience &amp; Prédictions</span>
-            <div class="divider-line"></div>
-        </div>
-
-        <!-- CARD 3 — Fans -->
-        <div class="big-card fade-in">
-            <div class="card-img">
-                <img src="img/rugbyspectateur.jpg" alt="Supporters rugby">
-                <div class="card-img-overlay"></div>
-                <div class="card-num">06</div>
+        <div class="section-title"><h2>— <span>Réseau</span> & Infrastructure</h2></div>
+        <div class="projects-grid">
+            <div class="project-card" data-cat="reseau">
+                <div class="project-image">
+                    <span class="project-badge">Réseau</span>
+                    <img src="img/reseaup1.png" alt="Projet Réseau">
+                </div>
+                <div class="project-info">
+                    <h3>Projet Réseau</h3>
+                    <p>Bypass de mot de passe avec JohnTheReaper et création d'un Active Directory.</p>
+                    <a href="projet-reseau.html" class="project-link">Voir le projet →</a>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="card-category">Media &amp; Fans</div>
-                <h2 class="card-title">Expérience Spectateur Augmentée</h2>
-                <p class="card-text">Stats en direct, explication des phases de jeu, contenus personnalisés selon les préférences de chaque supporter. Le stade devient intelligent.</p>
-                <div class="card-tags">
-                    <span class="tag">Live stats</span>
-                    <span class="tag">Personnalisation</span>
-                    <span class="tag">Broadcast IA</span>
+            <div class="project-card" data-cat="reseau">
+                <div class="project-image">
+                    <span class="project-badge">Réseau</span>
+                    <img src="img/serveur.png" alt="Serveur Web">
+                </div>
+                <div class="project-info">
+                    <h3>Serveur Web</h3>
+                    <p>Montage d'un serveur web pour stocker des fichiers HTML, CSS et plus.</p>
+                    <a href="projet-serveur-web.html" class="project-link">Voir le projet →</a>
+                </div>
+            </div>
+            <div class="project-card" data-cat="reseau">
+                <div class="project-image">
+                    <span class="project-badge">Réseau</span>
+                    <img src="img/infra.png" alt="Infrastructure">
+                </div>
+                <div class="project-info">
+                    <h3>Infrastructure Réseau</h3>
+                    <p>Montage et sécurisation d'une infrastructure réseau avec Cisco Packet Tracer.</p>
+                    <a href="projet-infrastructure-reseau.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
         </div>
 
-        <!-- CARD 4 — Prédictions -->
-        <div class="big-card reverse fade-in">
-            <div class="card-img">
-                <img src="img/rugbyduel.jpg" alt="Match rugby essai">
-                <div class="card-img-overlay"></div>
-                <div class="card-num">07</div>
+        <div class="section-title"><h2>— <span>Workshops</span> Créatifs</h2></div>
+        <div class="projects-grid">
+            <div class="project-card" data-cat="workshop">
+                <div class="project-image">
+                    <span class="project-badge">Workshop</span>
+                    <img src="img/imagejames.png" alt="James Bond Workshop">
+                </div>
+                <div class="project-info">
+                    <h3>James Bond - Workshop 2025</h3>
+                    <p>Objectif : créer un gadget numérique discret façon James Bond.</p>
+                    <a href="projet-james-bond.html" class="project-link">Voir le projet →</a>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="card-category">Prédictions &amp; Modèles</div>
-                <h2 class="card-title">Probabilités &amp; Prédictions</h2>
-                <p class="card-text">Modèles prédictifs basés sur les données historiques, la forme récente des joueurs et les conditions de match pour estimer les scénarios de résultat.</p>
-                <div class="card-tags">
-                    <span class="tag">Machine Learning</span>
-                    <span class="tag">Historique</span>
-                    <span class="tag">Contexte match</span>
+            <div class="project-card" data-cat="workshop">
+                <div class="project-image">
+                    <span class="project-badge">Workshop</span>
+                    <img src="img/workshop2024.png" alt="Rube Goldberg">
+                </div>
+                <div class="project-info">
+                    <h3>Rube Goldberg Machine Workshop</h3>
+                    <p>Workshop créatif 2024 axé sur l'innovation et la construction basé sur la machine de Rube Goldberg.</p>
+                    <a href="projet-rube-goldberg.html" class="project-link">Voir le projet →</a>
                 </div>
             </div>
         </div>
 
-        <!-- FOOTER BANNER -->
-        <div class="footer-banner fade-in">
-            <div>
-                <div class="footer-banner-title">Rugby <span>&amp; IA</span> — 2024</div>
-                <div class="footer-banner-sub">Veille technologique réalisée par Arthur PICQUE · BTS SIO</div>
-            </div>
-            <a href="projets.html" class="back-link">← Retour aux projets</a>
-        </div>
-    </div>
+    </main>
 
     <script>
+        // Cards observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((e, i) => {
                 if (e.isIntersecting) {
@@ -605,9 +607,50 @@
                     observer.unobserve(e.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.05 });
+        document.querySelectorAll('.project-card').forEach(el => observer.observe(el));
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        // Filter
+        const btns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.project-card');
+        const counter = document.getElementById('count');
+        const grids = document.querySelectorAll('.projects-grid');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                let visible = 0;
+                cards.forEach(card => {
+                    const cats = card.dataset.cat || '';
+                    const show = filter === 'all' || cats.includes(filter);
+                    card.style.display = show ? '' : 'none';
+                    if (show) visible++;
+                });
+                grids.forEach(grid => {
+                    const hasVisible = [...grid.querySelectorAll('.project-card')].some(c => c.style.display !== 'none');
+                    grid.style.display = hasVisible ? '' : 'none';
+                    const title = grid.previousElementSibling;
+                    if (title && title.classList.contains('section-title')) {
+                        title.style.display = hasVisible ? '' : 'none';
+                    }
+                });
+                counter.textContent = visible;
+            });
+        });
+
+        // Burger
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            burger.classList.remove('open');
+            navLinks.classList.remove('open');
+        }));
     </script>
 </body>
 </html>
