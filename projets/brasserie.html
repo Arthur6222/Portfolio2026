@@ -33,8 +33,6 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
-        /* ── GRID BG ── */
         .grid-background {
             position: fixed; inset: 0;
             background-image:
@@ -44,7 +42,6 @@
             pointer-events: none; z-index: 0;
         }
 
-        /* ── NAV ── */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
@@ -67,7 +64,6 @@
         .nav-links a:hover,
         .nav-links a.active { color: var(--cyan); }
 
-        /* ── MAIN ── */
         main {
             position: relative; z-index: 2;
             max-width: 960px;
@@ -75,7 +71,6 @@
             padding: 110px 48px 100px;
         }
 
-        /* ── BACK LINK ── */
         .back-link {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: .68rem; letter-spacing: .25em; text-transform: uppercase;
@@ -90,7 +85,6 @@
             transform: translateX(-3px);
         }
 
-        /* ── HERO ── */
         .hero-project {
             min-height: 42vh;
             display: flex; align-items: center; justify-content: center;
@@ -149,7 +143,6 @@
             margin-bottom: 2px;
         }
 
-        /* ── COVER ── */
         .project-cover {
             margin-bottom: 56px;
             border: 1px solid var(--border);
@@ -174,7 +167,6 @@
             border-top: 1px solid var(--border);
         }
 
-        /* ── SECTION BLOCK ── */
         .section-block {
             margin-bottom: 48px;
         }
@@ -202,7 +194,6 @@
         }
         .section-block p strong { font-weight: 600; }
 
-        /* ── SCREENSHOT GRID ── */
         .screenshot-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -226,7 +217,6 @@
             border-top: 1px solid rgba(255,160,0,.2);
         }
 
-        /* ── SKILLS LIST ── */
         .skills-learned {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -248,7 +238,6 @@
             border-color: var(--cyan);
         }
 
-        /* ── TECH TAGS ── */
         .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
         .tech-tag {
             font-size: .68rem; letter-spacing: .15em;
@@ -263,14 +252,12 @@
             box-shadow: 0 0 14px rgba(255,0,255,.2);
         }
 
-        /* ── SEP ── */
         .sep-line {
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(0,255,255,.2), transparent);
             margin: 48px 0;
         }
 
-        /* ── CTA ── */
         .cta-footer {
             border-top: 1px solid var(--border);
             padding-top: 32px;
@@ -301,11 +288,9 @@
             box-shadow: 0 0 16px rgba(0,255,255,.2);
         }
 
-        /* ── FADE IN ── */
         .fade-in { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             nav { padding: 0 1.2rem; }
             .nav-links { display: none; }
@@ -450,6 +435,8 @@
         <div class="cta-footer fade-in">
             <p>Intéressé par ce type de projet design & développement ?</p>
             <div class="cta-buttons">
+                <a href="https://github.com/Arthur6222/EthurSiteFini/tree/main/EthurFinal" target="_blank" class="cta-button secondary">Voir sur GitHub</a>
+                <a href="https://trello.com/b/4rkBHo1I/trello-ethur" target="_blank" class="cta-button secondary">Voir sur Trello</a>
                 <a href="../contact.html" class="cta-button">Me contacter</a>
                 <a href="../projets.html" class="cta-button secondary">Voir d'autres projets</a>
             </div>

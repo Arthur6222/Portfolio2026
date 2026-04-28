@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,7 +33,6 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
         .grid-background {
             position: fixed;
             inset: 0;
@@ -112,7 +110,6 @@
             box-shadow: 0 0 18px rgba(0,255,255,.3);
             transform: translateX(-3px);
         }
-
         /* HERO */
         .hero-project {
             position: relative;
@@ -158,7 +155,6 @@
             line-height: 1.75;
             margin-bottom: 1.8rem;
         }
-
         .project-meta-grid {
             display: flex;
             flex-wrap: wrap;
@@ -225,7 +221,6 @@
             align-items: center;
             gap: 10px;
         }
-        
 
         .section-block p {
             font-size: .95rem;
@@ -418,7 +413,6 @@
             margin: 0;
         }
         .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-
         .cta-button {
             display: inline-block;
             padding: 10px 22px;
@@ -445,6 +439,28 @@
         .cta-button.secondary:hover {
             background: rgba(0,255,255,.08);
             border-color: var(--cyan);
+        }
+
+        /* FEATURE IMAGE */
+        .project-feature-image {
+            margin: 3rem 0;
+        }
+        .project-feature-image .project-cover-inner {
+            border: 1px solid rgba(255, 0, 255, 0.25);
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
+        }
+        .project-feature-image img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            filter: brightness(0.9) saturate(0.95);
+            transition: filter 0.35s, transform 0.35s;
+        }
+        .project-feature-image:hover img {
+            filter: brightness(1) saturate(1);
+            transform: scale(1.02);
         }
 
         /* FADE IN */
@@ -497,6 +513,7 @@
                     et organisation des tâches dans une interface simple, moderne et responsive.
                 </p>
                 <div class="project-meta-grid">
+                    <div class="project-meta-item"><span>Date</span>2025 - 2026</div>
                     <div class="project-meta-item"><span>Contexte</span>Projet mobile Flutter</div>
                     <div class="project-meta-item"><span>Rôle</span>Développement complet de l'app</div>
                     <div class="project-meta-item"><span>Framework</span>Flutter / Dart</div>
@@ -525,33 +542,6 @@
                 et les <strong>supprimer</strong> depuis une interface claire et fluide, construite entièrement
                 avec les widgets natifs de Flutter.
             </p>
-
-            <!-- PHONE MOCKUP -->
-            <div class="phone-wrap">
-                <div class="phone-frame">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                        <div class="phone-app-title">📋 Mes tâches</div>
-                        <div class="phone-task done">
-                            <div class="phone-task-dot"></div>
-                            <span class="phone-task-text">Configurer Flutter</span>
-                        </div>
-                        <div class="phone-task done">
-                            <div class="phone-task-dot"></div>
-                            <span class="phone-task-text">Créer les widgets</span>
-                        </div>
-                        <div class="phone-task">
-                            <div class="phone-task-dot"></div>
-                            <span class="phone-task-text">Gérer l'état de la liste</span>
-                        </div>
-                        <div class="phone-task">
-                            <div class="phone-task-dot"></div>
-                            <span class="phone-task-text">Tester sur émulateur</span>
-                        </div>
-                        <div class="phone-add-btn">+ Ajouter une tâche</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- FONCTIONNALITÉS -->
@@ -574,6 +564,14 @@
                     <div class="bullet-card-title">Interface native</div>
                     <p>Composants Flutter natifs (ListView, TextField, Checkbox) pour une expérience fluide et cohérente.</p>
                 </div>
+            </div>
+
+            <!-- NOUVELLE SECTION IMAGE -->
+            <div class="project-feature-image fade-in">
+                <div class="project-cover-inner">
+                    <img src="img/bddtodo.png" alt="Démonstration des fonctionnalités de l'application To-Do">
+                </div>
+                <p class="project-cover-caption">Démonstration des fonctionnalités clés de l'application</p>
             </div>
         </div>
 
@@ -626,6 +624,8 @@
         <div class="cta-footer fade-in">
             <p>Intéressé par ce type de projet Flutter ?</p>
             <div class="cta-buttons">
+                <a href="https://github.com/Arthur6222/TodoFlutterprojetPro1" target="_blank" class="cta-button secondary">Voir sur GitHub</a>
+                <a href="https://trello.com/b/jVKbJssR/projet-todoflutter" target="_blank" class="cta-button secondary">Voir sur Trello</a>
                 <a href="contact.html" class="cta-button">Me contacter</a>
                 <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
             </div>
@@ -646,4 +646,3 @@
     </script>
 </body>
 </html>
-```
