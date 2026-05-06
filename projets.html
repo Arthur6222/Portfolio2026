@@ -33,71 +33,33 @@
         }
 
         .grid-background {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background-image:
                 linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
             background-size: 50px 50px;
-            pointer-events: none;
-            z-index: 0;
+            pointer-events: none; z-index: 0;
         }
 
-        /* ── NAVBAR UNIFIÉE ── */
         nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2.5rem;
-            height: 64px;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 2.5rem; height: 64px;
             background: rgba(5,10,14,.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
         }
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.3rem;
-            letter-spacing: .15em;
-            color: var(--cyan);
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
+        .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: .15em; color: var(--cyan); }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
         .nav-links a {
-            font-size: .78rem;
-            font-weight: 500;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: color .25s;
-            white-space: nowrap;
+            font-size: .78rem; font-weight: 500; letter-spacing: .12em;
+            text-transform: uppercase; color: var(--text-dim); text-decoration: none;
+            transition: color .25s; white-space: nowrap;
         }
-        .nav-links a:hover,
-        .nav-links a.active { color: var(--cyan); }
+        .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
 
-        .nav-burger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 4px;
-            background: none;
-            border: none;
-        }
-        .nav-burger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--cyan);
-            border-radius: 2px;
-            transition: all .3s;
-        }
+        .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+        .nav-burger span { display: block; width: 24px; height: 2px; background: var(--cyan); border-radius: 2px; transition: all .3s; }
         .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav-burger.open span:nth-child(2) { opacity: 0; }
         .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -106,114 +68,81 @@
             nav { padding: 0 1.2rem; }
             .nav-burger { display: flex; }
             .nav-links {
-                display: none;
-                position: fixed;
-                top: 64px; left: 0; right: 0;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0;
-                background: rgba(5,10,14,.97);
-                border-bottom: 1px solid var(--border);
-                padding: 1rem 0;
+                display: none; position: fixed; top: 64px; left: 0; right: 0;
+                flex-direction: column; align-items: flex-start; gap: 0;
+                background: rgba(5,10,14,.97); border-bottom: 1px solid var(--border); padding: 1rem 0;
             }
             .nav-links.open { display: flex; }
-            .nav-links a {
-                width: 100%;
-                padding: .85rem 1.8rem;
-                font-size: .8rem;
-            }
+            .nav-links a { width: 100%; padding: .85rem 1.8rem; font-size: .8rem; }
         }
 
         main {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
+            position: relative; z-index: 1;
+            max-width: 1200px; margin: 0 auto;
             padding: 100px 2rem 6rem;
         }
 
-        .page-header { margin-bottom: 3.5rem; }
-
+        .page-header { margin-bottom: 3rem; }
         .page-kicker {
-            font-size: .7rem;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: var(--cyan);
-            margin-bottom: .8rem;
-            display: flex;
-            align-items: center;
-            gap: .8rem;
+            font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+            color: var(--cyan); margin-bottom: .8rem;
+            display: flex; align-items: center; gap: .8rem;
         }
-        .page-kicker::before {
-            content: '';
-            display: inline-block;
-            width: 28px; height: 1px;
-            background: var(--cyan);
-        }
-
+        .page-kicker::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--cyan); }
         .page-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: clamp(3rem, 7vw, 5.5rem);
-            line-height: .95;
-            color: #fff;
-            letter-spacing: .04em;
-            margin-bottom: 1rem;
+            line-height: .95; color: #fff; letter-spacing: .04em; margin-bottom: 1rem;
         }
         .page-title span { color: var(--cyan); }
+        .page-subtitle { font-size: .95rem; color: var(--text-dim); max-width: 520px; line-height: 1.7; }
 
-        .page-subtitle {
-            font-size: .95rem;
-            color: var(--text-dim);
-            max-width: 520px;
-            line-height: 1.7;
+        /* ── FILTRES ── */
+        .filter-label {
+            display: block;
+            font-size: .62rem; letter-spacing: .25em; text-transform: uppercase;
+            color: var(--text-dim); margin-bottom: .55rem; margin-top: 1.2rem;
         }
+        .filter-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .4rem; }
 
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .6rem;
-            margin-bottom: 2.5rem;
-        }
         .filter-btn {
-            padding: .45rem 1.1rem;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: transparent;
-            font-size: .72rem;
-            text-transform: uppercase;
-            letter-spacing: .12em;
-            color: var(--text-dim);
-            cursor: pointer;
-            transition: all .25s;
+            padding: .45rem 1.1rem; border-radius: 999px;
+            border: 1px solid var(--border); background: transparent;
+            font-size: .72rem; text-transform: uppercase; letter-spacing: .12em;
+            color: var(--text-dim); cursor: pointer; transition: all .25s;
             font-family: 'DM Sans', sans-serif;
         }
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--cyan-dim);
-            border-color: var(--cyan);
-            color: var(--cyan);
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan);
         }
 
+        .comp-filter-btn {
+            padding: .4rem 1rem; border-radius: 999px;
+            border: 1px solid rgba(255,224,102,.2); background: transparent;
+            font-size: .68rem; text-transform: uppercase; letter-spacing: .1em;
+            color: #7a6a20; cursor: pointer; transition: all .25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .comp-filter-btn:hover, .comp-filter-btn.active {
+            background: rgba(255,224,102,.1); border-color: #ffe066; color: #ffe066;
+        }
+
+        .projects-counter {
+            font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+            color: var(--text-dim); margin: 1.2rem 0 0;
+        }
+        .projects-counter span { color: var(--cyan); }
+
+        /* ── SECTIONS ── */
         .section-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 3rem 0 1.5rem;
+            display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem;
         }
         .section-title h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.6rem;
-            letter-spacing: .1em;
-            color: #fff;
-            white-space: nowrap;
+            font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+            letter-spacing: .1em; color: #fff; white-space: nowrap;
         }
         .section-title h2 span { color: var(--cyan); }
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
         .projects-grid {
             display: grid;
@@ -221,6 +150,7 @@
             gap: 1.5rem;
         }
 
+        /* ── CARTES — toujours visibles, pas d'opacity:0 ── */
         .project-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -228,13 +158,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity .6s ease, transform .6s ease, border-color .3s, box-shadow .3s;
-        }
-        .project-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+            transition: border-color .3s, box-shadow .3s, transform .3s;
         }
         .project-card:hover {
             border-color: rgba(0,255,255,.4);
@@ -242,109 +166,63 @@
             transform: translateY(-4px);
         }
 
-        .project-image {
-            position: relative;
-            overflow: hidden;
-            height: 200px;
-        }
+        .project-image { position: relative; overflow: hidden; height: 200px; }
         .project-image::after {
-            content: '';
-            position: absolute;
-            inset: 0;
+            content: ''; position: absolute; inset: 0;
             background: linear-gradient(to bottom, transparent 40%, rgba(13,26,34,.95));
         }
         .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100%; height: 100%; object-fit: cover;
             filter: brightness(.8) saturate(.85);
             transition: transform .5s ease, filter .4s;
         }
-        .project-card:hover .project-image img {
-            transform: scale(1.06);
-            filter: brightness(1) saturate(1);
-        }
+        .project-card:hover .project-image img { transform: scale(1.06); filter: brightness(1) saturate(1); }
 
         .project-badge {
-            position: absolute;
-            top: .9rem;
-            right: .9rem;
-            z-index: 2;
-            padding: .3rem .75rem;
-            border-radius: 999px;
-            font-size: .62rem;
-            text-transform: uppercase;
-            letter-spacing: .15em;
-            font-weight: 600;
-            background: rgba(0,255,255,.15);
-            border: 1px solid rgba(0,255,255,.4);
-            color: var(--cyan);
+            position: absolute; top: .9rem; right: .9rem; z-index: 2;
+            padding: .3rem .75rem; border-radius: 999px;
+            font-size: .62rem; text-transform: uppercase; letter-spacing: .15em; font-weight: 600;
+            background: rgba(0,255,255,.15); border: 1px solid rgba(0,255,255,.4); color: var(--cyan);
         }
 
         .project-info {
             padding: 1.4rem 1.5rem 1.6rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
+            display: flex; flex-direction: column; flex: 1;
         }
         .project-info h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.25rem;
-            letter-spacing: .06em;
-            color: #fff;
-            margin-bottom: .65rem;
+            font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem;
+            letter-spacing: .06em; color: #fff; margin-bottom: .65rem;
         }
         .project-info p {
-            font-size: .85rem;
-            color: var(--text-dim);
-            line-height: 1.7;
-            flex: 1;
-            margin-bottom: 1.2rem;
+            font-size: .85rem; color: var(--text-dim);
+            line-height: 1.7; flex: 1; margin-bottom: 1.2rem;
         }
 
         .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            font-size: .72rem;
-            font-weight: 600;
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            color: var(--cyan);
-            text-decoration: none;
-            padding: .6rem 1.2rem;
-            border: 1px solid rgba(0,255,255,.3);
-            border-radius: 4px;
-            align-self: flex-start;
-            transition: all .3s;
+            display: inline-flex; align-items: center; gap: .5rem;
+            font-size: .72rem; font-weight: 600; letter-spacing: .15em;
+            text-transform: uppercase; color: var(--cyan); text-decoration: none;
+            padding: .6rem 1.2rem; border: 1px solid rgba(0,255,255,.3);
+            border-radius: 4px; align-self: flex-start; transition: all .3s;
         }
         .project-link:hover {
-            background: var(--cyan-dim);
-            border-color: var(--cyan);
+            background: var(--cyan-dim); border-color: var(--cyan);
             box-shadow: 0 0 20px rgba(0,255,255,.15);
         }
 
-        .projects-counter {
-            font-size: .7rem;
-            letter-spacing: .2em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            margin-bottom: 1.5rem;
+        /* ── TAGS COMPÉTENCES ── */
+        .competences-tags {
+            display: flex; flex-wrap: wrap; gap: .4rem;
+            margin-top: .9rem; padding-top: .9rem;
+            border-top: 1px solid rgba(0,255,255,.08);
         }
-        .projects-counter span { color: var(--cyan); }
-
-        .img-placeholder {
-            width: 100%;
-            height: 100%;
-            background: var(--bg-surface);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-dim);
-            font-size: .7rem;
-            letter-spacing: .15em;
-            text-transform: uppercase;
+        .comp-tag {
+            font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
+            padding: .28rem .65rem; border-radius: 3px;
+            border: 1px solid rgba(255,224,102,.25); background: rgba(255,224,102,.05);
+            color: #ffe066; cursor: pointer; transition: all .2s; white-space: nowrap;
         }
+        .comp-tag:hover { background: rgba(255,224,102,.15); border-color: rgba(255,224,102,.6); }
 
         @media (max-width: 700px) {
             main { padding: 90px 1.2rem 4rem; }
@@ -378,7 +256,8 @@
             <p class="page-subtitle">Développement web, mobile, réseau et workshops créatifs — l'ensemble de mes réalisations.</p>
         </div>
 
-        <div class="filter-row">
+        <span class="filter-label">Par type</span>
+        <div class="filter-row" id="typeFilters">
             <button class="filter-btn active" data-filter="all">Tous</button>
             <button class="filter-btn" data-filter="web">Développement</button>
             <button class="filter-btn" data-filter="reseau">Réseau</button>
@@ -387,11 +266,24 @@
             <button class="filter-btn" data-filter="bts">Projets BTS</button>
         </div>
 
+        <span class="filter-label">Par compétence BTS SIO</span>
+        <div class="filter-row" id="compFilters">
+            <button class="comp-filter-btn active" data-comp="all">Toutes</button>
+            <button class="comp-filter-btn" data-comp="patrimoine">Gérer le patrimoine informatique</button>
+            <button class="comp-filter-btn" data-comp="incidents">Répondre aux incidents</button>
+            <button class="comp-filter-btn" data-comp="projet">Travailler en mode projet</button>
+            <button class="comp-filter-btn" data-comp="presence">Développer la présence en ligne</button>
+            <button class="comp-filter-btn" data-comp="service">Mettre à disposition des utilisateurs un service</button>
+            <button class="comp-filter-btn" data-comp="devpro">Organiser son développement professionnel</button>
+        </div>
+
         <p class="projects-counter">Affichage : <span id="count">17</span> projets</p>
 
+        <!-- STAGES -->
         <div class="section-title"><h2>— <span>Stages</span></h2></div>
         <div class="projects-grid">
-            <div class="project-card" data-cat="stage">
+
+            <div class="project-card" data-cat="stage" data-comp="projet service devpro">
                 <div class="project-image">
                     <span class="project-badge">Stage</span>
                     <img src="img/kimple2.png" alt="Kimple">
@@ -400,9 +292,19 @@
                     <h3>Stage 1ère année - Plateforme Interactive</h3>
                     <p>Missions front-end réalisées en React exclusivement.</p>
                     <a href="projets/kimple.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="stage">
+
+            <div class="project-card" data-cat="stage" data-comp="patrimoine incidents projet service devpro">
                 <div class="project-image">
                     <span class="project-badge">Stage</span>
                     <img src="img/stage-jwt.png" alt="Stage JWT">
@@ -411,13 +313,24 @@
                     <h3>Stage 2ème année - Plugin JWT</h3>
                     <p>Projet de stage orienté sécurité avec la mise en place d'un plugin d'authentification JWT.</p>
                     <a href="projet-stage-jwt.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service </span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+
+                    </div>
                 </div>
             </div>
+
         </div>
 
+        <!-- PROJETS BTS -->
         <div class="section-title"><h2>— Projets <span>Environnement Professionnel BTS</span></h2></div>
         <div class="projects-grid">
-            <div class="project-card" data-cat="bts web">
+
+            <div class="project-card" data-cat="bts web" data-comp="patrimoine incidents projet service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/todolist2.png" alt="To-Do Flutter">
@@ -426,9 +339,17 @@
                     <h3>To-Do App Flutter</h3>
                     <p>Application mobile de gestion de tâches développée avec Flutter. Interface simple et moderne.</p>
                     <a href="projet-flutterflow-todo.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service </span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat=" web">
+
+            <div class="project-card" data-cat="bts web" data-comp="presence projet patrimoine service devpro ">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/banniere.jpg" alt="BTS Brasserie">
@@ -437,9 +358,18 @@
                     <h3>BTS - Brasserie Terroir et Saveur</h3>
                     <p>Site vitrine pour une brasserie artisanale célébrant le terroir local. Réalisé en 1ère année.</p>
                     <a href="projets/brasserie.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="bts web">
+
+            <div class="project-card" data-cat="bts web" data-comp="patrimoine projet service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/banniere.jpg" alt="Gestion de Stock Brasserie">
@@ -448,13 +378,23 @@
                     <h3>Brasserie — Gestion de Stock</h3>
                     <p>Application web de gestion de stock de bières développée en 2ème année. Authentification, tableau de bord et CRUD complet.</p>
                     <a href="projet-brasserie-stock.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="projet">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-        <div class="section-title"><h2>— <span>Développement</span> Web & Mobile</h2></div>
+       
+        <div class="section-title"><h2>— <span>Développement</span> Web &amp; Mobile</h2></div>
         <div class="projects-grid">
-            <div class="project-card" data-cat="web">
+
+            <div class="project-card" data-cat="web" data-comp="presence service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/ruckby.png" alt="Ruckby">
@@ -463,9 +403,17 @@
                     <h3>Ruckby - Boutique en ligne</h3>
                     <p>Site de vente en ligne développé en React. Catalogue produits, gestion du panier et interface moderne.</p>
                     <a href="projet-ruckby.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="projet">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="web">
+
+            <div class="project-card" data-cat="web" data-comp="presence service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/nueva.png" alt="Nueva Volta">
@@ -474,9 +422,18 @@
                     <h3>Nueva Volta - Travel Platform</h3>
                     <p>Plateforme de voyage immersive pour découvrir de nouvelles destinations.</p>
                     <a href="projet-nueva-volta.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="web">
+
+            <div class="project-card" data-cat="web" data-comp="devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/todohtml.png" alt="HTML To-Do">
@@ -485,9 +442,18 @@
                     <h3>HTML/CSS To-Do App</h3>
                     <p>Création d'une TODOList en HTML CSS.</p>
                     <a href="projet-todo-html.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="web">
+
+            <div class="project-card" data-cat="web" data-comp="presence service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/vantime.png" alt="Vantime">
@@ -496,20 +462,31 @@
                     <h3>Vantime</h3>
                     <p>Site WordPress de vente de repas pour robots en ligne (fictif).</p>
                     <a href="projet-vantime.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
+                        <span class="comp-tag" data-comp="devpro">Gérer le patrimoine informatique</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="web">
+
+            <div class="project-card" data-cat="web" data-comp="service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/pythonAPI.png" alt="API Python">
                 </div>
                 <div class="project-info">
                     <h3>API REST Python</h3>
-                    <p>Interrogation d'une API REST en Python avec requests & Flask.</p>
+                    <p>Interrogation d'une API REST en Python avec requests &amp; Flask.</p>
                     <a href="projet-python-api.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
+                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="web">
+
+            <div class="project-card" data-cat="web" data-comp="service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
                     <img src="img/meteo.png" alt="API Météo">
@@ -518,9 +495,14 @@
                     <h3>API Météo JS</h3>
                     <p>Développement d'une API météo en JavaScript renvoyant des données exploitables côté client.</p>
                     <a href="projet-api-meteo.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
+                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="seo">
+
+            <div class="project-card" data-cat="web" data-comp="presence devpro">
                 <div class="project-image">
                     <span class="project-badge">SEO</span>
                     <img src="img/seo.png" alt="SEO">
@@ -529,13 +511,20 @@
                     <h3>Optimisation SEO</h3>
                     <p>Formation sur l'importance d'un audit SEO correct et les bonnes pratiques d'optimisation.</p>
                     <a href="projet-seo.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-        <div class="section-title"><h2>— <span>Réseau</span> & Infrastructure</h2></div>
+        <!-- RÉSEAU -->
+        <div class="section-title"><h2>— <span>Réseau</span> &amp; Infrastructure</h2></div>
         <div class="projects-grid">
-            <div class="project-card" data-cat="reseau">
+
+            <div class="project-card" data-cat="reseau" data-comp="patrimoine incidents projet">
                 <div class="project-image">
                     <span class="project-badge">Réseau</span>
                     <img src="img/reseaup1.png" alt="Projet Réseau">
@@ -544,9 +533,15 @@
                     <h3>Projet Réseau</h3>
                     <p>Bypass de mot de passe avec JohnTheReaper et création d'un Active Directory.</p>
                     <a href="projet-reseau.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="reseau">
+
+            <div class="project-card" data-cat="reseau" data-comp="patrimoine incidents service">
                 <div class="project-image">
                     <span class="project-badge">Réseau</span>
                     <img src="img/serveur.png" alt="Serveur Web">
@@ -555,9 +550,15 @@
                     <h3>Serveur Web</h3>
                     <p>Montage d'un serveur web pour stocker des fichiers HTML, CSS et plus.</p>
                     <a href="projet-serveur-web.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="reseau">
+
+            <div class="project-card" data-cat="reseau" data-comp="patrimoine incidents projet service">
                 <div class="project-image">
                     <span class="project-badge">Réseau</span>
                     <img src="img/infra.png" alt="Infrastructure">
@@ -566,13 +567,22 @@
                     <h3>Infrastructure Réseau</h3>
                     <p>Montage et sécurisation d'une infrastructure réseau avec Cisco Packet Tracer.</p>
                     <a href="projet-infrastructure-reseau.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
+                    </div>
                 </div>
             </div>
+
         </div>
 
+        <!-- WORKSHOPS -->
         <div class="section-title"><h2>— <span>Workshops</span> Créatifs</h2></div>
         <div class="projects-grid">
-            <div class="project-card" data-cat="workshop">
+
+            <div class="project-card" data-cat="workshop" data-comp="projet devpro">
                 <div class="project-image">
                     <span class="project-badge">Workshop</span>
                     <img src="img/imagejames.png" alt="James Bond Workshop">
@@ -581,9 +591,14 @@
                     <h3>James Bond - Workshop 2025</h3>
                     <p>Objectif : créer un gadget numérique discret façon James Bond.</p>
                     <a href="projet-james-bond.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card" data-cat="workshop">
+
+            <div class="project-card" data-cat="workshop" data-comp="projet devpro">
                 <div class="project-image">
                     <span class="project-badge">Workshop</span>
                     <img src="img/workshop2024.png" alt="Rube Goldberg">
@@ -592,56 +607,88 @@
                     <h3>Rube Goldberg Machine Workshop</h3>
                     <p>Workshop créatif 2024 axé sur l'innovation et la construction basé sur la machine de Rube Goldberg.</p>
                     <a href="projet-rube-goldberg.html" class="project-link">Voir le projet →</a>
+                    <div class="competences-tags">
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
+                    </div>
                 </div>
             </div>
+
         </div>
 
     </main>
 
     <script>
-        // Cards observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((e, i) => {
-                if (e.isIntersecting) {
-                    setTimeout(() => e.target.classList.add('visible'), i * 80);
-                    observer.unobserve(e.target);
-                }
+        const typeBtns = document.querySelectorAll('#typeFilters .filter-btn');
+        const compBtns = document.querySelectorAll('#compFilters .comp-filter-btn');
+        const cards    = document.querySelectorAll('.project-card');
+        const counter  = document.getElementById('count');
+        const grids    = document.querySelectorAll('.projects-grid');
+
+        let activeType = 'all';
+        let activeComp = 'all';
+
+        function applyFilters() {
+            let visible = 0;
+            cards.forEach(card => {
+                const cats  = (card.dataset.cat  || '').trim().split(/\s+/);
+                const comps = (card.dataset.comp || '').trim().split(/\s+/);
+                const typeOk = activeType === 'all' || cats.includes(activeType);
+                const compOk = activeComp === 'all' || comps.includes(activeComp);
+                const show   = typeOk && compOk;
+                card.style.display = show ? '' : 'none';
+                if (show) visible++;
             });
-        }, { threshold: 0.05 });
-        document.querySelectorAll('.project-card').forEach(el => observer.observe(el));
+            grids.forEach(grid => {
+                const any = [...grid.querySelectorAll('.project-card')].some(c => c.style.display !== 'none');
+                grid.style.display = any ? '' : 'none';
+                const title = grid.previousElementSibling;
+                if (title && title.classList.contains('section-title')) title.style.display = any ? '' : 'none';
+            });
+            counter.textContent = visible;
+        }
 
-        // Filter
-        const btns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.project-card');
-        const counter = document.getElementById('count');
-        const grids = document.querySelectorAll('.projects-grid');
+        typeBtns.forEach(btn => btn.addEventListener('click', () => {
+            typeBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeType = btn.dataset.filter;
+            applyFilters();
+        }));
 
-        btns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                btns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const filter = btn.dataset.filter;
-                let visible = 0;
-                cards.forEach(card => {
-                    const cats = card.dataset.cat || '';
-                    const show = filter === 'all' || cats.includes(filter);
-                    card.style.display = show ? '' : 'none';
-                    if (show) visible++;
-                });
-                grids.forEach(grid => {
-                    const hasVisible = [...grid.querySelectorAll('.project-card')].some(c => c.style.display !== 'none');
-                    grid.style.display = hasVisible ? '' : 'none';
-                    const title = grid.previousElementSibling;
-                    if (title && title.classList.contains('section-title')) {
-                        title.style.display = hasVisible ? '' : 'none';
-                    }
-                });
-                counter.textContent = visible;
+        compBtns.forEach(btn => btn.addEventListener('click', () => {
+            compBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeComp = btn.dataset.comp;
+            applyFilters();
+        }));
+
+        document.querySelectorAll('.comp-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                const comp = tag.dataset.comp;
+                compBtns.forEach(b => b.classList.remove('active'));
+                const target = document.querySelector('.comp-filter-btn[data-comp="' + comp + '"]');
+                if (target) { target.classList.add('active'); target.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+                activeComp = comp;
+                applyFilters();
             });
         });
 
-        // Burger
-        const burger = document.getElementById('burger');
+        // Lien depuis Skills.html avec ?comp=xxx
+        const urlParams = new URLSearchParams(window.location.search);
+        const compParam = urlParams.get('comp');
+        if (compParam) {
+            const target = document.querySelector('.comp-filter-btn[data-comp="' + compParam + '"]');
+            if (target) {
+                compBtns.forEach(b => b.classList.remove('active'));
+                target.classList.add('active');
+                activeComp = compParam;
+                applyFilters();
+                setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+            }
+        }
+
+        // Burger menu
+        const burger   = document.getElementById('burger');
         const navLinks = document.getElementById('navLinks');
         burger.addEventListener('click', () => {
             burger.classList.toggle('open');

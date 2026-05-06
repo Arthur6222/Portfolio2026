@@ -230,12 +230,28 @@
             text-transform: uppercase; padding: 9px 16px;
             border: 1px solid rgba(0,255,255,.2);
             background: var(--cyan-dim); color: var(--text);
-            transition: all .3s; cursor: default;
+            transition: all .3s; cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .professional-badge::after {
+            content: '→';
+            font-size: .65rem;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: all .25s;
+            color: var(--cyan);
         }
         .professional-badge:hover {
             border-color: var(--cyan);
             background: rgba(0,255,255,.12);
             color: #fff;
+        }
+        .professional-badge:hover::after {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .tools-section { margin-bottom: 80px; }
@@ -385,13 +401,26 @@
 
         <div class="professional-skills fade-in">
             <div class="section-title">Référentiel <span>BTS SIO</span></div>
+            <p style="font-size:.8rem;color:var(--muted);margin-bottom:1.2rem;letter-spacing:.05em;">Cliquez sur une compétence pour voir les projets associés →</p>
             <div class="professional-grid">
-                <span class="professional-badge">Travailler en mode projet</span>
-                <span class="professional-badge">Gérer le patrimoine informatique</span>
-                <span class="professional-badge">Répondre aux incidents et aux demandes d'assistance</span>
-                <span class="professional-badge">Développer la présence en ligne de l'organisation</span>
-                <span class="professional-badge">Mettre à disposition un service informatique</span>
-                <span class="professional-badge">Organiser son développement professionnel</span>
+                <a href="projets.html?comp=projet" class="professional-badge">
+                    <span>Travailler en mode projet</span>
+                </a>
+                <a href="projets.html?comp=patrimoine" class="professional-badge">
+                    <span>Gérer le patrimoine informatique</span>
+                </a>
+                <a href="projets.html?comp=incidents" class="professional-badge">
+                    <span>Répondre aux incidents et aux demandes d'assistance</span>
+                </a>
+                <a href="projets.html?comp=presence" class="professional-badge">
+                    <span>Développer la présence en ligne de l'organisation</span>
+                </a>
+                <a href="projets.html?comp=service" class="professional-badge">
+                    <span>Mettre à disposition un service informatique</span>
+                </a>
+                <a href="projets.html?comp=devpro" class="professional-badge">
+                    <span>Organiser son développement professionnel</span>
+                </a>
             </div>
         </div>
 
