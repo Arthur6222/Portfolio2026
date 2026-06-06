@@ -97,7 +97,7 @@
         .page-title span { color: var(--cyan); }
         .page-subtitle { font-size: .95rem; color: var(--text-dim); max-width: 520px; line-height: 1.7; }
 
-        /* ── FILTRES ── */
+  
         .filter-label {
             display: block;
             font-size: .62rem; letter-spacing: .25em; text-transform: uppercase;
@@ -133,7 +133,6 @@
         }
         .projects-counter span { color: var(--cyan); }
 
-        /* ── SECTIONS ── */
         .section-title {
             display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem;
         }
@@ -150,7 +149,7 @@
             gap: 1.5rem;
         }
 
-        /* ── CARTES — toujours visibles, pas d'opacity:0 ── */
+   
         .project-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -210,7 +209,6 @@
             box-shadow: 0 0 20px rgba(0,255,255,.15);
         }
 
-        /* ── TAGS COMPÉTENCES ── */
         .competences-tags {
             display: flex; flex-wrap: wrap; gap: .4rem;
             margin-top: .9rem; padding-top: .9rem;
@@ -279,7 +277,7 @@
 
         <p class="projects-counter">Affichage : <span id="count">17</span> projets</p>
 
-        <!-- STAGES -->
+
         <div class="section-title"><h2>— <span>Stages</span></h2></div>
         <div class="projects-grid">
 
@@ -342,7 +340,6 @@
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
                         <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
-                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
                         <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service </span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
                     </div>
@@ -369,6 +366,23 @@
                 </div>
             </div>
 
+            <div class="project-card" data-cat="bts" data-comp="patrimoine service projet devpro">
+    <div class="project-image">
+        <span class="project-badge">Développement</span>
+        <img src="img/glpi.png" alt="UNGLPI">
+    </div>
+    <div class="project-info">
+        <h3>UNGLPI — Épreuve E6</h3>
+        <p>Projet BTS SIO : déploiement d'un serveur GLPI sur machine virtuelle pour gérer le patrimoine informatique dans le cadre de l'épreuve E6.</p>
+        <a href="projet-unglpi.html" class="project-link">Voir le projet →</a>
+        <div class="competences-tags">
+            <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+            <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
+            <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+        </div>
+    </div>
+</div>
+
             <div class="project-card" data-cat="bts web" data-comp="patrimoine projet service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
@@ -383,7 +397,7 @@
                         <span class="comp-tag" data-comp="projet">Développer la présence en ligne</span>
                         <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
-                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                        
                     </div>
                 </div>
             </div>
@@ -406,7 +420,6 @@
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
                         <span class="comp-tag" data-comp="projet">Développer la présence en ligne</span>
-                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
                         <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
                     </div>
@@ -425,7 +438,7 @@
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
-                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        
                         <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
                         <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
@@ -445,9 +458,7 @@
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
-                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
                         <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
-                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
                     </div>
                 </div>
@@ -470,6 +481,24 @@
                 </div>
             </div>
 
+
+                         <div class="project-card" data-cat="dev" data-comp="">
+    <div class="project-image">
+        <span class="project-badge">Développement</span>
+        <img src="img/symfony.png" alt="Messagerie Symfony">
+    </div>
+    <div class="project-info">
+        <h3>Serveur Symfony — Messagerie en ligne</h3>
+        <p>Application complète de messagerie avec Symfony 6.4, Doctrine ORM et Twig. Gestion des utilisateurs, conversations et messages sécurisés.</p>
+        <a href="projet-messagerie-symfony.html" class="project-link">Voir le projet →</a>
+        <div class="competences-tags">
+            <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+            <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+            <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+        </div>
+    </div>
+</div>
+
             <div class="project-card" data-cat="web" data-comp="service devpro">
                 <div class="project-image">
                     <span class="project-badge">Développement</span>
@@ -481,7 +510,9 @@
                     <a href="projet-python-api.html" class="project-link">Voir le projet →</a>
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
-                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
                     </div>
                 </div>
             </div>
@@ -496,27 +527,18 @@
                     <p>Développement d'une API météo en JavaScript renvoyant des données exploitables côté client.</p>
                     <a href="projet-api-meteo.html" class="project-link">Voir le projet →</a>
                     <div class="competences-tags">
-                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
-                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
+                        
+                       <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                        <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
+                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
+
+
                     </div>
                 </div>
             </div>
 
-            <div class="project-card" data-cat="web" data-comp="presence devpro">
-                <div class="project-image">
-                    <span class="project-badge">SEO</span>
-                    <img src="img/seo.png" alt="SEO">
-                </div>
-                <div class="project-info">
-                    <h3>Optimisation SEO</h3>
-                    <p>Formation sur l'importance d'un audit SEO correct et les bonnes pratiques d'optimisation.</p>
-                    <a href="projet-seo.html" class="project-link">Voir le projet →</a>
-                    <div class="competences-tags">
-                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
-                        <span class="comp-tag" data-comp="devpro">Développement pro</span>
-                    </div>
-                </div>
-            </div>
 
         </div>
 
@@ -535,7 +557,7 @@
                     <a href="projet-reseau.html" class="project-link">Voir le projet →</a>
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
-                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
                         <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
                     </div>
                 </div>
@@ -558,6 +580,10 @@
                 </div>
             </div>
 
+   
+
+
+
             <div class="project-card" data-cat="reseau" data-comp="patrimoine incidents projet service">
                 <div class="project-image">
                     <span class="project-badge">Réseau</span>
@@ -569,16 +595,14 @@
                     <a href="projet-infrastructure-reseau.html" class="project-link">Voir le projet →</a>
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
-                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
+                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
                         <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
-                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- WORKSHOPS -->
         <div class="section-title"><h2>— <span>Workshops</span> Créatifs</h2></div>
         <div class="projects-grid">
 

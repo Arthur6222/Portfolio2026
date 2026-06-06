@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet UNGLPI — Épreuve E6 | Portfolio Arthur PICQUE</title>
+    <meta name="description" content="Projet de formation BTS SIO : déploiement d'un serveur GLPI sur une machine virtuelle pour gérer le patrimoine informatique dans le cadre de l'épreuve E6.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --magenta:    #ff00ff;
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(5,10,14,.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: .15em;
+            color: var(--cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color .25s;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cyan);
+        }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .nav-burger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--cyan);
+            border-radius: 2px;
+            transition: all .3s;
+        }
+
+        .nav-burger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-burger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 1.2rem;
+            }
+            .nav-burger {
+                display: flex;
+            }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                background: rgba(5,10,14,.97);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem 0;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links a {
+                width: 100%;
+                padding: .85rem 1.8rem;
+                font-size: .8rem;
+            }
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 2rem 6rem;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-kicker {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .page-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--cyan);
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 1rem;
+        }
+
+        .page-title span {
+            color: var(--cyan);
+        }
+
+        .page-subtitle {
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 520px;
+            line-height: 1.7;
+        }
+
+        .section-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-block h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: .08em;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-block h2 span {
+            color: var(--cyan);
+        }
+
+        .section-block p {
+            font-size: .92rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section-block strong {
+            color: var(--cyan);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            text-decoration: none;
+            padding: .6rem 1.2rem;
+            border: 1px solid rgba(0,255,255,.3);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            transition: all .3s;
+        }
+
+        .back-link:hover {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.15);
+        }
+
+        .project-cover {
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .project-cover-inner {
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .project-cover img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.5);
+        }
+
+        .project-cover-caption {
+            text-align: center;
+            font-size: .8rem;
+            color: var(--text-dim);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-card {
+            background: rgba(0,0,0,.2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: border-color .3s;
+        }
+
+        .gallery-card:hover {
+            border-color: var(--cyan);
+        }
+
+        .gallery-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: .8rem;
+            letter-spacing: .05em;
+        }
+
+        .gallery-card p {
+            font-size: .9rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: step;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: .5rem;
+        }
+
+        .steps-list li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 52px;
+            font-size: .93rem;
+            color: var(--text-dim);
+            line-height: 1.75;
+        }
+
+        .steps-list li::before {
+            content: counter(step, decimal-leading-zero);
+            position: absolute;
+            left: 0;
+            top: -2px;
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--magenta);
+            letter-spacing: .1em;
+        }
+
+        .steps-list li strong {
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            margin-top: 1.2rem;
+        }
+
+        .tag-pill {
+            font-size: .6rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            padding: .4rem .8rem;
+            border-radius: 999px;
+            background: rgba(0,255,255,.1);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+        }
+
+        .cta-footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .cta-footer p {
+            font-size: .95rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: .8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .7rem 1.5rem;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all .3s;
+            border: 1px solid var(--cyan);
+            color: var(--bg-deep);
+            background: var(--cyan);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.25);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--cyan);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--cyan-dim);
+        }
+
+        @media (max-width: 700px) {
+            main {
+                padding: 90px 1.2rem 4rem;
+            }
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <nav>
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
+        <button class="nav-burger" id="burger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Accueil</a>
+            <a href="about.html">À Propos</a>
+            <a href="Skills.html">Compétences</a>
+            <a href="projets.html" class="active">Projets</a>
+            <a href="veille-technologique-rugby.html">Veille Tech</a>
+            <a href="contact.html">Contact</a>
+            <a href="hobbies.html">Hobbies</a>
+        </div>
+    </nav>
+
+    <main>
+        <a href="projets.html" class="back-link">← Retour aux projets</a>
+
+        <header class="project-hero">
+            <p class="project-kicker">Projet BTS SIO</p>
+            <h1 class="project-title-main">
+                UNGLPI<br>
+                <span>Épreuve E6</span>
+            </h1>
+            <p class="project-subtitle">
+                Projet de formation BTS SIO : déploiement d'un serveur GLPI sur une machine virtuelle pour gérer le patrimoine informatique dans le cadre de l'épreuve E6.
+            </p>
+            <div class="project-meta-grid">
+                <div class="project-meta-item">
+                    <span>Contexte</span>Projet scolaire (BTS SIO 2ème année)
+                </div>
+                <div class="project-meta-item">
+                    <span>Rôle</span>Administration système & gestion de parc
+                </div>
+                <div class="project-meta-item">
+                    <span>Outils principaux</span>GLPI, VirtualBox, Debian
+                </div>
+            </div>
+        </header>
+
+        <div class="project-cover fade-in">
+            <div class="project-cover-inner">
+                <img src="img/unglpi-dashboard.png" alt="Interface GLPI">
+            </div>
+            <p class="project-cover-caption">Interface d'administration GLPI — Tableau de bord principal</p>
+        </div>
+
+        <div class="section-block fade-in">
+            <h2>Présentation du projet</h2>
+            <p>
+                Ce projet s'inscrit dans le cadre de l'épreuve <strong>E6 "Parcours de Professionnalisation"</strong> du BTS SIO. L'objectif était de déployer une solution de gestion de parc informatique (GLPI) sur une machine virtuelle pour répondre aux besoins d'une organisation fictive.
+            </p>
+            <p>
+                Le projet a permis de mettre en pratique les compétences acquises en administration système, virtualisation et gestion de parc, tout en respectant les contraintes techniques et pédagogiques de l'épreuve.
+            </p>
+        </div>
+
+        <div class="section-block fade-in">
+            <h2>Architecture technique</h2>
+            <p>
+                L'infrastructure repose sur une machine virtuelle Debian hébergée sous VirtualBox, avec les composants suivants :
+            </p>
+            <div class="gallery">
+                <div class="gallery-card">
+                    <h3>Serveur GLPI</h3>
+                    <p>Version 10.0.10 installée sur une VM Debian 12 avec Apache, PHP 8.2 et MariaDB.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Virtualisation</h3>
+                    <p>VirtualBox 7.0 utilisé pour créer une VM avec 2 vCPU, 4 Go de RAM et 30 Go de stockage.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Base de données</h3>
+                    <p>MariaDB 10.11 pour stocker les données du parc informatique et des utilisateurs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block fade-in">
+            <h2>Étapes de déploiement</h2>
+            <ol class="steps-list">
+                <li><strong>Préparation de l'environnement</strong> — Installation de Debian 12 sur VirtualBox avec configuration réseau (NAT + Host-only).</li>
+                <li><strong>Installation des dépendances</strong> — Mise en place d'Apache, PHP 8.2, MariaDB et des extensions nécessaires.</li>
+                <li><strong>Configuration de GLPI</strong> — Téléchargement, extraction et configuration initiale via l'interface web.</li>
+                <li><strong>Création de la base de données</strong> — Import du schéma SQL et configuration des identifiants.</li>
+                <li><strong>Sécurisation du serveur</strong> — Configuration des pare-feux, mises à jour système et sauvegardes automatiques.</li>
+                <li><strong>Tests et validation</strong> — Vérification du bon fonctionnement des fonctionnalités principales (inventaire, tickets, gestion des utilisateurs).</li>
+            </ol>
+        </div>
+
+        <div class="section-block fade-in">
+            <h2>Fonctionnalités implémentées</h2>
+            <div class="tag-row">
+                <span class="tag-pill">Gestion de parc</span>
+                <span class="tag-pill">Inventaire matériel</span>
+                <span class="tag-pill">Tickets utilisateurs</span>
+                <span class="tag-pill">Base de connaissances</span>
+                <span class="tag-pill">Rapports personnalisés</span>
+                <span class="tag-pill">Sauvegardes automatisées</span>
+                <span class="tag-pill">Sécurité réseau</span>
+            </div>
+        </div>
+
+        <div class="section-block fade-in">
+            <h2>Défis techniques rencontrés</h2>
+            <p>
+                Plusieurs obstacles ont été surmontés lors de ce projet :
+            </p>
+            <ul class="steps-list">
+                <li><strong>Problème de permissions</strong> — Résolu en configurant correctement les droits Apache sur les dossiers GLPI.</li>
+                <li><strong>Conflits de versions PHP</strong> — Solution : mise à jour vers PHP 8.2 et installation des extensions manquantes.</li>
+                <li><strong>Sauvegardes non fonctionnelles</strong> — Identification d'un problème de quota disque, corrigé via la configuration de LVM.</li>
+                <li><strong>Performances limitées</strong> — Optimisation de la VM (ajout de RAM, configuration du cache) pour une meilleure réactivité.</li>
+            </ul>
+        </div>
+
+        <div class="section-block fade-in">
+            <h2>Bilan personnel</h2>
+            <p>
+                Ce projet m'a permis de consolider mes compétences en administration système et gestion de parc informatique. J'ai particulièrement apprécié :
+            </p>
+            <ul class="steps-list">
+                <li>La mise en pratique des connaissances théoriques sur la virtualisation et la sécurité.</li>
+                <li>L'expérience de déploiement d'une solution open source complexe comme GLPI.</li>
+                <li>La résolution de problèmes techniques concrets, qui m'a donné confiance pour mes futurs projets professionnels.</li>
+            </ul>
+            <p>
+                Ce travail s'inscrit parfaitement dans le cadre de l'épreuve E6, démontrant ma capacité à gérer un projet complet de A à Z dans un environnement professionnel simulé.
+            </p>
+        </div>
+
+        <div class="section-block fade-in">
+            <h2>Technologies & compétences</h2>
+            <div class="tag-row">
+                <span class="tag-pill">GLPI</span>
+                <span class="tag-pill">VirtualBox</span>
+                <span class="tag-pill">Debian</span>
+                <span class="tag-pill">MariaDB</span>
+                <span class="tag-pill">Apache</span>
+                <span class="tag-pill">PHP 8.2</span>
+                <span class="tag-pill">Gestion de parc</span>
+                <span class="tag-pill">Sécurité réseau</span>
+                <span class="tag-pill">BTS SIO</span>
+                <span class="tag-pill">Épreuve E6</span>
+            </div>
+        </div>
+
+        <div class="cta-footer fade-in">
+            <p>Intéressé par ce projet ou par la gestion de parc informatique ?</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="cta-button">Me contacter</a>
+                <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+                <a href="https://trello.com/b/CCpO7sD6/proj-sys-glpi-systeme" class="cta-button secondary">Voir sur Trello</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Burger menu
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            burger.classList.remove('open');
+            navLinks.classList.remove('open');
+        }));
+    </script>
+</body>
+</html>

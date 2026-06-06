@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Symfony — Messagerie en ligne | Portfolio Arthur PICQUE</title>
+    <meta name="description" content="Développement d'un serveur de messagerie en ligne avec Symfony, Doctrine et Twig pour gérer les utilisateurs, les messages et les conversations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep:    #050a0e;
+            --bg-surface: #0a1218;
+            --bg-card:    #0d1a22;
+            --cyan:       #00ffff;
+            --cyan-dim:   rgba(0,255,255,.08);
+            --cyan-mid:   rgba(0,255,255,.25);
+            --magenta:    #ff00ff;
+            --text:       #c8d8e4;
+            --text-dim:   #6a8a9a;
+            --border:     rgba(0,255,255,.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0,255,255,.02) 0%, transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(255,0,255,.02) 0%, transparent 40%),
+                linear-gradient(to bottom right, var(--bg-deep) 0%, var(--bg-surface) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(5,10,14,.75);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: .85rem;
+            letter-spacing: .1em;
+            color: var(--cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: .75rem;
+            font-weight: 400;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            transition: color .3s;
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--cyan); }
+        .nav-links a.active {
+            color: var(--cyan);
+            font-weight: 500;
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--cyan);
+        }
+
+        /* MAIN */
+        main {
+            padding: 100px 3rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: .7rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            transition: color .3s;
+        }
+
+        .back-link:hover { color: var(--cyan); }
+
+        /* HERO */
+        .project-hero {
+            margin-bottom: 4rem;
+            padding: 0 2rem;
+        }
+
+        .project-kicker {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .project-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--cyan);
+        }
+
+        .project-title-main {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 1rem;
+        }
+
+        .project-title-main span {
+            color: var(--cyan);
+        }
+
+        .project-subtitle {
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .project-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
+        }
+
+        .project-meta-item span {
+            font-size: .65rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* COVER */
+        .project-cover {
+            margin: 3rem 0;
+            padding: 0 2rem;
+        }
+
+        .project-cover-inner {
+            border: 1px solid var(--border);
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0,255,255,.15);
+            margin-bottom: 1rem;
+        }
+
+        .project-cover img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            filter: brightness(.9) saturate(.95);
+            transition: filter .35s, transform .35s;
+        }
+
+        .project-cover:hover img {
+            filter: brightness(1) saturate(1);
+            transform: scale(1.02);
+        }
+
+        .project-cover-caption {
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: .6rem;
+        }
+
+        /* SECTIONS */
+        .section-block {
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+
+        .section-block h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #fff;
+            letter-spacing: .03em;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: .8rem;
+        }
+
+        .section-block h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--cyan);
+        }
+
+        .section-block.accent-left h2::after {
+            background: var(--magenta);
+        }
+
+        .section-block p {
+            font-size: .95rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1.2rem;
+            max-width: 800px;
+        }
+
+        .section-block p strong {
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        /* CODE BLOCK */
+        .code-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: .85rem;
+            line-height: 1.6;
+        }
+
+        .code-block .keyword { color: #ff80ab; }
+        .code-block .string { color: #a5d6a7; }
+        .code-block .comment { color: var(--text-dim); }
+        .code-block .annotation { color: #81d4fa; }
+
+        /* TAGS */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .7rem;
+            margin: 1.5rem 0;
+        }
+
+        .tag-pill {
+            padding: .5rem 1rem;
+            font-size: .7rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            border-radius: 20px;
+            background: var(--cyan-dim);
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+        }
+
+        /* CTA */
+        .cta-footer {
+            margin: 4rem 0;
+            padding: 0 2rem;
+        }
+
+        .cta-footer p {
+            font-size: .9rem;
+            color: var(--text-dim);
+            margin-bottom: 1.2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: .8rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .7rem 1.5rem;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all .3s;
+            border: 1px solid var(--cyan);
+            color: var(--bg-deep);
+            background: var(--cyan);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,255,.25);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--cyan);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--cyan-dim);
+        }
+
+        .cta-button.download {
+            gap: .6rem;
+        }
+
+        .download-block {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            padding: 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .download-block-info {
+            flex: 1;
+        }
+
+        .download-block-info strong {
+            display: block;
+            color: var(--cyan);
+            margin-bottom: .3rem;
+        }
+
+        .download-block-info p {
+            font-size: .8rem;
+            color: var(--text-dim);
+            margin: 0;
+        }
+
+        /* FADE */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* GALLERY */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: border-color .3s;
+        }
+
+        .gallery-card:hover {
+            border-color: var(--cyan);
+        }
+
+        .gallery-card h3 {
+            color: var(--cyan);
+            font-size: 1.1rem;
+            margin-bottom: .8rem;
+        }
+
+        .gallery-card p {
+            font-size: .9rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        /* MEDIA QUERIES */
+        @media (max-width: 768px) {
+            nav { padding: 0 1.2rem; }
+            .nav-links { gap: 1.2rem; }
+            .nav-links a { font-size: .7rem; }
+            main { padding: 90px 1.2rem 4rem; }
+            .hero-project { padding: 2.5rem 1.5rem; }
+            .project-meta-grid { grid-template-columns: 1fr; }
+            .download-block { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+
+    <nav>
+        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="about.html">À Propos</a>
+            <a href="Skills.html">Compétences</a>
+            <a href="projets.html" class="active">Projets</a>
+            <a href="veille-technologique-rugby.html">Veille Tech</a>
+            <a href="contact.html">Contact</a>
+            <a href="hobbies.html">Hobbies</a>
+        </div>
+    </nav>
+
+    <main>
+        <a href="projets.html" class="back-link">← Retour aux projets</a>
+
+        <!-- HERO -->
+        <header class="project-hero fade-in">
+            <div class="hero-inner">
+                <p class="project-kicker">Développement Web</p>
+                <h1 class="project-title-main">Serveur <span>Messagerie</span><br>Symfony</h1>
+                <p class="project-subtitle">
+                    Développement d'une application de messagerie en ligne complète avec Symfony, Doctrine ORM et Twig.
+                    Gestion des utilisateurs, des conversations et des messages en temps réel.
+                </p>
+                <div class="project-meta-grid">
+                    <div class="project-meta-item"><span>Contexte</span>Projet scolaire & personnel</div>
+                    <div class="project-meta-item"><span>Rôle</span>Développeur Full-Stack</div>
+                    <div class="project-meta-item"><span>Environnement</span>Symfony 6.4 / PHP 8.2 / MySQL</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- COVER -->
+        <div class="project-cover fade-in">
+            <div class="project-cover-inner">
+                <img src="img/messagerie-symfony.png" alt="Interface de la messagerie Symfony">
+            </div>
+            <p class="project-cover-caption">Interface de la messagerie avec gestion des conversations</p>
+        </div>
+
+        <!-- PRÉSENTATION -->
+        <div class="section-block fade-in">
+            <h2>Présentation du projet</h2>
+            <p>
+                Ce projet consistait à développer une application de messagerie en ligne complète en utilisant le framework <strong>Symfony</strong>.
+                L'objectif était de créer un système permettant aux utilisateurs de s'inscrire, se connecter, gérer leurs contacts et échanger des messages
+                de manière sécurisée et structurée.
+            </p>
+            <p>
+                J'ai implémenté toutes les fonctionnalités classiques d'une messagerie : gestion des utilisateurs, création de conversations,
+                envoi et réception de messages, avec une interface intuitive et responsive.
+            </p>
+        </div>
+
+        <!-- ARCHITECTURE TECHNIQUE -->
+        <div class="section-block fade-in">
+            <h2>Architecture technique</h2>
+            <p>Voici les principales technologies et composants utilisés pour ce projet :</p>
+
+            <div class="tag-row">
+                <span class="tag-pill">Symfony 6.4</span>
+                <span class="tag-pill">Doctrine ORM</span>
+                <span class="tag-pill">Twig</span>
+                <span class="tag-pill">MySQL</span>
+                <span class="tag-pill">PHP 8.2</span>
+                <span class="tag-pill">Bootstrap 5</span>
+                <span class="tag-pill">Webpack Encore</span>
+                <span class="tag-pill">API Platform</span>
+            </div>
+
+            <p><strong>Points clés de l'architecture :</strong></p>
+            <ul style="margin: 1.5rem 0; padding-left: 1.8rem; line-height: 1.8;">
+                <li><strong>Système d'authentification</strong> : Utilisation du composant Security de Symfony avec gestion des rôles (utilisateur, admin)</li>
+                <li><strong>Base de données</strong> : Modélisation des entités User, Message, Conversation avec Doctrine ORM</li>
+                <li><strong>Gestion des messages</strong> : Système de conversations avec lecture/écriture asynchrone</li>
+                <li><strong>Interface utilisateur</strong> : Template Twig avec composants Bootstrap 5 pour un design responsive</li>
+                <li><strong>Sécurité</strong> : Protection contre les attaques CSRF, validation des entrées, gestion des permissions</li>
+            </ul>
+
+            <div class="code-block">
+                <div><span class="annotation">&lt;!-- Exemple de relation Doctrine entre User et Message --&gt;</span></div>
+                <div><span class="keyword">&lt;?php</span></div>
+                <div></div>
+                <div><span class="keyword">use</span> <span class="string">App\Entity\User</span>;</div>
+                <div><span class="keyword">use</span> <span class="string">App\Entity\Message</span>;</div>
+                <div></div>
+                <div><span class="keyword">class</span> <span class="string">User</span></div>
+                <div>{</div>
+                <div>    <span class="keyword">private</span> <span class="string">$id</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$email</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$password</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$messages</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$conversations</span>;</div>
+                <div></div>
+                <div>    <span class="comment">// ... getters et setters</span></div>
+                <div>}</div>
+                <div></div>
+                <div><span class="keyword">class</span> <span class="string">Message</span></div>
+                <div>{</div>
+                <div>    <span class="keyword">private</span> <span class="string">$id</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$content</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$createdAt</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$sender</span>;</div>
+                <div>    <span class="keyword">private</span> <span class="string">$conversation</span>;</div>
+                <div></div>
+                <div>    <span class="comment">// ... getters et setters</span></div>
+                <div>}</div>
+            </div>
+        </div>
+
+        <!-- FONCTIONNALITÉS -->
+        <div class="section-block fade-in">
+            <h2>Fonctionnalités implémentées</h2>
+            <p>Voici les principales fonctionnalités développées pour cette application de messagerie :</p>
+
+            <div class="gallery">
+                <div class="gallery-card">
+                    <h3>Authentification sécurisée</h3>
+                    <p>Système de connexion avec gestion des sessions, protection CSRF, et réinitialisation de mot de passe.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Gestion des contacts</h3>
+                    <p>Ajout, suppression et visualisation des contacts avec recherche et pagination.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Conversations privées</h3>
+                    <p>Création de conversations entre utilisateurs avec historique des messages et statut de lecture.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Envoi de messages</h3>
+                    <p>Interface pour rédiger et envoyer des messages avec validation côté client et serveur.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Notifications en temps réel</h3>
+                    <p>Système de notifications pour les nouveaux messages avec badge de notification.</p>
+                </div>
+                <div class="gallery-card">
+                    <h3>Interface responsive</h3>
+                    <p>Design adapté aux mobiles, tablettes et desktop avec Bootstrap 5 et media queries.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DÉFIS TECHNIQUES -->
+        <div class="section-block accent-left fade-in">
+            <h2>Défis techniques rencontrés</h2>
+            <p>Ce projet m'a permis de relever plusieurs défis techniques importants :</p>
+
+            <ol class="steps-list">
+                <li><strong>Gestion des relations entre entités</strong> — Modélisation complexe des conversations et messages avec Doctrine ORM pour éviter les problèmes de N+1 queries.</li>
+                <li><strong>Sécurité des données</strong> — Implémentation de bonnes pratiques : hachage des mots de passe avec Argon2, validation des entrées, protection contre les injections SQL.</li>
+                <li><strong>Optimisation des performances</strong> — Mise en place de caching avec Symfony Cache, pagination des messages, et optimisation des requêtes.</li>
+                <li><strong>Interface utilisateur dynamique</strong> — Création d'une interface réactive avec gestion des notifications en temps réel (via AJAX).</li>
+                <li><strong>Déploiement et configuration serveur</strong> — Mise en production avec configuration Apache/Nginx, gestion des variables d'environnement et sécurité.</li>
+            </ol>
+        </div>
+
+        <!-- BILAN -->
+        <div class="section-block fade-in">
+            <h2>Bilan personnel</h2>
+            <p>
+                Ce projet de messagerie Symfony a été particulièrement enrichissant car il m'a permis de mettre en pratique l'ensemble des compétences
+                acquises en développement web : architecture MVC, gestion de base de données, sécurité, et interface utilisateur.
+            </p>
+            <p>
+                J'ai particulièrement apprécié travailler sur la modélisation des données et la création d'une interface utilisateur intuitive.
+                Symfony s'est révélé être un excellent framework pour structurer le projet et implémenter rapidement des fonctionnalités complexes.
+            </p>
+            <p>
+                Ce projet m'a également permis de mieux comprendre les enjeux de la sécurité web et l'importance de bonnes pratiques de développement.
+                La gestion des sessions, la validation des entrées et la protection contre les attaques sont des aspects critiques que j'ai pu approfondir.
+            </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-footer fade-in">
+            <p>Intéressé par ce projet ou par une collaboration ?</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/Arthur6222/symphonyTest" class="cta-button" target="_blank">GitHub</a>
+                <a href="contact.html" class="cta-button">Me contacter</a>
+                <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
