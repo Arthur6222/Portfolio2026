@@ -19,7 +19,10 @@
             --text: #c8d8e4;
             --text-dim: #6a8a9a;
             --border: rgba(0,255,255,.15);
+            --green: #00ff88;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'DM Sans', sans-serif;
@@ -61,7 +64,12 @@
             color: var(--cyan);
         }
 
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
         .nav-links a {
             font-size: .78rem;
             font-weight: 500;
@@ -69,10 +77,13 @@
             text-transform: uppercase;
             color: var(--text-dim);
             text-decoration: none;
-            transition: color .25s;
-            white-space: nowrap;
+            transition: color .2s;
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cyan);
+        }
 
         .nav-burger {
             display: none;
@@ -83,135 +94,444 @@
             background: none;
             border: none;
         }
+
         .nav-burger span {
+            display: block;
             width: 24px;
             height: 2px;
             background: var(--cyan);
             border-radius: 2px;
             transition: all .3s;
         }
+
         .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav-burger.open span:nth-child(2) { opacity: 0; }
         .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding-top: 64px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,255,255,.07), transparent 70%);
+        }
+
+        .hero-img-wrap {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .13;
+            filter: saturate(.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 1.5rem;
+            background: var(--cyan-dim);
+            padding: .4rem 1rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .4; transform: scale(.7); }
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+            letter-spacing: .04em;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span { color: var(--cyan); }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-dim);
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .25rem;
+        }
+
+        .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: var(--cyan);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--text-dim);
+        }
+
         main {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            padding: 4rem 2.5rem 6rem;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 100px 2rem 5rem;
         }
 
-        .hero { margin-bottom: 2.2rem; }
-        .kicker {
-            font-size: .72rem;
-            letter-spacing: .3em;
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            letter-spacing: .06em;
+            color: #fff;
+        }
+
+        .section-title span { color: var(--cyan); }
+
+        .section-sub {
+            font-size: .8rem;
+            color: var(--text-dim);
+            margin-top: .25rem;
+        }
+
+        .view-all {
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .1em;
             text-transform: uppercase;
             color: var(--cyan);
-            margin-bottom: .9rem;
-        }
-        .title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.8rem, 7vw, 5.2rem);
-            line-height: .95;
-            letter-spacing: .04em;
-            color: #fff;
-            margin-bottom: .9rem;
-        }
-        .title span { color: var(--cyan); }
-        .intro {
-            max-width: 760px;
-            color: var(--text-dim);
-            line-height: 1.75;
-            font-size: .95rem;
-        }
-
-        .insight-box {
-            margin-top: 1.4rem;
-            padding: 1rem 1.1rem;
+            text-decoration: none;
             border: 1px solid var(--border);
-            background: rgba(10,18,24,.75);
-            border-radius: 12px;
-            color: var(--text-dim);
-            line-height: 1.7;
-            font-size: .9rem;
+            padding: .5rem 1.1rem;
+            border-radius: 6px;
+            transition: background .2s;
         }
 
-        .gallery-title {
-            margin: 2.2rem 0 1rem;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: .1em;
-            font-size: 1.5rem;
-            color: #fff;
-        }
+        .view-all:hover { background: var(--cyan-dim); }
 
-        .gallery {
+        .articles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.1rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
-        .tile {
+        .a-tile {
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 14px;
             overflow: hidden;
-            background: var(--bg-card);
-            transition: transform .3s ease, border-color .25s ease, box-shadow .3s ease;
-        }
-        .tile:hover {
-            transform: translateY(-4px);
-            border-color: rgba(0,255,255,.42);
-            box-shadow: 0 14px 40px rgba(0,255,255,.12);
+            display: flex;
+            flex-direction: column;
+            transition: border-color .3s, transform .3s;
         }
 
-        .tile-image {
+        .a-tile:hover { border-color: var(--cyan); transform: translateY(-4px); }
+
+        .a-tile.featured { grid-column: 1 / 3; }
+        .a-tile.wide { grid-column: 1 / -1; }
+
+        .tile-img {
             position: relative;
-            aspect-ratio: 16 / 10;
-            background:
-                radial-gradient(circle at top right, rgba(0,255,255,.16), transparent 36%),
-                var(--bg-surface);
+            height: 200px;
             overflow: hidden;
+            background: #0a1820;
         }
 
-        .tile-image::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(to top, rgba(13,26,34,.92), rgba(13,26,34,.15) 48%, rgba(13,26,34,.18));
-            pointer-events: none;
-        }
+        .a-tile.featured .tile-img { height: 260px; }
 
-        .tile img {
+        .tile-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
             display: block;
-            transform: scale(1.01) translateZ(0);
-            filter: contrast(1.07) saturate(1.1) brightness(1.02);
-            image-rendering: auto;
-            backface-visibility: hidden;
-            transition: transform .55s ease, filter .4s ease;
+            transition: transform .4s;
         }
 
-        .tile:hover img {
-            transform: scale(1.05) translateZ(0);
-            filter: contrast(1.1) saturate(1.14) brightness(1.05);
+        .a-tile:hover .tile-img img { transform: scale(1.04); }
+
+        .a-tile.wide .tile-img.full-img { height: auto; }
+        .a-tile.wide .tile-img.full-img img { height: auto; object-fit: unset; }
+
+        .tile-source-chip {
+            position: absolute;
+            top: .75rem; left: .75rem;
+            background: rgba(5,10,14,.85);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: .25rem .75rem;
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            backdrop-filter: blur(6px);
         }
 
-        .tile-body { padding: .8rem .95rem 1rem; }
+        .chip-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        .tile-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; gap: .6rem; }
+
+        .cat-tag {
+            display: inline-block;
+            padding: .2rem .65rem;
+            border-radius: 4px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .tag-ia    { background: rgba(0,255,255,.12); color: var(--cyan); }
+        .tag-gps   { background: rgba(0,255,136,.12); color: var(--green); }
+        .tag-video { background: rgba(120,80,255,.15); color: #b89fff; }
+        .tag-sante { background: rgba(255,100,100,.12); color: #ff8888; }
+        .tag-dent  { background: rgba(255,180,0,.12); color: #ffb400; }
+
         .tile-body h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: .06em;
-            color: #fff;
             font-size: 1rem;
-            margin-bottom: .25rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.4;
         }
-        .tile-body p {
+
+        .a-tile.featured .tile-body h3 { font-size: 1.15rem; }
+
+        .tile-body p { font-size: .83rem; color: var(--text-dim); line-height: 1.6; flex: 1; }
+
+        .tile-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: .75rem;
             color: var(--text-dim);
-            font-size: .82rem;
+            margin-top: auto;
+            padding-top: .5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .tile-meta a { color: var(--cyan); text-decoration: none; }
+        .tile-meta a:hover { text-decoration: underline; }
+
+        .insight-box {
+            background: linear-gradient(135deg, rgba(0,255,255,.06), rgba(0,255,136,.04));
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--cyan);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            font-size: .9rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 4rem;
+        }
+
+        .insight-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: .1rem; }
+
+        .sources-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .source-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: .9rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: border-color .2s;
+        }
+
+        .source-card:hover { border-color: var(--cyan); }
+
+        .source-name {
+            font-weight: 700;
+            font-size: .9rem;
+            color: #fff;
+        }
+
+        .source-type {
+            font-size: .75rem;
+            color: var(--text-dim);
+            margin-top: .15rem;
+        }
+
+        .feedly-section { margin-bottom: 4rem; }
+
+        .feedly-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .feedly-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(0,255,255,.03);
+        }
+
+        .feedly-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .feedly-logo-icon {
+            width: 36px; height: 36px;
+            background: #2bb24c;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .feedly-logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: .08em;
+            color: #fff;
+        }
+
+        .feedly-logo-text span { color: #2bb24c; }
+
+        .feedly-link-btn {
+            background: #2bb24c;
+            color: #fff;
+            text-decoration: none;
+            padding: .5rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: .85rem;
+            transition: background .2s, transform .2s;
+        }
+
+        .feedly-link-btn:hover { background: #23993f; transform: translateY(-2px); }
+
+        .feedly-desc {
+            padding: 1rem 1.5rem;
+            font-size: .85rem;
+            color: var(--text-dim);
             line-height: 1.6;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feedly-screenshot-wrap { padding: 1.5rem; }
+
+        .feedly-screenshot-label {
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--text-dim);
+            margin-bottom: .75rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .feedly-screenshot-label::before {
+            content: '';
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #2bb24c;
+        }
+
+        .feedly-screenshot-wrap img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            display: block;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            font-size: .8rem;
+            color: var(--text-dim);
         }
 
         @media (max-width: 768px) {
@@ -229,97 +549,256 @@
                 padding: 1rem 0;
             }
             .nav-links.open { display: flex; }
-            .nav-links a { width: 100%; padding: .85rem 1.8rem; font-size: .8rem; }
-            main { padding: 90px 1.2rem 4rem; }
+            .nav-links a {
+                width: 100%;
+                padding: .85rem 1.8rem;
+                font-size: .8rem;
+            }
+            .articles-grid { grid-template-columns: 1fr; }
+            .a-tile.featured, .a-tile.wide { grid-column: 1; }
+            main { padding: 2rem 1.2rem 4rem; }
         }
     </style>
 </head>
 <body>
-    <div class="grid-background"></div>
 
-    <nav>
-        <div class="logo">PORTFOLIO — Arthur PICQUE</div>
-        <button class="nav-burger" id="burger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-        <div class="nav-links" id="navLinks">
-            <a href="index.html">Accueil</a>
-            <a href="about.html">À Propos</a>
-            <a href="Skills.html">Compétences</a>
-            <a href="projets.html">Projets</a>
-            <a href="veille-technologique-rugby.html" class="active">Veille Tech</a>
-            <a href="contact.html">Contact</a>
-            <a href="hobbies.html">Hobbies</a>
+<div class="grid-background"></div>
+
+<nav>
+    <div class="logo">PORTFOLIO — Arthur PICQUE</div>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+        <a href="index.html">Accueil</a>
+        <a href="about.html">À Propos</a>
+        <a href="Skills.html">Compétences</a>
+        <a href="projets.html">Projets</a>
+        <a href="veille-technologique-rugby.html" class="active">Veille Tech</a>
+        <a href="contact.html">Contact</a>
+        <a href="hobbies.html">Hobbies</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-img-wrap">
+        <img src="img/rugby-ballon.jpg" alt="Rugby terrain">
+    </div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">Veille Technologique 2025/2026</div>
+        <h1>La Tech au <span>Cœur</span> du Rugby</h1>
+        <p>IA, capteurs GPS, analyse vidéo, prévention des blessures — comment la technologie redéfinit le rugby moderne.</p>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-num">5</span><span class="stat-label">Thématiques</span></div>
+            <div class="stat"><span class="stat-num">12+</span><span class="stat-label">Sources analysées</span></div>
+            <div class="stat"><span class="stat-num">2025</span><span class="stat-label">Mise à jour</span></div>
         </div>
-    </nav>
+    </div>
+</section>
 
-    <main>
-        <section class="hero">
-            <p class="kicker">Technologie & Sport</p>
-            <h1 class="title">Veille <span>Technologique</span><br>Rugby</h1>
-            <p class="intro">
-                Cette page regroupe ma veille autour des innovations qui transforment le rugby:
-                préparation physique, analyse vidéo, prévention des blessures et aide à la décision.
-                J'ai gardé exactement les mêmes visuels, avec un rendu plus propre et plus net.
-            </p>
-            <div class="insight-box">
-                Focus 2026: l'IA embarquée, la vision par ordinateur et les capteurs terrain améliorent
-                la compréhension du jeu en temps réel sans dénaturer l'intensité du rugby.
+<main>
+
+    <section id="articles">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Articles <span>Sélectionnés</span></div>
+                <div class="section-sub">Dernières publications issues de Feedly</div>
             </div>
-        </section>
+            <a href="https://feedly.com" target="_blank" class="view-all">Voir sur Feedly →</a>
+        </div>
 
-        <h2 class="gallery-title">Galerie de Veille</h2>
-        <section class="gallery">
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugby1.jpg" alt="Rugby et data" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Analyse de performance</h3><p>Suivi des phases de jeu et des zones de pression.</p></div>
-            </article>
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugbyanalyse.jpg" alt="Analyse vidéo rugby" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Vidéo augmentée</h3><p>Relecture tactique assistée par outils d'analyse moderne.</p></div>
-            </article>
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugbyblessure.jpg" alt="Prévention des blessures" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Prévention blessures</h3><p>Mesure des charges et anticipation des risques physiques.</p></div>
-            </article>
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugbyduel.jpg" alt="Duel rugby innovation" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Duel et prise de décision</h3><p>Lecture rapide des duels grâce aux données terrain.</p></div>
-            </article>
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugbyspectateur.jpg" alt="Expérience spectateur rugby" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Expérience spectateur</h3><p>Stats live et angles enrichis pour mieux lire le match.</p></div>
-            </article>
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugbystrat.jpg" alt="Stratégie rugby" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Stratégie collective</h3><p>Visualisation des schémas tactiques et ajustements.</p></div>
-            </article>
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugbytraining.jpg" alt="Entraînement rugby" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Entraînement intelligent</h3><p>Personnalisation des séances selon le profil des joueurs.</p></div>
-            </article>
-            <article class="tile">
-                <div class="tile-image"><img src="img/rugbyvideo.jpg" alt="Technologie vidéo rugby" loading="lazy" decoding="async"></div>
-                <div class="tile-body"><h3>Assistance vidéo</h3><p>Décisions plus précises grâce aux replays et à la data.</p></div>
-            </article>
-        </section>
-    </main>
+        <div class="articles-grid">
 
-    <script>
-        const burger = document.getElementById('burger');
-        const navLinks = document.getElementById('navLinks');
+            <article class="a-tile featured">
+                <div class="tile-img">
+                    <span class="tile-source-chip"><span class="chip-dot"></span>Technology.org</span>
+                    <img src="img/IA.png" alt="IA et performance rugby">
+                </div>
+                <div class="tile-body">
+                    <span class="cat-tag tag-ia">Intelligence Artificielle</span>
+                    <h3>The Tech Innovations Transforming Rugby Performance</h3>
+                    <p>L'IA permet désormais d'analyser en temps réel les patterns de jeu adverses et de proposer des ajustements tactiques à la mi-temps. Les algorithmes de machine learning traitent des milliers de séquences pour identifier les failles défensives.</p>
+                    <div class="tile-meta">
+                        <span> Fév. 2025 · Technology.org</span>
+                        <a href="https://www.technology.org/2025/02/the-tech-innovations-transforming-rugby-performance/" target="_blank">Lire l'article →</a>
+                    </div>
+                </div>
+            </article>
 
-        burger.addEventListener('click', () => {
-            burger.classList.toggle('open');
-            navLinks.classList.toggle('open');
-        });
+            <article class="a-tile">
+                <div class="tile-img">
+                    <span class="tile-source-chip"><span class="chip-dot"></span>Rugby World</span>
+                    <img src="img/gps.png" alt="Tactique et GPS">
+                </div>
+                <div class="tile-body">
+                    <span class="cat-tag tag-gps">GPS & Wearables</span>
+                    <h3>Capteurs GPS : la révolution des données terrain</h3>
+                    <p>Les gilets GPS embarqués mesurent accélération, charge physique et zones de course pour optimiser la charge d'entraînement et prévenir la fatigue musculaire.</p>
+                    <div class="tile-meta">
+                        <span> Jan. 2025</span>
+                        <a href="https://www.rugbypass.com/fr/news/cest-quoi-cette-bosse-derriere-les-maillots-de-rugby/" target="_blank">Lire l'article →</a>
+                    </div>
+                </div>
+            </article>
 
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                burger.classList.remove('open');
-                navLinks.classList.remove('open');
-            });
-        });
-    </script>
+            <article class="a-tile">
+                <div class="tile-img">
+                    <span class="tile-source-chip"><span class="chip-dot"></span>World Rugby</span>
+                    <img src="img/asm.png" alt="Protège-dent connecté rugby">
+                </div>
+                <div class="tile-body">
+                    <span class="cat-tag tag-dent">Protège-dent Connecté</span>
+                    <h3>Le protège-dent connecté : mesurer les chocs en temps réel</h3>
+                    <p>Intégrant des capteurs inertiels miniaturisés, le protège-dent connecté mesure les accélérations subies par la tête lors des contacts et alerte le staff médical en cas de risque de commotion cérébrale.Actuellement PROTECHT travail sur un score de risque individuel, en fonction de plusieurs paramètres(âge,poste...) afin de sortir un joueur qund il le faut.</p>
+                    <div class="tile-meta">
+                        <span>2026</span>
+                        <a href="https://www.asm-rugby.com/actus/2022-01-19-les-protege-dents-connectes-letude-world-rugby-menee-a-lasm" target="_blank">Lire l'article →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="a-tile wide">
+                <div class="tile-img">
+                    <span class="tile-source-chip"><span class="chip-dot"></span>SportTech Insider</span>
+                    <img src="img/rugbyvideo.png" alt="Analyse vidéo rugby">
+                </div>
+                <div class="tile-body">
+                    <span class="cat-tag tag-video">Analyse Vidéo</span>
+                    <h3>L'analyse vidéo assistée par IA : un staff technique augmenté</h3>
+                    <p>Des outils comme Hudl Sportscode permettent aux staffs de taguer automatiquement les phases de jeu, de créer des clips ciblés et de partager les analyses avec les joueurs en quelques minutes après le match. La vision par ordinateur identifie désormais les positions individuelles de chaque joueur image par image. De plus, à long terme hudl souhaites utiliser des Hudl Focus Flex, de petites caméras auto suiveuses pour stopper l'utilisation de logistique lourde.</p>
+                    <div class="tile-meta">
+                        <span> Mars 2025</span>
+                        <a href="https://www.sporttechinsider.com/analyse-video-ia-rugby/" target="_blank">Lire l'article →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="a-tile wide">
+                <div class="tile-img full-img">
+                    <span class="tile-source-chip"><span class="chip-dot"></span>TechSport FR</span>
+                    <img src="img/rugbyblessure.png" alt="Localisation des blessures rugby">
+                </div>
+                <div class="tile-body">
+                    <span class="cat-tag tag-sante">Santé & Prévention</span>
+                    <h3>Cartographie des blessures et analyse prédictive par zone corporelle</h3>
+                    <p>Les données de 10 saisons révèlent que 47 % des blessures des avants touchent les membres inférieurs. Les algorithmes prédictifs croisent charge d'entraînement, fatigue et historique pour anticiper les risques 72h à l'avance.</p>
+                    <div class="tile-meta">
+                        <span> Fév. 2025</span>
+                        <a href="https://feedly.com" target="_blank">Lire l'article →</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <div class="insight-box">
+        
+        <div>
+            <strong style="color:#fff">Focus 2025–2026 :</strong> l'IA embarquée, la vision par ordinateur et les capteurs terrain
+            convergent pour offrir une compréhension du jeu en temps réel sans dénaturer l'intensité du rugby.
+            Les prochaines évolutions porteront sur la standardisation des données entre clubs et fédérations,
+            et l'intégration de jumeaux numériques des joueurs pour optimiser la récupération.
+        </div>
+    </div>
+
+    <section id="sources">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Sources <span>Utilisées</span></div>
+                <div class="section-sub">Flux suivis via Feedly</div>
+            </div>
+        </div>
+        <div class="sources-grid">
+            <div class="source-card">
+                <div class="source-info">
+                    <div class="source-name">Technology.org</div>
+                    <div class="source-type">Science & Tech · Anglais</div>
+                </div>
+            </div>
+            <div class="source-card">
+                <div class="source-info">
+                    <div class="source-name">Rugby World</div>
+                    <div class="source-type">Presse spécialisée · Anglais</div>
+                </div>
+            </div>
+            <div class="source-card">
+                <div class="source-info">
+                    <div class="source-name">SportTech Insider</div>
+                    <div class="source-type">Tech Blog · Anglais</div>
+                </div>
+            </div>
+            <div class="source-card">
+                <div class="source-info">
+                    <div class="source-name">TechSport FR</div>
+                    <div class="source-type">Newsletter · Français</div>
+                </div>
+            </div>
+            <div class="source-card">
+                <div class="source-info">
+                    <div class="source-name">L'Équipe Sport&Tech</div>
+                    <div class="source-type">Presse nationale · Français</div>
+                </div>
+            </div>
+            <div class="source-card">
+                <div class="source-info">
+                    <div class="source-name">World Rugby</div>
+                    <div class="source-type">Fédération internationale · Anglais</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="feedly" class="feedly-section">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Mon <span>Feedly</span></div>
+                <div class="section-sub">Outil de veille utilisé pour collecter les articles</div>
+            </div>
+        </div>
+        <div class="feedly-card">
+            <div class="feedly-header">
+                <div class="feedly-logo-wrap">
+                    <div class="feedly-logo-icon">f</div>
+                    <div class="feedly-logo-text">Feed<span>ly</span></div>
+                </div>
+                <a href="https://feedly.com" target="_blank" class="feedly-link-btn">
+                     Accéder à Feedly
+                </a>
+            </div>
+            <div class="feedly-desc">
+                Feedly est l'agrégateur de flux RSS utilisé pour centraliser et organiser les sources de cette veille technologique.
+                Il permet de suivre en temps réel les publications de sites spécialisés en technologie sportive, rugby et innovation,
+                et de filtrer les articles pertinents par mots-clés comme
+                <strong style="color:var(--cyan)">rugby</strong>,
+                <strong style="color:var(--cyan)">sport tech</strong> ou
+                <strong style="color:var(--cyan)">wearables</strong>.
+            </div>
+            <div class="feedly-screenshot-wrap">
+                <div class="feedly-screenshot-label">Capture d'écran — Recherche "rugby" sur mon Feedly</div>
+                <img src="img/feedly.png" alt="Capture Feedly - recherche rugby">
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>Veille Technologique Rugby · Portfolio 2025 · Sources agrégées via <a href="https://feedly.com" target="_blank" style="color:var(--cyan)">Feedly</a></p>
+</footer>
+
+<script>
+    const burger   = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => {
+        burger.classList.toggle('open');
+        navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        navLinks.classList.remove('open');
+    }));
+</script>
 </body>
 </html>

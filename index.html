@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="cssdoc/style.css">
     <style>
-        /* ── RESET & BASE ── */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -31,7 +30,8 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-        }/* ── GRID BACKGROUND ── */
+        }
+
         .grid-background {
             position: fixed; inset: 0;
             background-image:
@@ -41,7 +41,6 @@
             pointer-events: none; z-index: 0;
         }
 
-        /* ── NAVBAR ── */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
@@ -76,7 +75,9 @@
             text-decoration: none;
             transition: color .25s ease;
             white-space: nowrap;
-        }.nav-links a:hover,
+        }
+
+        .nav-links a:hover,
         .nav-links a.active {
             color: var(--cyan);
             text-shadow: 0 0 10px rgba(0,255,255,.3);
@@ -103,7 +104,9 @@
 
         .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav-burger.open span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
-        .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }@media (max-width: 768px) {
+        .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 768px) {
             .nav-burger { display: flex; }
             .nav-links {
                 display: none;
@@ -128,7 +131,6 @@
             }
         }
 
-        /* ── PAGE CONTAINER ── */
         main {
             position: relative;
             z-index: 1;
@@ -141,7 +143,6 @@
             padding: 0 clamp(1.2rem, 5vw, 2.5rem);
         }
 
-        /* ── HERO SECTION ── */
         .hero {
             position: relative;
             z-index: 1;
@@ -151,7 +152,9 @@
             justify-content: center;
             padding-top: 64px;
             overflow: hidden;
-        }.hero-content {
+        }
+
+        .hero-content {
             position: relative;
             z-index: 2;
             max-width: 900px;
@@ -196,7 +199,9 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-        }.cta-buttons {
+        }
+
+        .cta-buttons {
             display: flex;
             gap: clamp(1rem, 3vw, 1.5rem);
             justify-content: center;
@@ -241,7 +246,9 @@
             background: rgba(0,255,255,.1);
             box-shadow: 0 0 20px rgba(0,255,255,.3);
             transform: translateY(-2px);
-        }.hero-stats {
+        }
+
+        .hero-stats {
             display: flex;
             justify-content: center;
             gap: clamp(2rem, 5vw, 4rem);
@@ -271,7 +278,6 @@
             text-transform: uppercase;
         }
 
-        /* ── DIVIDER ── */
         .divider {
             display: flex;
             align-items: center;
@@ -291,7 +297,8 @@
             letter-spacing: .1em;
             text-transform: uppercase;
             white-space: nowrap;
-        }/* ── QUICK CARDS ── */
+        }
+
         .quick-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -363,7 +370,6 @@
 
         .quick-card:hover .quick-card-arrow { transform: translateX(4px); }
 
-        /* ── BUTTON EXCEL ── */
         .download-excel-btn {
             position: fixed;
             bottom: 2rem;
@@ -394,20 +400,11 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .excel-icon {
-            font-size: 1.2rem;
-        }
+        .excel-icon { font-size: 1.2rem; }
 
-        /* ── ANIMATIONS ── */
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeIn {
@@ -418,43 +415,26 @@
         .fade-in {
             opacity: 0;
             animation: fadeIn .6s ease-out forwards;
-        }.fade-in:nth-child(1) { animation-delay: .1s; }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: .1s; }
         .fade-in:nth-child(2) { animation-delay: .15s; }
         .fade-in:nth-child(3) { animation-delay: .2s; }
         .fade-in:nth-child(4) { animation-delay: .25s; }
         .fade-in:nth-child(5) { animation-delay: .3s; }
         .fade-in:nth-child(6) { animation-delay: .35s; }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .download-excel-btn {
-                bottom: 1rem;
-                right: 1rem;
-            }
-
-            .excel-button {
-                padding: 0.6rem 1rem;
-                font-size: 0.8rem;
-            }
+            .download-excel-btn { bottom: 1rem; right: 1rem; }
+            .excel-button { padding: 0.6rem 1rem; font-size: 0.8rem; }
         }
 
         @media (max-width: 640px) {
-            .hero {
-                min-height: auto;
-                padding: 80px 1.2rem 2rem;
-            }
-
+            .hero { min-height: auto; padding: 80px 1.2rem 2rem; }
             .hero-content { padding: 2rem 0; }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
+            .cta-buttons { flex-direction: column; }
             .cta-button { width: 100%; }
-
-            .quick-cards {
-                grid-template-columns: 1fr;
-            }
+            .quick-cards { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -478,7 +458,6 @@
     </nav>
 
     <main>
-        <!-- HERO -->
         <section class="hero">
             <div class="hero-content fade-in">
                 <h1 class="hero-title">
@@ -511,7 +490,6 @@
             </div>
         </section>
 
-        <!-- QUICK ACCESS -->
         <div class="page-content">
             <div class="divider fade-in">
                 <div class="divider-line"></div>
@@ -521,55 +499,72 @@
 
             <div class="quick-cards">
                 <a href="about.html" class="quick-card fade-in">
-                    <div class="quick-card-icon">👤</div>
                     <div class="quick-card-title">À Propos</div>
                     <p class="quick-card-text">Mon parcours, ma formation et ce qui me motive au quotidien.</p>
                     <span class="quick-card-arrow">Découvrir →</span>
                 </a>
                 <a href="Skills.html" class="quick-card fade-in">
-                    <div class="quick-card-icon">⚡</div>
                     <div class="quick-card-title">Compétences</div>
                     <p class="quick-card-text">HTML, CSS, JavaScript, PHP, SQL et bien d'autres outils maîtrisés.</p>
                     <span class="quick-card-arrow">Découvrir →</span>
                 </a>
                 <a href="projets.html" class="quick-card fade-in">
-                    <div class="quick-card-icon">🚀</div>
                     <div class="quick-card-title">Projets</div>
                     <p class="quick-card-text">Mes réalisations concrètes — sites, apps et expérimentations.</p>
                     <span class="quick-card-arrow">Découvrir →</span>
                 </a>
                 <a href="veille-technologique-rugby.html" class="quick-card fade-in">
-                    <div class="quick-card-icon">🔍</div>
                     <div class="quick-card-title">Veille Tech</div>
                     <p class="quick-card-text">Technologie & rugby — ma veille sur l'innovation dans le sport.</p>
                     <span class="quick-card-arrow">Découvrir →</span>
                 </a>
                 <a href="hobbies.html" class="quick-card fade-in">
-                    <div class="quick-card-icon">🎯</div>
                     <div class="quick-card-title">Hobbies</div>
                     <p class="quick-card-text">Rugby, musique, gaming — ce qui me définit hors du clavier.</p>
                     <span class="quick-card-arrow">Découvrir →</span>
                 </a>
                 <a href="contact.html" class="quick-card fade-in">
-                    <div class="quick-card-icon">✉️</div>
                     <div class="quick-card-title">Contact</div>
                     <p class="quick-card-text">Un projet ? Une opportunité ? Parlons-en ensemble.</p>
                     <span class="quick-card-arrow">Me contacter →</span>
                 </a>
             </div>
+
+            <!-- CAPTURES GLPI -->
+            <div class="divider fade-in">
+                <div class="divider-line"></div>
+                <span class="divider-label">Certifications</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; align-items:center; gap:3rem; margin-bottom:4rem;">
+
+                <div style="display:flex; flex-direction:column; align-items:center; gap:.75rem; width:100%;">
+                    <img src="img/RGPD1.png" alt="Page accueil GLPI" style="width:100%; max-width:800px; border-radius:10px; border:1px solid rgba(0,255,255,.15);">
+                    <span style="font-size:.82rem; color:#5a7080; letter-spacing:.08em; text-transform:uppercase;">Atelier RGPD</span>
+                </div>
+
+                <div style="display:flex; flex-direction:column; align-items:center; gap:.75rem; width:100%;">
+                    <img src="img/RGPD2.png" alt="Base de connaissance GLPI" style="width:100%; max-width:800px; border-radius:10px; border:1px solid rgba(0,255,255,.15);">
+                    <span style="font-size:.82rem; color:#5a7080; letter-spacing:.08em; text-transform:uppercase;">Atelier RGPD</span>
+                </div>
+
+                <div style="display:flex; flex-direction:column; align-items:center; gap:.75rem; width:100%;">
+                    <img src="img/ebios.png" alt="Ticket GLPI" style="width:100%; max-width:800px; border-radius:10px; border:1px solid rgba(0,255,255,.15);">
+                    <span style="font-size:.82rem; color:#5a7080; letter-spacing:.08em; text-transform:uppercase;">ClubEbios</span>
+                </div>
+
+            </div>
         </div>
     </main>
 
-    <!-- Bouton de téléchargement Excel -->
     <div class="download-excel-btn">
         <a href="tabcomp.xlsx" download class="excel-button">
-            
             Télécharger le tableau des compétences
         </a>
     </div>
 
     <script>
-        // Fade-in observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
@@ -580,7 +575,6 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Burger
         const burger = document.getElementById('burger');
         const navLinks = document.getElementById('navLinks');
         burger.addEventListener('click', () => {
