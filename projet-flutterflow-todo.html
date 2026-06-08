@@ -44,7 +44,7 @@
             z-index: 0;
         }
 
-        /* NAV */
+
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -81,7 +81,7 @@
         .nav-links a:hover,
         .nav-links a.active { color: var(--cyan); }
 
-        /* MAIN */
+     
         main {
             position: relative;
             z-index: 1;
@@ -90,7 +90,7 @@
             padding: 104px 2rem 5rem;
         }
 
-        /* BACK LINK */
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -110,7 +110,7 @@
             box-shadow: 0 0 18px rgba(0,255,255,.3);
             transform: translateX(-3px);
         }
-        /* HERO */
+      
         .hero-project {
             position: relative;
             overflow: hidden;
@@ -175,7 +175,7 @@
             margin-right: 6px;
         }
 
-        /* COVER */
+      
         .project-cover { margin-bottom: 3rem; }
         .project-cover-inner {
             border: 1px solid rgba(0,255,255,.25);
@@ -203,7 +203,7 @@
             margin-top: .6rem;
         }
 
-        /* SECTIONS */
+    
         .section-block { margin-bottom: 3.5rem; }
         .section-block.accent-left {
             border-left: 3px solid var(--magenta);
@@ -238,7 +238,7 @@
             font-family: 'Courier New', monospace;
         }
 
-        /* PHONE MOCKUP */
+
         .phone-wrap {
             display: flex;
             justify-content: center;
@@ -313,7 +313,7 @@
             text-transform: uppercase;
         }
 
-        /* CARDS GRID */
+   
         .section-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -344,7 +344,7 @@
             margin: 0;
         }
 
-        /* STEPS LIST */
+       
         .steps-list {
             counter-reset: step;
             list-style: none;
@@ -373,7 +373,6 @@
         }
         .steps-list li strong { color: var(--cyan); font-weight: 500; }
 
-        /* TAGS */
         .tag-row {
             display: flex;
             flex-wrap: wrap;
@@ -396,7 +395,7 @@
             border-color: var(--cyan);
         }
 
-        /* CTA FOOTER */
+  
         .cta-footer {
             margin-top: 1rem;
             padding-top: 2rem;
@@ -441,7 +440,7 @@
             border-color: var(--cyan);
         }
 
-        /* FEATURE IMAGE */
+      
         .project-feature-image {
             margin: 3rem 0;
         }
@@ -463,7 +462,7 @@
             transform: scale(1.02);
         }
 
-        /* FADE IN */
+
         .fade-in {
             opacity: 0;
             transform: translateY(22px);
@@ -474,7 +473,7 @@
             transform: none;
         }
 
-        /* RESPONSIVE */
+    
         @media (max-width: 768px) {
             nav { padding: 0 1.2rem; }
             .nav-links { gap: 1.2rem; }
@@ -503,7 +502,7 @@
     <main>
         <a href="projets.html" class="back-link">← Retour aux projets</a>
 
-        <!-- HERO -->
+
         <header class="hero-project fade-in">
             <div class="hero-inner">
                 <p class="project-kicker">Application mobile</p>
@@ -520,8 +519,7 @@
                 </div>
             </div>
         </header>
-
-        <!-- COVER -->
+   
         <div class="project-cover fade-in">
             <div class="project-cover-inner">
                 <img src="img/visitodoflutter.png" alt="Capture d'écran de l'application To-Do Flutter">
@@ -529,7 +527,7 @@
             <p class="project-cover-caption">Interface de l'application To-Do développée avec Flutter</p>
         </div>
 
-        <!-- PRÉSENTATION -->
+    
         <div class="section-block fade-in">
             <h2>Présentation</h2>
             <p>
@@ -544,7 +542,7 @@
             </p>
         </div>
 
-        <!-- FONCTIONNALITÉS -->
+    
         <div class="section-block fade-in">
             <h2>Fonctionnalités</h2>
             <div class="section-grid">
@@ -566,7 +564,7 @@
                 </div>
             </div>
 
-            <!-- NOUVELLE SECTION IMAGE -->
+       
             <div class="project-feature-image fade-in">
                 <div class="project-cover-inner">
                     <img src="img/bddtodo.png" alt="Démonstration des fonctionnalités de l'application To-Do">
@@ -575,7 +573,7 @@
             </div>
         </div>
 
-        <!-- ARCHITECTURE -->
+        
         <div class="section-block fade-in">
             <h2>Architecture de l'application</h2>
             <p>
@@ -590,7 +588,7 @@
             </ul>
         </div>
 
-        <!-- TECHNOLOGIES -->
+      
         <div class="section-block fade-in">
             <h2>Technologies & compétences</h2>
             <p>
@@ -609,7 +607,7 @@
             </div>
         </div>
 
-        <!-- BILAN -->
+
         <div class="section-block accent-left fade-in">
             <h2>Bilan personnel</h2>
             <p>
@@ -620,12 +618,12 @@
             </p>
         </div>
 
-        <!-- CTA -->
+    
         <div class="cta-footer fade-in">
-            <p>Intéressé par ce type de projet Flutter ?</p>
+           
             <div class="cta-buttons">
-                <a href="https://github.com/Arthur6222/TodoFlutterprojetPro1" target="_blank" class="cta-button secondary">Voir sur GitHub</a>
-                <a href="https://trello.com/b/jVKbJssR/projet-todoflutter" target="_blank" class="cta-button secondary">Voir sur Trello</a>
+                <a href="https://github.com/Arthur6222/TodoFlutterprojetPro1" target="_blank" class="cta-button secondary">GitHub</a>
+                <a href="https://trello.com/b/jVKbJssR/projet-todoflutter" target="_blank" class="cta-button secondary">Trello</a>
                 <a href="contact.html" class="cta-button">Me contacter</a>
                 <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
             </div>

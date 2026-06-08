@@ -322,7 +322,7 @@
 
         </div>
 
-        <!-- PROJETS BTS -->
+      
         <div class="section-title"><h2>— Projets <span>Environnement Professionnel BTS</span></h2></div>
         <div class="projects-grid">
 
@@ -340,6 +340,7 @@
                         <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
                         <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service </span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
                     </div>
                 </div>
             </div>
@@ -422,6 +423,7 @@
                         <span class="comp-tag" data-comp="projet">Développer la présence en ligne</span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
                         <span class="comp-tag" data-comp="projet">Répondre aux incidents</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
                     </div>
                 </div>
             </div>
@@ -460,26 +462,13 @@
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
                         <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
                         <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
+                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        <span class="comp-tag" data-comp="service">Mettre à disposition des utilisateurs un service</span>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card" data-cat="web" data-comp="presence service devpro">
-                <div class="project-image">
-                    <span class="project-badge">Développement</span>
-                    <img src="img/vantime.png" alt="Vantime">
-                </div>
-                <div class="project-info">
-                    <h3>Vantime</h3>
-                    <p>Site WordPress de vente de repas pour robots en ligne (fictif).</p>
-                    <a href="projet-vantime.html" class="project-link">Voir le projet </a>
-                    <div class="competences-tags">
-                        <span class="comp-tag" data-comp="presence">Développer la présence en ligne</span>
-                        <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
-                        <span class="comp-tag" data-comp="devpro">Gérer le patrimoine informatique</span>
-                    </div>
-                </div>
-            </div>
+            
 
 
                          <div class="project-card" data-cat="dev" data-comp="">
@@ -542,7 +531,7 @@
 
         </div>
 
-        <!-- RÉSEAU -->
+    
         <div class="section-title"><h2>— <span>Réseau</span> &amp; Infrastructure</h2></div>
         <div class="projects-grid">
 
@@ -574,7 +563,6 @@
                     <a href="projet-serveur-web.html" class="project-link">Voir le projet </a>
                     <div class="competences-tags">
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
-                        <span class="comp-tag" data-comp="incidents">Répondre aux incidents</span>
                         <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
                     </div>
                 </div>
@@ -616,7 +604,7 @@
                     <p>Objectif : créer un gadget numérique discret façon James Bond.</p>
                     <a href="projet-james-bond.html" class="project-link">Voir le projet </a>
                     <div class="competences-tags">
-                        <span class="comp-tag" data-comp="projet">Travailler en mode projet</span>
+                        
                         <span class="comp-tag" data-comp="service">Mettre à disposition un service</span>
                          <span class="comp-tag" data-comp="devpro">Organiser son développement professionnel</span>
                         <span class="comp-tag" data-comp="patrimoine">Gérer le patrimoine informatique</span>
@@ -700,7 +688,7 @@
             });
         });
 
-        // Lien depuis Skills.html avec ?comp=xxx
+      
         const urlParams = new URLSearchParams(window.location.search);
         const compParam = urlParams.get('comp');
         if (compParam) {
@@ -714,7 +702,7 @@
             }
         }
 
-        // Burger menu
+       
         const burger   = document.getElementById('burger');
         const navLinks = document.getElementById('navLinks');
         burger.addEventListener('click', () => {

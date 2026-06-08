@@ -32,7 +32,7 @@
             overflow-x: hidden;
         }
 
-        /* GRID BACKGROUND */
+  
         .grid-background {
             position: fixed;
             inset: 0;
@@ -44,7 +44,7 @@
             z-index: 0;
         }
 
-        /* NAV */
+    
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -81,7 +81,7 @@
         .nav-links a:hover,
         .nav-links a.active { color: var(--cyan); }
 
-        /* HERO */
+      
         .hero {
             position: relative;
             height: 420px;
@@ -133,7 +133,7 @@
             line-height: 1.6;
         }
 
-        /* DIVIDER */
+      
         .section-divider {
             display: flex;
             align-items: center;
@@ -157,7 +157,7 @@
             white-space: nowrap;
         }
 
-        /* MAIN CONTENT */
+        
         .main-content {
             position: relative;
             z-index: 1;
@@ -166,7 +166,7 @@
             padding: 3rem 2rem 6rem;
         }
 
-        /* ABOUT GRID */
+        
         .about-grid {
             display: grid;
             grid-template-columns: 340px 1fr;
@@ -174,7 +174,7 @@
             align-items: start;
         }
 
-        /* PROFILE CARD */
+        
         .profile-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -210,7 +210,6 @@
             background: linear-gradient(to top, var(--bg-card), transparent);
         }
 
-        /* STAT ROW */
         .stat-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -243,7 +242,7 @@
             line-height: 1.3;
         }
 
-        /* TEXT CONTENT */
+    
         .about-body { display: flex; flex-direction: column; gap: 2rem; }
 
         .intro-block {
@@ -274,7 +273,7 @@
             color: var(--text);
         }
 
-        /* PHILOSOPHY */
+    
         .philosophy-block {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -325,7 +324,7 @@
             box-shadow: 0 0 8px var(--cyan);
         }
 
-        /* FADE IN */
+        
         .fade-in {
             opacity: 0;
             transform: translateY(24px);
@@ -337,7 +336,7 @@
             transform: translateY(0);
         }
 
-        /* RESPONSIVE */
+        
         @media (max-width: 768px) {
             .about-grid { grid-template-columns: 1fr; }
             .profile-card { position: static; }
@@ -365,7 +364,7 @@
         </div>
     </nav>
 
-    <!-- HERO -->
+   
     <section class="hero">
         <div class="hero-content">
             <h1 class="hero-title">À <span>Propos</span><br>De Moi</h1>
@@ -373,7 +372,7 @@
         </div>
     </section>
 
-    <!-- MAIN -->
+ 
     <main class="main-content">
 
         <div class="section-divider fade-in">
@@ -382,7 +381,7 @@
 
         <div class="about-grid">
 
-            <!-- COLONNE GAUCHE : PROFIL -->
+           
             <div class="profile-card fade-in">
                 <div class="profile-image-wrap">
                     <img src="img/vraipdp.jpg" alt="Photo de profil Arthur Picque">
@@ -403,7 +402,6 @@
                 </div>
             </div>
 
-            <!-- COLONNE DROITE : TEXTE -->
             <div class="about-body">
 
                 <div class="intro-block fade-in">
@@ -434,7 +432,7 @@
     </main>
 
     <script>
-        // Fade-in on scroll
+     
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {

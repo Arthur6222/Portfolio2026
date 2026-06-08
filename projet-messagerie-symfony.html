@@ -46,7 +46,7 @@
             pointer-events: none;
         }
 
-        /* NAV */
+  
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -98,7 +98,7 @@
             background: var(--cyan);
         }
 
-        /* MAIN */
+      
         main {
             padding: 100px 3rem 4rem;
             max-width: 1200px;
@@ -120,7 +120,7 @@
 
         .back-link:hover { color: var(--cyan); }
 
-        /* HERO */
+       
         .project-hero {
             margin-bottom: 4rem;
             padding: 0 2rem;
@@ -189,7 +189,7 @@
             color: var(--text-dim);
         }
 
-        /* COVER */
+        
         .project-cover {
             margin: 3rem 0;
             padding: 0 2rem;
@@ -225,7 +225,7 @@
             margin-top: .6rem;
         }
 
-        /* SECTIONS */
+
         .section-block {
             margin-bottom: 3rem;
             padding: 0 2rem;
@@ -268,7 +268,7 @@
             font-weight: 500;
         }
 
-        /* CODE BLOCK */
+     
         .code-block {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -286,7 +286,7 @@
         .code-block .comment { color: var(--text-dim); }
         .code-block .annotation { color: #81d4fa; }
 
-        /* TAGS */
+     
         .tag-row {
             display: flex;
             flex-wrap: wrap;
@@ -305,7 +305,7 @@
             border: 1px solid var(--cyan);
         }
 
-        /* CTA */
+
         .cta-footer {
             margin: 4rem 0;
             padding: 0 2rem;
@@ -386,7 +386,7 @@
             margin: 0;
         }
 
-        /* FADE */
+    
         .fade-in {
             opacity: 0;
             transform: translateY(22px);
@@ -398,7 +398,7 @@
             transform: none;
         }
 
-        /* GALLERY */
+   
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -430,7 +430,7 @@
             color: var(--text);
         }
 
-        /* MEDIA QUERIES */
+  
         @media (max-width: 768px) {
             nav { padding: 0 1.2rem; }
             .nav-links { gap: 1.2rem; }
@@ -461,7 +461,7 @@
     <main>
         <a href="projets.html" class="back-link">← Retour aux projets</a>
 
-        <!-- HERO -->
+   
         <header class="project-hero fade-in">
             <div class="hero-inner">
                 <p class="project-kicker">Développement Web</p>
@@ -478,7 +478,7 @@
             </div>
         </header>
 
-        <!-- COVER -->
+
         <div class="project-cover fade-in">
             <div class="project-cover-inner">
                 <img src="img/messagerie-symfony.png" alt="Interface de la messagerie Symfony">
@@ -486,7 +486,7 @@
             <p class="project-cover-caption">Interface de la messagerie avec gestion des conversations</p>
         </div>
 
-        <!-- PRÉSENTATION -->
+   
         <div class="section-block fade-in">
             <h2>Présentation du projet</h2>
             <p>
@@ -500,7 +500,7 @@
             </p>
         </div>
 
-        <!-- ARCHITECTURE TECHNIQUE -->
+      
         <div class="section-block fade-in">
             <h2>Architecture technique</h2>
             <p>Voici les principales technologies et composants utilisés pour ce projet :</p>
@@ -556,7 +556,7 @@
             </div>
         </div>
 
-        <!-- FONCTIONNALITÉS -->
+  
         <div class="section-block fade-in">
             <h2>Fonctionnalités implémentées</h2>
             <p>Voici les principales fonctionnalités développées pour cette application de messagerie :</p>
@@ -589,7 +589,7 @@
             </div>
         </div>
 
-        <!-- DÉFIS TECHNIQUES -->
+   
         <div class="section-block accent-left fade-in">
             <h2>Défis techniques rencontrés</h2>
             <p>Ce projet m'a permis de relever plusieurs défis techniques importants :</p>
@@ -603,7 +603,7 @@
             </ol>
         </div>
 
-        <!-- BILAN -->
+      
         <div class="section-block fade-in">
             <h2>Bilan personnel</h2>
             <p>
@@ -620,7 +620,7 @@
             </p>
         </div>
 
-        <!-- CTA -->
+        
         <div class="cta-footer fade-in">
             <p>Intéressé par ce projet ou par une collaboration ?</p>
             <div class="cta-buttons">
@@ -632,7 +632,7 @@
     </main>
 
     <script>
-        // Animation au scroll
+       
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
