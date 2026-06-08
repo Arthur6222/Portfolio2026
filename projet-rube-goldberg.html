@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rube Goldberg Workshop - Portfolio</title>
+    <title>Rube Goldberg Workshop — RubeTech | Portfolio Arthur PICQUE</title>
+    <meta name="description" content="Workshop créatif 2024 : conception et construction d'une machine de Rube Goldberg avec Arduino, capteurs, imprimante 3D et motorisation.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -17,6 +18,7 @@
             --cyan:       #00ffff;
             --cyan-dim:   rgba(0,255,255,.08);
             --cyan-mid:   rgba(0,255,255,.25);
+            --magenta:    #ff00ff;
             --text:       #c8d8e4;
             --text-dim:   #6a8a9a;
             --border:     rgba(0,255,255,.15);
@@ -34,308 +36,482 @@
 
         .grid-background {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background-image:
                 linear-gradient(rgba(0,255,255,.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,255,255,.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-            z-index: 0;
+            background-size: 40px 40px;
+            z-index: -1;
         }
 
-        /* NAV */
         nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             padding: 0 2.5rem;
-            height: 64px;
-            background: rgba(5,10,14,.85);
-            backdrop-filter: blur(12px);
+            height: 60px;
             border-bottom: 1px solid var(--border);
         }
 
         .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.3rem;
+            font-size: .8rem;
+            font-weight: 500;
             letter-spacing: .15em;
-            color: var(--cyan);
+            color: var(--text-dim);
         }
 
-        .nav-links { display: flex; gap: 2rem; }
+        .nav-links { display: flex; gap: 1.8rem; }
 
         .nav-links a {
-            font-size: .78rem;
-            font-weight: 500;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--text-dim);
             text-decoration: none;
+            color: var(--text);
+            font-size: .85rem;
+            font-weight: 400;
             transition: color .25s;
+            position: relative;
         }
 
-        .nav-links a:hover,
+        .nav-links a:hover { color: var(--cyan); }
+
         .nav-links a.active { color: var(--cyan); }
 
-        /* MAIN */
-        main {
-            position: relative;
-            z-index: 1;
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 100px 2rem 6rem;
-        }
-
-        /* BACK LINK */
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: .6rem;
-            font-size: .72rem;
-            letter-spacing: .2em;
-            text-transform: uppercase;
-            color: var(--cyan);
-            text-decoration: none;
-            border: 1px solid var(--border);
-            padding: .55rem 1.2rem;
-            border-radius: 4px;
-            margin-bottom: 2.5rem;
-            transition: border-color .3s, box-shadow .3s;
-        }
-
-        .back-link:hover {
-            border-color: var(--cyan);
-            box-shadow: 0 0 20px rgba(0,255,255,.2);
-        }
-
-        /* HEADER */
-        .project-header { margin-bottom: 2.5rem; }
-
-        .project-kicker {
-            font-size: .7rem;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: var(--cyan);
-            margin-bottom: .8rem;
-            display: flex;
-            align-items: center;
-            gap: .8rem;
-        }
-
-        .project-kicker::before {
+        .nav-links a.active::after {
             content: '';
-            display: inline-block;
-            width: 28px; height: 1px;
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 100%;
+            height: 2px;
             background: var(--cyan);
         }
 
-        .project-title-main {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
-            line-height: .95;
-            color: #fff;
-            letter-spacing: .04em;
-            margin-bottom: .8rem;
-        }
-
-        .project-title-main span { color: var(--cyan); }
-
-        .project-subtitle {
-            font-size: .95rem;
-            color: var(--text-dim);
-            max-width: 580px;
-            line-height: 1.7;
-        }
-
-        /* META GRID */
-        .project-meta-grid {
+        .hero {
+            padding: 0 2.5rem 4rem;
+            min-height: 70vh;
             display: flex;
-            flex-wrap: wrap;
-            gap: .8rem;
-            margin-top: 1.8rem;
+            align-items: center;
         }
 
-        .project-meta-item {
-            padding: .55rem 1.1rem;
-            border: 1px solid var(--border);
-            background: var(--cyan-dim);
-            border-radius: 6px;
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-eyebrow {
             font-size: .8rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
             color: var(--text);
         }
 
-        .project-meta-item span {
+        .hero-title span { color: var(--cyan); }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            line-height: 1.7;
             color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: .1em;
-            font-size: .7rem;
-            margin-right: .4rem;
+            margin-bottom: 2.5rem;
         }
 
-        /* COVER */
-        .project-cover { margin: 2.5rem 0 3rem; }
+        .hero-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+        }
 
-        .project-cover-inner {
-            border: 1px solid var(--border);
+        .meta-item { display: flex; flex-direction: column; }
+
+        .meta-item .label {
+            font-size: .7rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: .3rem;
+        }
+
+        .meta-item .value {
+            font-size: .9rem;
+            color: var(--text);
+        }
+
+        .main-content {
+            padding: 0 2.5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: .9rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .5s, transform .5s;
+        }
+
+        .back-link:hover { color: var(--cyan); }
+
+        .back-link::before { content: '←'; font-size: 1.1rem; }
+
+        .photo-band {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .photo-slot {
+            position: relative;
             border-radius: 12px;
             overflow: hidden;
-            position: relative;
         }
 
-        .project-cover-inner::before {
-            content: '';
+        .photo-slot img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-slot .overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, transparent 60%, rgba(5,10,14,.6));
-            z-index: 1;
+            background: linear-gradient(180deg, transparent 40%, rgba(5,10,14,.85) 100%);
             pointer-events: none;
         }
 
-        .project-cover img {
-            width: 100%;
-            display: block;
-            object-fit: cover;
-            max-height: 440px;
-            filter: brightness(.85) saturate(.9);
-            transition: filter .4s, transform .4s;
-        }
-
-        .project-cover:hover img {
-            filter: brightness(1) saturate(1);
-            transform: scale(1.02);
-        }
-
-        .project-cover-caption {
-            font-size: .68rem;
+        .photo-slot .photo-label {
+            position: absolute;
+            bottom: 12px;
+            left: 14px;
+            z-index: 2;
+            font-size: .65rem;
+            letter-spacing: .15em;
             text-transform: uppercase;
-            letter-spacing: .2em;
-            color: var(--text-dim);
-            text-align: center;
-            margin-top: .8rem;
+            color: var(--cyan);
         }
 
-        /* SECTION BLOCKS */
+       
         .section-block {
-            margin-bottom: 3rem;
-            padding: 2rem;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            transition: border-color .3s;
+            border-radius: 12px;
+            padding: 2rem 2.2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .section-block:hover { border-color: rgba(0,255,255,.3); }
+        .section-block.accent-left {
+            border-left: 3px solid var(--cyan);
+            border-radius: 0 12px 12px 0;
+        }
 
         .section-block h2 {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.6rem;
             letter-spacing: .08em;
-            color: #fff;
-            margin-bottom: 1rem;
+            color: var(--cyan);
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
             gap: .8rem;
         }
 
-        .section-block h2::before {
-            content: '';
-            display: inline-block;
-            width: 4px; height: 1.4rem;
-            background: var(--cyan);
-            border-radius: 2px;
-        }
-
         .section-block p {
             font-size: .95rem;
-            color: var(--text-dim);
-            line-height: 1.8;
-            margin-bottom: .6rem;
+            line-height: 1.85;
+            color: var(--text);
+            margin-bottom: .8rem;
         }
 
-        /* TAGS */
+        .section-block p:last-child { margin-bottom: 0; }
+
+        .highlight-quote {
+            background: var(--cyan-dim);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-quote p {
+            font-style: italic;
+            font-size: .95rem;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .sep-line {
+            height: 1px;
+            background: var(--border);
+            margin: 3rem 0;
+        }
+
+     
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .bullet-card {
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .bullet-card-title {
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            font-size: .95rem;
+        }
+
+        .bullet-card-title::before { content: '▸ '; }
+
+        .bullet-card p {
+            color: var(--text);
+            font-size: .88rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+      
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .spec-card {
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .spec-label {
+            font-size: .7rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: .4rem;
+        }
+
+        .spec-value {
+            font-size: .9rem;
+            color: var(--text);
+        }
+
+       
+        .steps-list {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .steps-list li {
+            position: relative;
+            padding: 1rem 1.2rem 1rem 3.5rem;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: .92rem;
+            line-height: 1.75;
+            transition: border-color .25s;
+        }
+
+        .steps-list li:hover { border-color: var(--cyan-mid); }
+
+        .steps-list li::before {
+            counter-increment: step;
+            content: counter(step, decimal-leading-zero);
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            font-size: .8rem;
+            font-weight: 700;
+            color: var(--magenta);
+            letter-spacing: .1em;
+        }
+
+        .steps-list li strong { color: var(--cyan); }
+
+        
         .tag-row {
             display: flex;
             flex-wrap: wrap;
-            gap: .7rem;
-            margin-top: .8rem;
+            gap: .6rem;
+            margin: 1.5rem 0;
         }
 
         .tag-pill {
-            padding: .45rem 1rem;
-            border-radius: 999px;
-            border: 1px solid rgba(0,255,255,.35);
-            background: var(--cyan-dim);
-            font-size: .72rem;
-            text-transform: uppercase;
-            letter-spacing: .12em;
-            color: var(--cyan);
-            transition: background .25s, border-color .25s;
+            padding: .5rem 1rem;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text);
+            font-size: .8rem;
+            text-decoration: none;
+            transition: all .25s;
         }
 
         .tag-pill:hover {
-            background: rgba(0,255,255,.15);
+            background: rgba(0,255,255,.14);
             border-color: var(--cyan);
         }
 
-        /* CTA FOOTER */
+       
+        .skills-learned {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: .8rem;
+        }
+
+        .skill-chip {
+            padding: .9rem 1.1rem;
+            background: var(--cyan-dim);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--cyan);
+            font-size: .88rem;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            transition: all .25s;
+        }
+
+        .skill-chip:hover {
+            border-color: var(--cyan-mid);
+            background: rgba(0,255,255,.12);
+        }
+
+        .skill-chip::before {
+            content: '✓';
+            color: var(--magenta);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        
         .cta-footer {
-            margin-top: 1rem;
+            margin-top: 3rem;
+            padding-top: 2.5rem;
             border-top: 1px solid var(--border);
-            padding-top: 2rem;
             display: flex;
             flex-wrap: wrap;
-            gap: 1.2rem;
+            gap: 1.4rem;
             align-items: center;
             justify-content: space-between;
         }
 
-        .cta-footer p {
-            font-size: .88rem;
-            color: var(--text-dim);
-            margin: 0;
-        }
+        .cta-footer p { margin: 0; color: var(--text-dim); font-size: .9rem; }
 
         .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
 
         .cta-button {
-            font-size: .75rem;
-            font-weight: 600;
-            letter-spacing: .15em;
-            text-transform: uppercase;
+            padding: .8rem 1.5rem;
+            background: var(--cyan-dim);
+            color: var(--cyan);
             text-decoration: none;
-            padding: .75rem 1.8rem;
-            border-radius: 4px;
-            transition: all .3s;
-            background: var(--cyan);
-            color: #050a0e;
-            border: 1px solid var(--cyan);
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all .25s;
+            border: 1px solid var(--border);
         }
 
         .cta-button:hover {
-            background: transparent;
-            color: var(--cyan);
-            box-shadow: 0 0 25px rgba(0,255,255,.3);
+            background: rgba(0,255,255,.14);
+            border-color: var(--cyan);
+            transform: translateY(-2px);
         }
 
         .cta-button.secondary {
             background: transparent;
-            color: var(--cyan);
-            border: 1px solid var(--border);
+            color: var(--text);
         }
 
         .cta-button.secondary:hover {
-            border-color: var(--cyan);
-            box-shadow: 0 0 20px rgba(0,255,255,.15);
+            background: var(--cyan-dim);
+            color: var(--cyan);
         }
 
-        /* FADE IN */
+     
+        .pdf-download-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .pdf-download-content h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: .08em;
+            color: var(--cyan);
+            margin-bottom: 0.8rem;
+        }
+
+        .pdf-download-content p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pdf-download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--cyan-dim);
+            color: var(--cyan);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.25s;
+            border: 1px solid var(--border);
+        }
+
+        .pdf-download-button:hover {
+            background: rgba(0,255,255,.14);
+            border-color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+       
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity .6s ease, transform .6s ease;
+            transition: opacity .5s, transform .5s;
         }
 
         .fade-in.visible {
@@ -343,12 +519,18 @@
             transform: translateY(0);
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
+        
+        @media (max-width: 768px) {
+            .hero { padding: 0 1.5rem 2.5rem; }
             nav { padding: 0 1.2rem; }
             .nav-links { gap: 1rem; }
-            .nav-links a { font-size: .68rem; }
-            main { padding: 90px 1.2rem 4rem; }
+            .nav-links a { font-size: .7rem; }
+            .main-content { padding: 2rem 1rem 4rem; }
+            .photo-band { grid-template-columns: 1fr; }
+            .section-block { padding: 1.4rem 1.4rem; }
+            .section-grid { grid-template-columns: 1fr; }
+            .specs-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -368,49 +550,103 @@
         </div>
     </nav>
 
-    <main>
-        <a href="projets.html" class="back-link fade-in">← Retour aux projets</a>
 
-        <header class="project-header fade-in">
-            <p class="project-kicker">Workshop créatif 2024</p>
-            <h1 class="project-title-main">
-                Rube Goldberg<br>
-                <span>Machine Workshop</span>
-            </h1>
-            <p class="project-subtitle">
-                Workshop créatif 2024 axé sur l'innovation et la construction, basé sur le concept des machines de Rube Goldberg.
-            </p>
-            <div class="project-meta-grid">
-                <div class="project-meta-item"><span>Contexte</span>Workshop scolaire</div>
-                <div class="project-meta-item"><span>Rôle</span>Conception & construction</div>
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Workshop créatif · 2024</p>
+            <h1 class="hero-title">Rube Goldberg <span>Machine Workshop</span></h1>
+            <p class="hero-sub">Conception et construction d'une machine de Rube Goldberg en carton, impression 3D et Arduino — une chaîne de réactions en cascade pilotée par capteurs et motorisation, réalisée en 5 jours.</p>
+            <div class="hero-meta">
+                <div class="meta-item"><span class="label">Année</span><span class="value">2024</span></div>
+                <div class="meta-item"><span class="label">Contexte</span><span class="value">Workshop scolaire</span></div>
+                <div class="meta-item"><span class="label">Durée</span><span class="value">5 jours</span></div>
+                <div class="meta-item"><span class="label">Rôle</span><span class="value">Conception & construction</span></div>
+                <div class="meta-item"><span class="label">Équipe</span><span class="value">Arthur, Yohann, Enzo, Aissata</span></div>
             </div>
-        </header>
+        </div>
+    </section>
 
-        <div class="project-cover fade-in">
-            <div class="project-cover-inner">
-                <img src="img/workshop2024.png" alt="Rube Goldberg Machine Workshop">
-            </div>
-            <p class="project-cover-caption">Machine Rube Goldberg — chaîne de réactions en cascade</p>
+    <main class="main-content">
+        <a href="projets.html" class="back-link fade-in">Retour aux projets</a>
+
+        
+
+    
+        <div class="section-block accent-left fade-in">
+            <h2>Contexte & objectif</h2>
+            <p>Ce workshop pédagogique de 5 jours avait pour but de stimuler <strong style="color:var(--cyan)">l'innovation, le travail en équipe et la pensée systémique</strong>. Le défi : concevoir une machine de Rube Goldberg — une séquence de réactions en chaîne où chaque action en déclenche une autre de façon ingénieuse.</p>
+            <p>L'équipe (Arthur, Yohann, Enzo, Aissata) a choisi de construire une boîte en carton de 40×40 cm intégrant deux chemins distincts, un piège rendant le parcours de la bille imprévisible, de l'électronique Arduino et des pièces imprimées en 3D.</p>
+            
         </div>
 
+        
         <div class="section-block fade-in">
-            <h2>Objectif du workshop</h2>
-            <p>Concevoir et construire une machine de Rube Goldberg : une séquence de réactions en chaîne où une action en déclenche une autre de manière ingénieuse et créative.</p>
-            <p>L'objectif était de stimuler l'innovation, le travail en équipe et la pensée systémique.</p>
+            <h2>Problématique</h2>
+            <p>Comment concevoir une machine de Rube Goldberg qui soit à la fois <strong style="color:var(--cyan)">spectaculaire</strong>, <strong style="color:var(--cyan)">fonctionnelle</strong> et <strong style="color:var(--cyan)">réalisable en 5 jours</strong> avec des moyens limités — carton de récupération, imprimante 3D et composants Arduino — tout en intégrant de l'électronique embarquée réelle (capteurs, moteurs, code) ?</p>
         </div>
 
+        <div class="sep-line"></div>
+
+        
         <div class="section-block fade-in">
-            <h2>Technologies & compétences</h2>
+            <h2>Processus de réalisation — 5 jours</h2>
+            <ol class="steps-list">
+                <li><strong>Jour 1 — Cadrage & conception</strong> — Construction de la boîte carton 40×40 cm pour délimiter le périmètre. Brainstorming : deux chemins avec piège pour rendre le trajet de la bille imprévisible. Abandon de l'idée catapulte (trop complexe) au profit d'une <strong>poulie imprimée en 3D</strong> enclenchant une bille en remontant.</li>
+                <li><strong>Jour 2 — Intégration Arduino</strong> — Documentation, mise en œuvre d'un premier capteur de mouvement PIR couplé à un moteur HS-422. Câblage de la carte Arduino et de la breadboard. Réflexion sur les capteurs complémentaires (ultrasons, capteur de choc).</li>
+                <li><strong>Jour 3 — Assemblage & code avancé</strong> — Répartition des tâches : agencement de la boîte et impression 3D de la poulie en parallèle, avancement du diaporama, innovation côté code Arduino. Abandon du joystick (code trop complexe) au profit d'un <strong>2e système capteur PIR + moteur DC Metal Gear</strong> plus rapide. Fermeture de la boîte sur 4 faces.</li>
+                <li><strong>Jour 4 — Finitions & communication</strong> — Peinture à la bombe aérosol. Dominos dessinés à l'imprimante 3D. Fixation de la dernière face avec tous les passages. Démarrage de la vidéo de présentation.</li>
+                <li><strong>Jour 5 — Finalisation & oral</strong> — Finalisation de la vidéo (différents plans sur le parcours de la bille). Corrections des derniers problèmes (dominos mal alignés, passages de bille). Présentation orale à 15h20.</li>
+            </ol>
+        </div>
+
+   
+        <div class="section-block fade-in">
+            <h2>Ce qui a été livré</h2>
+            <p>Une machine de Rube Goldberg fonctionnelle dans une boîte en carton peinte, intégrant deux chemins, une poulie imprimée en 3D, deux systèmes moteur/capteur Arduino, des dominos 3D et un piège rendant le parcours imprévisible. L'accent a été mis sur la <strong style="color:var(--cyan)">robustesse de la chaîne de réactions</strong> et la <strong style="color:var(--cyan)">qualité de la présentation vidéo</strong>.</p>
+            <div class="specs-grid">
+                <div class="spec-card"><div class="spec-label">Structure</div><div class="spec-value">Boîte carton 40×40 cm, 2 chemins + piège</div></div>
+                <div class="spec-card"><div class="spec-label">Électronique</div><div class="spec-value">Arduino, capteurs PIR x2, moteur HS-422, DC Metal Gear</div></div>
+                <div class="spec-card"><div class="spec-label">Fabrication</div><div class="spec-value">Impression 3D (poulie, dominos), matériaux de récupération</div></div>
+                <div class="spec-card"><div class="spec-label">Rendu final</div><div class="spec-value">Démo + vidéo multi-plans + présentation orale</div></div>
+            </div>
+        </div>
+
+        <div class="sep-line"></div>
+
+       
+     
+        <div class="section-block fade-in">
+            <h2>Technologies & outils</h2>
+            <p>Carte Arduino Uno, breadboard, capteurs de mouvement PIR, moteur servo HS-422, moteur DC Metal Gear, imprimante 3D (PLA), carton, peinture aérosol. IDE Arduino pour le code, logiciel de modélisation 3D pour la poulie et les dominos.</p>
             <div class="tag-row">
-                <span class="tag-pill">Prototypage</span>
-                <span class="tag-pill">Mécanique</span>
+                <span class="tag-pill">Arduino</span>
+                <span class="tag-pill">Capteur PIR</span>
+                <span class="tag-pill">Moteur HS-422</span>
+                <span class="tag-pill">DC Metal Gear</span>
+                <span class="tag-pill">Impression 3D</span>
+                <span class="tag-pill">Prototypage carton</span>
+                <span class="tag-pill">IDE Arduino</span>
                 <span class="tag-pill">Travail en équipe</span>
-                <span class="tag-pill">Innovation</span>
+            </div>
+        </div>
+
+        
+    
+
+        
+
+     
+        <div class="pdf-download-section fade-in">
+            <div class="pdf-download-content">
+                <h3>Documentation technique complète</h3>
+                <p>Téléchargez le dossier de conception de la machine RubeTech — journal de bord des 5 jours, choix techniques, code Arduino et photos de la réalisation.</p>
+                <a href="dossier_rube_tech.pdf" class="pdf-download-button" download>
+                    <span class="icon">⬇</span> Télécharger le dossier
+                </a>
             </div>
         </div>
 
         <div class="cta-footer fade-in">
-            <p>Intéressé par ce type de projet ?</p>
             <div class="cta-buttons">
                 <a href="contact.html" class="cta-button">Me contacter</a>
                 <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
@@ -429,6 +665,9 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+      
+        document.querySelector('.back-link').classList.add('visible');
     </script>
 </body>
 </html>

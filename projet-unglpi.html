@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
         :root {
             --bg-deep:    #050a0e;
             --bg-surface: #0a1218;
@@ -22,9 +23,9 @@
             --text-dim:   #6a8a9a;
             --border:     rgba(0,255,255,.15);
         }
-
+ 
         html { scroll-behavior: smooth; }
-
+ 
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--bg-deep);
@@ -32,7 +33,7 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
+ 
         .grid-background {
             position: fixed;
             top: 0;
@@ -46,7 +47,7 @@
             pointer-events: none;
             z-index: 0;
         }
-
+ 
         nav {
             position: fixed;
             top: 0;
@@ -62,20 +63,20 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
         }
-
+ 
         .logo {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.3rem;
             letter-spacing: .15em;
             color: var(--cyan);
         }
-
+ 
         .nav-links {
             display: flex;
             align-items: center;
             gap: 2rem;
         }
-
+ 
         .nav-links a {
             font-size: .78rem;
             font-weight: 500;
@@ -86,12 +87,12 @@
             transition: color .25s;
             white-space: nowrap;
         }
-
+ 
         .nav-links a:hover,
         .nav-links a.active {
             color: var(--cyan);
         }
-
+ 
         .nav-burger {
             display: none;
             flex-direction: column;
@@ -101,7 +102,7 @@
             background: none;
             border: none;
         }
-
+ 
         .nav-burger span {
             display: block;
             width: 24px;
@@ -110,19 +111,19 @@
             border-radius: 2px;
             transition: all .3s;
         }
-
+ 
         .nav-burger.open span:nth-child(1) {
             transform: translateY(7px) rotate(45deg);
         }
-
+ 
         .nav-burger.open span:nth-child(2) {
             opacity: 0;
         }
-
+ 
         .nav-burger.open span:nth-child(3) {
             transform: translateY(-7px) rotate(-45deg);
         }
-
+ 
         @media (max-width: 768px) {
             nav {
                 padding: 0 1.2rem;
@@ -152,7 +153,7 @@
                 font-size: .8rem;
             }
         }
-
+ 
         main {
             position: relative;
             z-index: 1;
@@ -160,81 +161,9 @@
             margin: 0 auto;
             padding: 100px 2rem 6rem;
         }
-
-        .page-header {
-            margin-bottom: 3rem;
-        }
-
-        .page-kicker {
-            font-size: .7rem;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: var(--cyan);
-            margin-bottom: .8rem;
-            display: flex;
-            align-items: center;
-            gap: .8rem;
-        }
-
-        .page-kicker::before {
-            content: '';
-            display: inline-block;
-            width: 28px;
-            height: 1px;
-            background: var(--cyan);
-        }
-
-        .page-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3rem, 7vw, 5.5rem);
-            line-height: .95;
-            color: #fff;
-            letter-spacing: .04em;
-            margin-bottom: 1rem;
-        }
-
-        .page-title span {
-            color: var(--cyan);
-        }
-
-        .page-subtitle {
-            font-size: .95rem;
-            color: var(--text-dim);
-            max-width: 520px;
-            line-height: 1.7;
-        }
-
-        .section-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .section-block h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: .08em;
-            color: #fff;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-block h2 span {
-            color: var(--cyan);
-        }
-
-        .section-block p {
-            font-size: .92rem;
-            color: var(--text-dim);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .section-block strong {
-            color: var(--cyan);
-        }
-
+ 
+       
+ 
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -251,51 +180,220 @@
             margin-bottom: 2rem;
             transition: all .3s;
         }
-
+ 
         .back-link:hover {
             background: var(--cyan-dim);
             border-color: var(--cyan);
             box-shadow: 0 0 20px rgba(0,255,255,.15);
+            transform: translateX(-3px);
         }
-
+ 
+        .project-hero {
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+ 
+        .project-kicker {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+ 
+        .project-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--cyan);
+        }
+ 
+        .project-title-main {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            line-height: .92;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 1.4rem;
+        }
+ 
+        .project-title-main span {
+            color: var(--cyan);
+            display: block;
+        }
+ 
+        .project-subtitle {
+            font-size: .97rem;
+            color: var(--text-dim);
+            max-width: 580px;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+ 
+        .project-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 0;
+        }
+ 
+        .project-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
+            font-size: .88rem;
+            color: var(--text);
+        }
+ 
+        .project-meta-item span {
+            font-size: .62rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+ 
+        
+ 
         .project-cover {
-            margin: 2rem 0;
+            margin: 2.5rem 0;
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border);
+            box-shadow: 0 0 40px rgba(0,255,255,.1);
+            position: relative;
         }
-
+ 
+        .project-cover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 55%, rgba(5,10,14,.65));
+            pointer-events: none;
+        }
+ 
         .project-cover-inner {
             position: relative;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #0a1520 0%, #071018 100%);
             padding: 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
+ 
         .project-cover img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,.6);
+            filter: brightness(.9) saturate(.95);
+            transition: filter .4s, transform .5s;
+            display: block;
         }
-
+ 
+        .project-cover:hover img {
+            filter: brightness(1) saturate(1);
+            transform: scale(1.02);
+        }
+ 
         .project-cover-caption {
             text-align: center;
-            font-size: .8rem;
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: .2em;
             color: var(--text-dim);
-            margin-top: 1rem;
-            font-style: italic;
+            margin-top: .75rem;
         }
-
+ 
+      
+ 
+        .page-header {
+            margin-bottom: 3rem;
+        }
+ 
+        .page-kicker {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+ 
+        .page-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--cyan);
+        }
+ 
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 1rem;
+        }
+ 
+        .page-title span {
+            color: var(--cyan);
+        }
+ 
+        .page-subtitle {
+            font-size: .95rem;
+            color: var(--text-dim);
+            max-width: 520px;
+            line-height: 1.7;
+        }
+ 
+        .section-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+ 
+        .section-block h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: .08em;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+ 
+        .section-block h2 span {
+            color: var(--cyan);
+        }
+ 
+        .section-block p {
+            font-size: .92rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+ 
+        .section-block strong {
+            color: var(--cyan);
+        }
+ 
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
-
+ 
         .gallery-card {
             background: rgba(0,0,0,.2);
             border: 1px solid var(--border);
@@ -303,11 +401,11 @@
             padding: 1.5rem;
             transition: border-color .3s;
         }
-
+ 
         .gallery-card:hover {
             border-color: var(--cyan);
         }
-
+ 
         .gallery-card h3 {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.3rem;
@@ -315,13 +413,13 @@
             margin-bottom: .8rem;
             letter-spacing: .05em;
         }
-
+ 
         .gallery-card p {
             font-size: .9rem;
             color: var(--text-dim);
             line-height: 1.6;
         }
-
+ 
         .steps-list {
             list-style: none;
             padding: 0;
@@ -331,7 +429,7 @@
             gap: 1.2rem;
             margin-top: .5rem;
         }
-
+ 
         .steps-list li {
             counter-increment: step;
             position: relative;
@@ -340,7 +438,7 @@
             color: var(--text-dim);
             line-height: 1.75;
         }
-
+ 
         .steps-list li::before {
             content: counter(step, decimal-leading-zero);
             position: absolute;
@@ -351,19 +449,19 @@
             color: var(--magenta);
             letter-spacing: .1em;
         }
-
+ 
         .steps-list li strong {
             color: var(--cyan);
             font-weight: 500;
         }
-
+ 
         .tag-row {
             display: flex;
             flex-wrap: wrap;
             gap: .6rem;
             margin-top: 1.2rem;
         }
-
+ 
         .tag-pill {
             font-size: .6rem;
             letter-spacing: .15em;
@@ -374,26 +472,26 @@
             border: 1px solid var(--cyan);
             color: var(--cyan);
         }
-
+ 
         .cta-footer {
             margin-top: 3rem;
             padding: 2rem 0;
             text-align: center;
         }
-
+ 
         .cta-footer p {
             font-size: .95rem;
             color: var(--text-dim);
             margin-bottom: 1.5rem;
         }
-
+ 
         .cta-buttons {
             display: flex;
             gap: .8rem;
             flex-wrap: wrap;
             justify-content: center;
         }
-
+ 
         .cta-button {
             display: inline-flex;
             align-items: center;
@@ -410,22 +508,22 @@
             color: var(--bg-deep);
             background: var(--cyan);
         }
-
+ 
         .cta-button:hover {
             background: transparent;
             color: var(--cyan);
             box-shadow: 0 0 20px rgba(0,255,255,.25);
         }
-
+ 
         .cta-button.secondary {
             background: transparent;
             color: var(--cyan);
         }
-
+ 
         .cta-button.secondary:hover {
             background: var(--cyan-dim);
         }
-
+ 
         @media (max-width: 700px) {
             main {
                 padding: 90px 1.2rem 4rem;
@@ -436,6 +534,9 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+            }
+            .project-meta-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
@@ -457,18 +558,18 @@
             <a href="hobbies.html">Hobbies</a>
         </div>
     </nav>
-
+ 
     <main>
         <a href="projets.html" class="back-link">← Retour aux projets</a>
-
+ 
         <header class="project-hero">
             <p class="project-kicker">Projet BTS SIO</p>
             <h1 class="project-title-main">
-                UNGLPI<br>
+                GLPI
                 <span>Épreuve E6</span>
             </h1>
             <p class="project-subtitle">
-                Projet de formation BTS SIO : déploiement d'un serveur GLPI sur une machine virtuelle pour gérer le patrimoine informatique dans le cadre de l'épreuve E6.
+                Déploiement d'un serveur GLPI sur une machine virtuelle pour l'environnement technologique dans le cadre de l'épreuve E6 du BTS SIO.
             </p>
             <div class="project-meta-grid">
                 <div class="project-meta-item">
@@ -482,14 +583,13 @@
                 </div>
             </div>
         </header>
-
+ 
         <div class="project-cover fade-in">
             <div class="project-cover-inner">
-                <img src="img/unglpi-dashboard.png" alt="Interface GLPI">
+                <img src="img/glpi.png" alt="Interface GLPI">
             </div>
-            <p class="project-cover-caption">Interface d'administration GLPI — Tableau de bord principal</p>
         </div>
-
+ 
         <div class="section-block fade-in">
             <h2>Présentation du projet</h2>
             <p>
@@ -499,7 +599,7 @@
                 Le projet a permis de mettre en pratique les compétences acquises en administration système, virtualisation et gestion de parc, tout en respectant les contraintes techniques et pédagogiques de l'épreuve.
             </p>
         </div>
-
+ 
         <div class="section-block fade-in">
             <h2>Architecture technique</h2>
             <p>
@@ -520,7 +620,7 @@
                 </div>
             </div>
         </div>
-
+ 
         <div class="section-block fade-in">
             <h2>Étapes de déploiement</h2>
             <ol class="steps-list">
@@ -528,11 +628,10 @@
                 <li><strong>Installation des dépendances</strong> — Mise en place d'Apache, PHP 8.2, MariaDB et des extensions nécessaires.</li>
                 <li><strong>Configuration de GLPI</strong> — Téléchargement, extraction et configuration initiale via l'interface web.</li>
                 <li><strong>Création de la base de données</strong> — Import du schéma SQL et configuration des identifiants.</li>
-                <li><strong>Sécurisation du serveur</strong> — Configuration des pare-feux, mises à jour système et sauvegardes automatiques.</li>
                 <li><strong>Tests et validation</strong> — Vérification du bon fonctionnement des fonctionnalités principales (inventaire, tickets, gestion des utilisateurs).</li>
             </ol>
         </div>
-
+ 
         <div class="section-block fade-in">
             <h2>Fonctionnalités implémentées</h2>
             <div class="tag-row">
@@ -545,21 +644,21 @@
                 <span class="tag-pill">Sécurité réseau</span>
             </div>
         </div>
-
-        <!-- SECTION GALERIE SCREENSHOTS -->
+ 
+      
         <div class="section-block fade-in">
             <h2>Aperçu de l'interface <span>GLPI</span></h2>
             <p>Captures d'écran des principales fonctionnalités déployées dans le cadre du projet.</p>
-
+ 
             <div class="gallery" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-
+ 
                 <div class="gallery-card" style="padding: 0; overflow: hidden;">
                     <div style="background: rgba(0,0,0,.3); padding: .8rem 1rem; border-bottom: 1px solid var(--border);">
                         <h3 style="font-size: 1rem; margin: 0;">Page d'accueil</h3>
                     </div>
                     <div style="background: rgba(0,0,0,.2); min-height: 200px; display: flex; align-items: center; justify-content: center;">
                         <img
-                            src="img/glpi-accueil.png"
+                            src="img/glpidashboard.png"
                             alt="Page d'accueil GLPI"
                             style="width: 100%; height: 200px; object-fit: cover; display: block;"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -573,14 +672,14 @@
                         Tableau de bord principal après connexion
                     </p>
                 </div>
-
+ 
                 <div class="gallery-card" style="padding: 0; overflow: hidden;">
                     <div style="background: rgba(0,0,0,.3); padding: .8rem 1rem; border-bottom: 1px solid var(--border);">
                         <h3 style="font-size: 1rem; margin: 0;">Base de connaissance</h3>
                     </div>
                     <div style="background: rgba(0,0,0,.2); min-height: 200px; display: flex; align-items: center; justify-content: center;">
                         <img
-                            src="img/glpi-base-connaissance.png"
+                            src="img/glpibdc.png"
                             alt="Base de connaissance GLPI"
                             style="width: 100%; height: 200px; object-fit: cover; display: block;"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -594,14 +693,14 @@
                         Module base de connaissances et articles
                     </p>
                 </div>
-
+ 
                 <div class="gallery-card" style="padding: 0; overflow: hidden;">
                     <div style="background: rgba(0,0,0,.3); padding: .8rem 1rem; border-bottom: 1px solid var(--border);">
                         <h3 style="font-size: 1rem; margin: 0;">Ticket utilisateur</h3>
                     </div>
                     <div style="background: rgba(0,0,0,.2); min-height: 200px; display: flex; align-items: center; justify-content: center;">
                         <img
-                            src="img/glpi-ticket.png"
+                            src="img/GLPIticket2.png"
                             alt="Ticket GLPI"
                             style="width: 100%; height: 200px; object-fit: cover; display: block;"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -615,10 +714,10 @@
                         Création et suivi d'un ticket d'incident
                     </p>
                 </div>
-
+ 
             </div>
         </div>
-
+ 
         <div class="section-block fade-in">
             <h2>Défis techniques rencontrés</h2>
             <p>
@@ -631,7 +730,7 @@
                 <li><strong>Performances limitées</strong> — Optimisation de la VM (ajout de RAM, configuration du cache) pour une meilleure réactivité.</li>
             </ul>
         </div>
-
+ 
         <div class="section-block fade-in">
             <h2>Bilan personnel</h2>
             <p>
@@ -646,7 +745,7 @@
                 Ce travail s'inscrit parfaitement dans le cadre de l'épreuve E6, démontrant ma capacité à gérer un projet complet de A à Z dans un environnement professionnel simulé.
             </p>
         </div>
-
+ 
         <div class="section-block fade-in">
             <h2>Technologies & compétences</h2>
             <div class="tag-row">
@@ -662,19 +761,18 @@
                 <span class="tag-pill">Épreuve E6</span>
             </div>
         </div>
-
+ 
         <div class="cta-footer fade-in">
             <p>Intéressé par ce projet ou par la gestion de parc informatique ?</p>
             <div class="cta-buttons">
                 <a href="contact.html" class="cta-button">Me contacter</a>
                 <a href="projets.html" class="cta-button secondary">Voir d'autres projets</a>
-                <a href="https://trello.com/b/CCpO7sD6/proj-sys-glpi-systeme" class="cta-button secondary">Voir sur Trello</a>
             </div>
         </div>
     </main>
-
+ 
     <script>
-        // Animation au scroll
+       
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -682,10 +780,10 @@
                 }
             });
         }, { threshold: 0.1 });
-
+ 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // Burger menu
+ 
+        
         const burger = document.getElementById('burger');
         const navLinks = document.getElementById('navLinks');
         burger.addEventListener('click', () => {
@@ -699,3 +797,10 @@
     </script>
 </body>
 </html>
+ 
+
+
+
+
+
+

@@ -33,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* ── GRID BG ── */
+ 
         .grid-background {
             position: fixed; inset: 0;
             background-image:
@@ -43,7 +43,7 @@
             pointer-events: none; z-index: 0;
         }
 
-        /* ── NAV ── */
+ 
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
@@ -66,7 +66,6 @@
         .nav-links a:hover,
         .nav-links a.active { color: var(--cyan); }
 
-        /* ── MAIN ── */
         main {
             position: relative; z-index: 2;
             max-width: 960px;
@@ -74,7 +73,7 @@
             padding: 110px 48px 100px;
         }
 
-        /* ── BACK LINK ── */
+
         .back-link {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: .68rem; letter-spacing: .25em; text-transform: uppercase;
@@ -89,7 +88,7 @@
             transform: translateX(-3px);
         }
 
-        /* ── HERO ── */
+
         .hero-project {
             min-height: 42vh;
             display: flex; align-items: center; justify-content: center;
@@ -156,7 +155,7 @@
             margin-bottom: 2px;
         }
 
-        /* ── PHOTO BAND ── */
+
         .photo-band {
             display: grid;
             grid-template-columns: 1fr 1.4fr 1fr;
@@ -194,7 +193,7 @@
         }
         .logo-slot img { max-width: 80%; max-height: 70%; object-fit: contain; }
 
-        /* ── SECTION BLOCK ── */
+ 
         .section-block { margin-bottom: 48px; }
         .section-block h2 {
             font-family: 'Bebas Neue', sans-serif;
@@ -214,7 +213,6 @@
             margin-bottom: 14px;
         }
 
-        /* ── COMPANY INFO GRID ── */
         .company-info-block {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -236,7 +234,7 @@
         .info-chip-value a { color: var(--magenta); text-decoration: none; }
         .info-chip-value a:hover { text-decoration: underline; }
 
-        /* ── HIGHLIGHT BOX ── */
+   
         .highlight-box {
             background: rgba(0,255,255,.04);
             border-left: 3px solid var(--cyan);
@@ -247,7 +245,7 @@
             font-size: .9rem; color: var(--muted); line-height: 1.8;
         }
 
-        /* ── SKILLS ── */
+        
         .skills-learned {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -269,7 +267,7 @@
             border-color: var(--cyan);
         }
 
-        /* ── TECH TAGS ── */
+  
         .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
         .tech-tag {
             font-size: .68rem; letter-spacing: .15em;
@@ -284,14 +282,13 @@
             box-shadow: 0 0 14px rgba(255,0,255,.2);
         }
 
-        /* ── SEP ── */
+       
         .sep-line {
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(0,255,255,.2), transparent);
             margin: 48px 0;
         }
-
-        /* ── CTA ── */
+   
         .cta-footer {
             border-top: 1px solid var(--border);
             padding-top: 32px;
@@ -322,11 +319,11 @@
             box-shadow: 0 0 16px rgba(0,255,255,.2);
         }
 
-        /* ── FADE IN ── */
+    
         .fade-in { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* ── RESPONSIVE ── */
+   
         @media (max-width: 768px) {
             nav { padding: 0 1.2rem; }
             .nav-links { display: none; }
@@ -357,7 +354,7 @@
     <main>
         <a href="../projets.html" class="back-link fade-in">← Retour aux projets</a>
 
-        <!-- HERO -->
+   
         <header class="hero-project fade-in">
             <div class="hero-inner">
                 <div class="kimple-logo-wrap">
@@ -379,7 +376,7 @@
             </div>
         </header>
 
-        <!-- PHOTO BAND -->
+    
         <div class="photo-band fade-in">
             <div class="photo-slot logo-slot">
                 <img src="https://www.kimpleapp.com/KimpleLogoFull-black.svg" alt="Kimple Logo"
@@ -400,7 +397,7 @@
             </div>
         </div>
 
-        <!-- À PROPOS DE KIMPLE -->
+    
         <div class="section-block fade-in">
             <h2>À propos de Kimple</h2>
             <p>
@@ -431,7 +428,7 @@
 
         <div class="sep-line"></div>
 
-        <!-- PRÉSENTATION DU STAGE -->
+      
         <div class="section-block fade-in">
             <h2>Présentation du stage</h2>
             <p>
@@ -446,7 +443,7 @@
             </div>
         </div>
 
-        <!-- MISSIONS -->
+   
         <div class="section-block fade-in">
             <h2>Missions réalisées</h2>
             <p>
@@ -466,7 +463,6 @@
 
         <div class="sep-line"></div>
 
-        <!-- TECHNOLOGIES -->
         <div class="section-block fade-in">
             <h2>Technologies & Outils</h2>
             <div class="tags-row">
@@ -479,7 +475,7 @@
             </div>
         </div>
 
-        <!-- APPRENTISSAGES -->
+      
         <div class="section-block fade-in">
             <h2>Apprentissages</h2>
             <p>
@@ -491,7 +487,7 @@
             </p>
         </div>
 
-        <!-- RAPPORT -->
+   
         <div class="section-block fade-in">
             <h2>Rapport de stage</h2>
             <p>Le rapport complet de ce stage est disponible en téléchargement ci-dessous.</p>
@@ -502,7 +498,7 @@
             </div>
         </div>
 
-        <!-- CTA FOOTER -->
+      
         <div class="cta-footer fade-in">
             <p>Intéressé par ce type de projet ?</p>
             <div class="cta-buttons">
